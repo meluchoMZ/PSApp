@@ -44,22 +44,6 @@ public class Utils {
 			sourceBytes[i] ^= codingScheme[i];
 		}
 		return encoder.encodeToString(sourceBytes);
-		/*
-		byte[] sourceBytes = source.getBytes();
-		// Password obfuscation
-		int length = sourceBytes.length + 2*codingScheme.length;
-		byte[] obyt = new byte[length];
-		for (int i = 0; i < codingScheme.length; i++) {
-			obyt[i]  = codingScheme[i];
-		}
-		for (int i = 0; i < sourceBytes.length; i++) {
-			obyt[i] = sourceBytes[i];
-		}
-		for (int i = 0; i < codingScheme.length; i++) {
-			obyt[i]  = codingScheme[i];
-		}
-		for (int i = 0; i < sourceBytes.length; i++);
-		 */
 	}
 
 	@RequiresApi(api = Build.VERSION_CODES.O)
@@ -75,14 +59,5 @@ public class Utils {
 			sourceBytes[i] ^= codingScheme[i];
 		}
 		return new String(sourceBytes);
-		/*
-		Base64.Decoder decoder = Base64.getDecoder();
-		byte[] sourceBytes = source.getBytes();
-		int length = sourceBytes.length - 2* codingScheme.length;
-		byte [] output = new byte[length];
-		for (int i = 0; i < length; i++) {
-			output[i] = sourceBytes[length+i];
-		}
-		 */
 	}
 }
