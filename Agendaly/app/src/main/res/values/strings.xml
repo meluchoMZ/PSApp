@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Agendaly</string>
     <string name="feature_launcher_string">Use me to launch your feature</string>
+    <string name="back">back</string>
+    <string name="forward">forward</string>
 </resources>
