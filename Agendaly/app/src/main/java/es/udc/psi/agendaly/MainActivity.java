@@ -25,11 +25,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener
+public class MainActivity extends AppCompatActivity
 {
-	private TextView monthYearText;
-	private RecyclerView calendarRecyclerView;
-	private LocalDate selectedDate;
+
 
 	/*
 	To avoid interference between use cases, this activity should be used as
@@ -48,17 +46,23 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		initWidgets();
-		selectedDate = LocalDate.now();
-		setMonthView();
 
-		Button b = findViewById(R.id.feature_launcher);
+		Button M = findViewById(R.id.feature_launcherM);
+		M.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent horario = new Intent(getApplicationContext(), AuthenticationActivity.class);
+				startActivity(horario);
+
+			}
+		});
+		Button b = findViewById(R.id.feature_launcherB);
 		b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Intent auth = new Intent(getApplicationContext(), AuthenticationActivity.class);
+				Intent auth = new Intent(getApplicationContext(), CalendarActivity.class);
 				startActivity(auth);
-
+			}});
 		Button l = findViewById(R.id.feature_launcherL);
 		l.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -70,73 +74,5 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 		});
 	}
 
-	private void initWidgets()
-	{
-		calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-		monthYearText = findViewById(R.id.monthYearTV);
-	}
-
-	private void setMonthView()
-	{
-		monthYearText.setText(monthYearFromDate(selectedDate));
-		ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-
-		CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
-		RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-		calendarRecyclerView.setLayoutManager(layoutManager);
-		calendarRecyclerView.setAdapter(calendarAdapter);
-	}
-
-	private ArrayList<String> daysInMonthArray(LocalDate date)
-	{
-		ArrayList<String> daysInMonthArray = new ArrayList<>();
-		YearMonth yearMonth = YearMonth.from(date);
-
-		int daysInMonth = yearMonth.lengthOfMonth();
-
-		LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-		int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-		for(int i = 1; i <= 42; i++)
-		{
-			if(i <= dayOfWeek || i > daysInMonth + dayOfWeek)
-			{
-				daysInMonthArray.add("");
-			}
-			else
-			{
-				daysInMonthArray.add(String.valueOf(i - dayOfWeek));
-			}
-		}
-		return  daysInMonthArray;
-	}
-
-	private String monthYearFromDate(LocalDate date)
-	{
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-		return date.format(formatter);
-	}
-
-	public void previousMonthAction(View view)
-	{
-		selectedDate = selectedDate.minusMonths(1);
-		setMonthView();
-	}
-
-	public void nextMonthAction(View view)
-	{
-		selectedDate = selectedDate.plusMonths(1);
-		setMonthView();
-	}
-
-	@Override
-	public void onItemClick(int position, String dayText)
-	{
-		if(!dayText.equals(""))
-		{
-			String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-		}
-	}
 }
 

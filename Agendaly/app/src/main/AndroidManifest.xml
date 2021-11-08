@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Agendaly">
         <activity
+            android:name=".CalendarActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -20,8 +23,7 @@
         </activity>
         <activity android:name=".AuthenticationActivity" />
         <activity android:name=".AuthTestActivity" />
-        <activity android:name=".TimeTable.Horario"></activity>
-
+        <activity android:name=".TimeTable.Horario" />
     </application>
 
 </manifest>
