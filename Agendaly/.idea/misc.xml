@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-
+        <entry key="..\:/Users/Blanca/StudioProjects/PSApp/Agendaly/app/src/main/res/layout/activity_main.xml" value="0.19166666666666668" />
+        <entry key="..\:/Users/Blanca/StudioProjects/PSApp/Agendaly/app/src/main/res/layout/calendar_cell.xml" value="0.1" />
         <entry key="..\:/Users/migue/git/PSApp/Agendaly/app/src/main/res/drawable/et_wrappers.xml" value="0.2703125" />
         <entry key="..\:/Users/laura/OneDrive/Escritorio/TT/Agendaly/app/src/main/res/layout/activity_info_fragment.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/laura/OneDrive/Escritorio/TT/Agendaly/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
@@ -13,7 +14,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
