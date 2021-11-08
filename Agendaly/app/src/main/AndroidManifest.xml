@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".AuthenticationActivity" />
         <activity android:name=".AuthTestActivity" />
+        <activity android:name=".TimeTable.Horario"></activity>
+
     </application>
 
 </manifest>

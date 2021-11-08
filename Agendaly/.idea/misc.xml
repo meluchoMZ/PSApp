@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+
         <entry key="..\:/Users/migue/git/PSApp/Agendaly/app/src/main/res/drawable/et_wrappers.xml" value="0.2703125" />
+        <entry key="..\:/Users/laura/OneDrive/Escritorio/TT/Agendaly/app/src/main/res/layout/activity_info_fragment.xml" value="0.12708333333333333" />
+        <entry key="..\:/Users/laura/OneDrive/Escritorio/TT/Agendaly/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/migue/git/PSApp/Agendaly/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/migue/git/PSApp/Agendaly/app/src/main/res/layout/authentication_activity.xml" value="0.14583333333333334" />
         <entry key="..\:/Users/migue/git/PSApp/Agendaly/app/src/main/res/layout/authtest_activity.xml" value="0.25416666666666665" />

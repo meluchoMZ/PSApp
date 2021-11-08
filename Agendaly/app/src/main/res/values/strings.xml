@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Agendaly</string>
     <string name="feature_launcher_string">Use me to launch your feature</string>
+    <string name="feature_horario">Use me to launch your timetable</string>
     <string name="shared_preferences_file">usr_shared_preferences</string>
     <string name="auth_title">Authentication</string>
     <string name="sign_up_button_text">Sign up</string>
@@ -17,4 +18,15 @@
     <string name="auth_error_dialog_button">Ok</string>
     <string name="sign_out_button_text">Sign out</string>
     <string name="automatic_signin_dialog">Attempting to sign in ...</string>
+    <string name="Friday"> Viernes </string>
+    <string name="hora_prueba"> 15:30 - 18:30 </string>
+    <string name="aula_prueba"> Aula 2.10 </string>
+    <string name="monday"> Lunes </string>
+    <string name="saturday"> Sábado </string>
+    <string name="sunday"> Domingo </string>
+    <string name="thrusday"> Jueves </string>
+    <string name="asignatura">Asignatura</string>
+    <string name="hora">Hora</string>
+    <string name="aula">Aula</string>
+
 </resources>
