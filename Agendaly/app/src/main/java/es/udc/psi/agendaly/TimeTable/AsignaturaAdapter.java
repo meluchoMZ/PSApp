@@ -8,34 +8,35 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import es.udc.psi.agendaly.R;
+import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 
 public class AsignaturaAdapter extends RecyclerView.Adapter<AsignaturaAdapter.MyViewHolder> {
 
-    private final ArrayList<Asignatura> mDataset;
+    private List<AsignaturaViewModel> mItems;
 
-    public AsignaturaAdapter(ArrayList<Asignatura> myDataset) {
-        mDataset = myDataset;
+    public AsignaturaAdapter() {
+
+        mItems = new ArrayList<>();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder  {
-        public TextView nombre,horario,clase;
-        public MyViewHolder(View view) {
-            super(view);
-            nombre = view.findViewById(R.id.textViewNombre);
-            horario = view.findViewById(R.id.textViewHorario);
-            clase = view.findViewById(R.id.textViewClase);
-        }
-        public void bind(Asignatura Asignatura) {
-            nombre.setText(Asignatura.getNombre());
-            horario.setText(Asignatura.getHorario());
-            clase.setText(Asignatura.getClase());
-        }
-
-
+    public void setItems(List<AsignaturaViewModel> items){
+        mItems=items;
+        notifyDataSetChanged();
     }
+
+    public void updateItem(AsignaturaViewModel item,
+                           int position) {
+
+        mItems.add(position, item);
+        notifyItemChanged(position);
+    }
+
+
 
     @NonNull
     @Override
@@ -47,13 +48,30 @@ public class AsignaturaAdapter extends RecyclerView.Adapter<AsignaturaAdapter.My
     }
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.bind(mDataset.get(position));
+        holder.bind(mItems.get(position));
     }
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mItems.size();
     }
 
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder  {
+        public TextView nombre,horario,clase;
+        public MyViewHolder(View view) {
+            super(view);
+            nombre = view.findViewById(R.id.textViewNombre);
+            horario = view.findViewById(R.id.textViewHorario);
+            clase = view.findViewById(R.id.textViewClase);
+        }
+        public void bind(AsignaturaViewModel asignatura) {
+            nombre.setText(asignatura.getName());
+            horario.setText(asignatura.getHora());
+            clase.setText(asignatura.getAula());
+        }
+
+
+    }
 
 
 }
