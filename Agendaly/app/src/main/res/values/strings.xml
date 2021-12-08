@@ -20,15 +20,33 @@
     <string name="auth_error_dialog_button">Ok</string>
     <string name="sign_out_button_text">Sign out</string>
     <string name="automatic_signin_dialog">Attempting to sign in ...</string>
-    <string name="Friday"> Viernes </string>
+    <string name="friday"> Viernes </string>
     <string name="hora_prueba"> 15:30 - 18:30 </string>
     <string name="aula_prueba"> Aula 2.10 </string>
     <string name="monday"> Lunes </string>
-    <string name="saturday"> Sábado </string>
-    <string name="sunday"> Domingo </string>
-    <string name="thrusday"> Jueves </string>
+    <string name="saturday">Sábado</string>
+    <string name="sunday">Domingo</string>
+    <string name="thrusday">Jueves</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miércoles</string>
     <string name="asignatura">Asignatura</string>
     <string name="hora">Hora</string>
     <string name="aula">Aula</string>
+    <string name="selectDay">Selecciona día</string>
+    <string name="add_asignatura">Asignatura añadida</string>
+    <string name="delete_question">¿Quiere borrar esta asignatura?</string>
+    <string name="yes">Sí</string>
+    <string name="asignatura_borrada">Asignatura borrada</string>
+    <string name="no">No</string>
+
+    <string-array name="days_week">
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thrusday</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+    </string-array>
 
 </resources>

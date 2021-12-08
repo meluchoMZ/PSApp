@@ -1,60 +1,77 @@
 package es.udc.psi.agendaly.TimeTable;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class Asignatura implements Parcelable{
-    String nombre, horario, clase, day;
+@Entity(tableName = "asignaturas")
+public class Asignatura {
 
-    public Asignatura(String nombre, String horario, String clase, String day) {
+    @PrimaryKey(autoGenerate=true)
+    @ColumnInfo(name = "idDB")
+    public int idBD;
+
+
+    @ColumnInfo(name = "nombre")
+    String nombre;
+
+    @ColumnInfo(name = "aula")
+    String aula;
+
+    @ColumnInfo(name = "day")
+    String day;
+
+    @ColumnInfo(name = "inicio")
+    String inicio;
+
+    @ColumnInfo(name = "fin")
+    String fin;
+
+
+    public Asignatura() {
+
+    }
+
+    public Asignatura(String nombre, String inicio, String fin, String clase, String day) {
         this.nombre = nombre;
-        this.horario = horario;
-        this.clase = clase;
+        this.inicio=inicio;
+        this.fin=fin;
+        this.aula = clase;
         this.day = day;
     }
-    protected Asignatura(Parcel in) {
-        nombre = in.readString();
-        horario = in.readString();
-        clase = in.readString();
-        day = in.readString();
-    }
-
-    public static final Creator<Asignatura> CREATOR = new Creator<Asignatura>() {
-        @Override
-        public Asignatura createFromParcel(Parcel in) {
-            return new Asignatura(in);
-        }
-
-        @Override
-        public Asignatura[] newArray(int size) {
-            return new Asignatura[size];
-        }
-    };
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    public void setClase(String clase) {
-        this.clase = clase;
+    public void setAula(String aula) {
+        this.aula = aula;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getHorario() {
-        return horario;
+
+    public String getAula() {
+        return aula;
     }
 
-    public String getClase() {
-        return clase;
+    public void setInicio(String inicio) {
+        this.inicio = inicio;
     }
 
+    public void setFin(String fin) {
+        this.fin = fin;
+    }
+
+    public String getInicio() {
+        return inicio;
+    }
+
+    public String getFin() {
+        return fin;
+    }
 
     public String getDay() {
         return day;
@@ -64,16 +81,9 @@ public class Asignatura implements Parcelable{
         this.day = day;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public int getIdBD() {
+        return idBD;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.nombre);
-        dest.writeString(this.horario);
-        dest.writeString(this.clase);
-        dest.writeString(this.day);
-    }
 }
+
