@@ -5,10 +5,11 @@
  *  Blanca María Fernández Martín
  *  Miguel Blanco Godón
  */
-package es.udc.psi.agendaly;
+package es.udc.psi.agendaly.Auth;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +17,18 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import es.udc.psi.agendaly.R;
 
 public class AuthTestActivity extends AppCompatActivity {
 	private boolean activeSession = false;
 	private TextView userTv, authMethodTv;
 	private Button signOut;
+	@RequiresApi(api = Build.VERSION_CODES.O)
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

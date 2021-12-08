@@ -5,12 +5,13 @@
  *  Blanca María Fernández Martín
  *  Miguel Blanco Godón
  */
-package es.udc.psi.agendaly;
+package es.udc.psi.agendaly.Auth;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +35,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import es.udc.psi.agendaly.R;
+
 
 public class AuthenticationActivity extends AppCompatActivity {
 	protected static final String AUTH_TYPE_AGENDALY_ACCOUNT = "agendaly account";
@@ -42,6 +46,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 	private Button signUpAgendaly, signInAgendaly, signGoogle;
 	private ProgressDialog loginDialog;
 
+	@RequiresApi(api = Build.VERSION_CODES.O)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,7 +84,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 			// tries automatic sign in using google account
 			loginDialog.show();
 			GoogleSignInOptions gsio = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-					.requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+					.requestIdToken("880869344178-22b2c9rs5kc7omms8gc2g5is6n8c2vhn.apps.googleusercontent.com").requestEmail().build();
 			GoogleSignInClient client = GoogleSignIn.getClient(getApplicationContext(), gsio);
 			startActivityForResult(client.getSignInIntent(), GOOGLE_OK);
 		}
@@ -164,7 +169,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View view) {
 				GoogleSignInOptions gsio = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-						.requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+						.requestIdToken("880869344178-22b2c9rs5kc7omms8gc2g5is6n8c2vhn.apps.googleusercontent.com").requestEmail().build();
 				GoogleSignInClient client = GoogleSignIn.getClient(getApplicationContext(), gsio);
 				startActivityForResult(client.getSignInIntent(), GOOGLE_OK);
 			}

@@ -5,7 +5,7 @@
  *  Blanca María Fernández Martín
  *  Miguel Blanco Godón
  */
-package es.udc.psi.agendaly;
+package es.udc.psi.agendaly.Auth;
 
 import android.os.Build;
 

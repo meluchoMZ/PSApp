@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Agendaly">
         <activity
-            android:name=".CalendarActivity"
+            android:name=".Calendar.CalendarActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AuthenticationActivity" />
-        <activity android:name=".AuthTestActivity" />
+        <activity android:name=".Auth.AuthenticationActivity" />
+        <activity android:name=".Auth.AuthTestActivity" />
         <activity android:name=".TimeTable.Horario" />
         <activity android:name=".TimeTable.AddEvent" />
         <activity android:name=".TimeTable.DeleteEvent" />

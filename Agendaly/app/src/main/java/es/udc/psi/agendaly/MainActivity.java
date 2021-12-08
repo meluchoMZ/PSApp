@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 
 import butterknife.BindView;
+import es.udc.psi.agendaly.Auth.AuthenticationActivity;
+import es.udc.psi.agendaly.Calendar.CalendarActivity;
 import es.udc.psi.agendaly.TimeTable.Horario;
 
 

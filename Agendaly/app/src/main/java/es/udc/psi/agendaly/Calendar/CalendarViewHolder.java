@@ -1,10 +1,12 @@
-package es.udc.psi.agendaly;
+package es.udc.psi.agendaly.Calendar;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import es.udc.psi.agendaly.R;
 
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
 {

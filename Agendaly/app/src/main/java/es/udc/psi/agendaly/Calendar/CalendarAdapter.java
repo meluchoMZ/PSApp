@@ -1,4 +1,4 @@
-package es.udc.psi.agendaly;
+package es.udc.psi.agendaly.Calendar;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import es.udc.psi.agendaly.R;
 
 class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder>
 {
