@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CalendarActivity">
+    tools:context=".Calendar.CalendarActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,16 +13,17 @@
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
+
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/back"
-            android:textColor="@color/blue"
             android:background="@null"
-            android:textStyle="bold"
             android:onClick="previousMonthAction"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:icon="@drawable/baseline_navigate_before_white_36"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/monthYearTV"
@@ -38,12 +39,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/forward"
-            android:textColor="@color/blue"
             android:background="@null"
-            android:textStyle="bold"
             android:onClick="nextMonthAction"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:icon="@drawable/baseline_navigate_next_white_36"
+            tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>
 

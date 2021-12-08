@@ -7,25 +7,18 @@
  */
 package es.udc.psi.agendaly;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Button;
+
+import butterknife.BindView;
+import es.udc.psi.agendaly.Auth.AuthenticationActivity;
+import es.udc.psi.agendaly.Calendar.CalendarActivity;
 import es.udc.psi.agendaly.TimeTable.Horario;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
-
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
 {
 
 
@@ -40,14 +33,19 @@ public class MainActivity extends AppCompatActivity
 	branches should be removed.
 	Commits should have the form: "[<bug/feature>#<id/name>] <commit message>"
 	 */
+	@BindView(R.id.feature_launcherM)
+	Button M;
 
+	@BindView(R.id.feature_launcherB)
+	Button b;
+
+	@BindView(R.id.feature_launcherL)
+	Button l;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		Button M = findViewById(R.id.feature_launcherM);
 		M.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -56,14 +54,14 @@ public class MainActivity extends AppCompatActivity
 
 			}
 		});
-		Button b = findViewById(R.id.feature_launcherB);
+
 		b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				Intent auth = new Intent(getApplicationContext(), CalendarActivity.class);
 				startActivity(auth);
 			}});
-		Button l = findViewById(R.id.feature_launcherL);
+
 		l.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
