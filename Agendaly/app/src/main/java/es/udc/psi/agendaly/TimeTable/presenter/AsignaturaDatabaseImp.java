@@ -2,7 +2,6 @@ package es.udc.psi.agendaly.TimeTable.presenter;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
 
 
     @Override
-    public void initFlow(String dayWeek){
+    public void searchByDay(String dayWeek){
         new GetAsignaturasbyDay(dayWeek).execute();
     }
 
@@ -120,7 +119,7 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
     }
 
 
-    private List<AsignaturaViewModel> getArtistsViewModel(List<Asignatura> asignaturas) {
+    private List<AsignaturaViewModel> getAsignaturaViewModel(List<Asignatura> asignaturas) {
 
         mAsignaturaViewModels = new AsignaturaViewModelMapper(asignaturas).map();
         return mAsignaturaViewModels;
@@ -146,7 +145,7 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
             @Override
             protected void onPostExecute (List<Asignatura> list) {
                 super.onPostExecute(list);
-                mAsignaturaViewModels=getArtistsViewModel(list);
+                mAsignaturaViewModels= getAsignaturaViewModel(list);
                 mView.showAsignaturas(mAsignaturaViewModels);
             }
 
@@ -168,7 +167,7 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
             @Override
             protected void onPostExecute(List<Asignatura> result) {
                 if(!result.isEmpty()){
-                mAsignaturaViewModels = getArtistsViewModel(result);
+                mAsignaturaViewModels = getAsignaturaViewModel(result);
                 if(!mAsignaturaViewModels.isEmpty())
                 {mView.showAsignaturas(mAsignaturaViewModels);}
                 }

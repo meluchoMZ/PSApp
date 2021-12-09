@@ -4,7 +4,7 @@ import es.udc.psi.agendaly.TimeTable.Asignatura;
 
 public interface AsignaturaPresenter {
 
-    void initFlow(String searchArtist);
+    void searchByDay(String day);
 
     void insert(Asignatura asignatura);
 

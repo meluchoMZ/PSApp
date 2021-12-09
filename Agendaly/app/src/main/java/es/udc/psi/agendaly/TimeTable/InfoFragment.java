@@ -1,18 +1,14 @@
 package es.udc.psi.agendaly.TimeTable;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import es.udc.psi.agendaly.R;
@@ -22,7 +18,6 @@ import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaView;
 import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 
 public class InfoFragment extends Fragment implements AsignaturaView {
-    AsignaturaView mView;
     private AsignaturaPresenter mPresenter;
     RecyclerView recyclerView;
     View rootView;
@@ -39,18 +34,18 @@ public class InfoFragment extends Fragment implements AsignaturaView {
         recyclerView= rootView.findViewById(R.id.events_recyclerView);
         mPresenter = new AsignaturaDatabaseImp(this, rootView.getContext());
         setUpView();
-        searchbyName(day);
+        searchByDay(day);
         return rootView;
     }
 
-    public void searchbyName(String day){
-        mPresenter.initFlow(day);
+    public void searchByDay(String day){
+        mPresenter.searchByDay(day);
     }
 
 
     @Override
-    public void showAsignaturas(List<AsignaturaViewModel> artists) {
-        mAdapter.setItems(artists);
+    public void showAsignaturas(List<AsignaturaViewModel> asignaturas) {
+        mAdapter.setItems(asignaturas);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -65,7 +60,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     }
 
     @Override
-    public void updateAsignatura(AsignaturaViewModel artist, int position) {
+    public void updateAsignatura(AsignaturaViewModel asignatura, int position) {
 
     }
 

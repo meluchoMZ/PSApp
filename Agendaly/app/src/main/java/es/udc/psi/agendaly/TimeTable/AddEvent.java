@@ -187,9 +187,9 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
 
 
     @Override
-    public void showAsignaturas(List<AsignaturaViewModel> artists) {
+    public void showAsignaturas(List<AsignaturaViewModel> asignaturas) {
 
-        mAdapter.setItems(artists);
+        mAdapter.setItems(asignaturas);
     }
 
     @Override
