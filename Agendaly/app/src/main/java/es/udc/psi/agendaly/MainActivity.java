@@ -52,12 +52,14 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 		selectedDate = LocalDate.now();
 		setMonthView();
 
-		Button b = findViewById(R.id.feature_launcher);
+		Button b = findViewById(R.id.feature_launcherL);
 		b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				Intent auth = new Intent(getApplicationContext(), AuthenticationActivity.class);
 				startActivity(auth);
+			}
+		});
 
 		Button l = findViewById(R.id.feature_launcherL);
 		l.setOnClickListener(new View.OnClickListener() {
