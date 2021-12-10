@@ -56,8 +56,8 @@ public class MainActivity extends BaseActivity
 		});
 
 
-		Button b = findViewById(R.id.feature_launcherL);
 
+		Button b = findViewById(R.id.feature_launcher);
 		b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
