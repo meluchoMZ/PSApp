@@ -55,17 +55,12 @@ public class MainActivity extends BaseActivity
 			}
 		});
 
-
-		Button b = findViewById(R.id.feature_launcherL);
-
 		b.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				Intent auth = new Intent(getApplicationContext(), CalendarActivity.class);
 				startActivity(auth);
-
 			}});
-
 
 		l.setOnClickListener(new View.OnClickListener() {
 			@Override
