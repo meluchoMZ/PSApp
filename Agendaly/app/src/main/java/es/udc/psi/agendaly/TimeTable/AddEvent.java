@@ -28,7 +28,7 @@ import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 
 public class AddEvent extends BaseActivity implements AsignaturaView {
     Asignatura asignatura = new Asignatura();
-    private AsignaturaAdapter mAdapter;
+    private EventAdapter mAdapter;
     AsignaturaPresenter mPresenter;
 
     @BindView(R.id.butInicio)

@@ -3,13 +3,19 @@
     package="es.udc.psi.agendaly">
 
     <application
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".GlobalApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Agendaly">
+        <activity
+            android:name=".Calendar.AddCalendarEventActivity"
+             />
+        <activity
+            android:name=".Calendar.ScreenCalendarActivity"
+            android:exported="false" />
         <activity
             android:name=".Calendar.CalendarActivity"
             android:exported="false" />
@@ -27,7 +33,6 @@
         <activity android:name=".TimeTable.Horario" />
         <activity android:name=".TimeTable.AddEvent" />
         <activity android:name=".TimeTable.DeleteEvent" />
-
     </application>
 
 </manifest>

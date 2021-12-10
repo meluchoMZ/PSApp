@@ -1,6 +1,5 @@
 package es.udc.psi.agendaly.TimeTable;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 
 public class DeleteEvent extends BaseActivity implements AsignaturaView {
     //Asignatura asignatura = new Asignatura();
-    private AsignaturaAdapter mAdapter;
+    private EventAdapter mAdapter;
     AsignaturaPresenter mPresenter;
 
     @BindView(R.id.butDelete)
