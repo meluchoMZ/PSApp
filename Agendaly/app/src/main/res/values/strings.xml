@@ -38,6 +38,9 @@
     <string name="yes">Sí</string>
     <string name="asignatura_borrada">Asignatura borrada</string>
     <string name="no">No</string>
+    <string name="calendario">Calendario</string>
+    <string name="inicio">Inicio</string>
+    <string name="info">Info</string>
 
     <string-array name="days_week">
         <item>@string/monday</item>
