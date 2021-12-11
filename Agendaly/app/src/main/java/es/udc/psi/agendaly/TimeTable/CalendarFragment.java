@@ -22,6 +22,7 @@ import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 import es.udc.psi.agendaly.Calendar.CalendarActivity;
+import es.udc.psi.agendaly.Profiles.ProfileActivity;
 import es.udc.psi.agendaly.R;
 
 
@@ -108,6 +109,10 @@ public class CalendarFragment extends Fragment  {
         if(id==R.id.icon_delete){
             Intent intentdel = new Intent(getActivity(),DeleteEvent.class);
             startActivity(intentdel);
+        }
+        if (id == R.id.icon_sign_out) {
+            Intent profileIntent = new Intent(getActivity(), ProfileActivity.class);
+            startActivity(profileIntent);
         }
         return true;
     }

@@ -49,4 +49,5 @@
         <item>@string/sunday</item>
     </string-array>
 
+    <string name="sign_out">Sign out</string>
 </resources>

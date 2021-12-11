@@ -14,7 +14,8 @@
             android:name=".Calendar.CalendarActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Auth.AuthenticationActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,11 +23,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Auth.AuthenticationActivity" />
-        <activity android:name=".Auth.AuthTestActivity" />
         <activity android:name=".TimeTable.Horario" />
         <activity android:name=".TimeTable.AddEvent" />
         <activity android:name=".TimeTable.DeleteEvent" />
+        <activity android:name=".Profiles.ProfileActivity" android:screenOrientation="portrait"/>
 
     </application>
 
