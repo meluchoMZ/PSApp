@@ -10,9 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Agendaly">
-        <activity
-            android:name=".Calendar.AddCalendarEventActivity"
-            />
+        <activity android:name=".Calendar.AddCalendarEventActivity" />
         <activity
             android:name=".Calendar.ScreenCalendarActivity"
             android:exported="false" />
@@ -21,19 +19,19 @@
             android:name=".Calendar.CalendarActivity"
             android:exported="false" />
         <activity
-            android:name=".Auth.AuthenticationActivity"
-            android:screenOrientation="portrait"
+            android:name=".MainActivity"
+            android:screenOrientation="fullSensor"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".TimeTable.Horario" />
+        <activity android:name=".Auth.AuthenticationActivity" />
         <activity android:name=".TimeTable.AddEvent" />
         <activity android:name=".TimeTable.DeleteEvent" />
-        <activity android:name=".Profiles.ProfileActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Profiles.ProfileActivity" android:screenOrientation="fullSensor"/>
 
     </application>
 
