@@ -6,11 +6,11 @@ import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 
 public interface AsignaturaView {
 
-    void showAsignaturas(List<AsignaturaViewModel> artists);
+    void showAsignaturas(List<AsignaturaViewModel> asignaturas);
 
     void showEmptyView();
 
     void showError();
 
-    void updateAsignatura(AsignaturaViewModel artist, int position);
+    void updateAsignatura(AsignaturaViewModel asignatura, int position);
 }

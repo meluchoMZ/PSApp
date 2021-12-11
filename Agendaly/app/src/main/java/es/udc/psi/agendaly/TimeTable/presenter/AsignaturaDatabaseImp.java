@@ -3,6 +3,7 @@ package es.udc.psi.agendaly.TimeTable.presenter;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import es.udc.psi.agendaly.TimeTable.Asignatura;
@@ -45,6 +46,7 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
     public void deleteClass(String asignatura) {
         deleteAsignaturaDB(asignatura);
     }
+
 
     @Override
     public void getAll() {
@@ -153,7 +155,15 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
 
 
     private void getAsignaturasBD () {
+
         class GetAsignaturas extends AsyncTask<Void, Void, List<Asignatura>> {
+
+            private int mPosition;
+            GetAsignaturas(int position) {
+
+                mPosition = position;
+            }
+
             @Override
             protected List<Asignatura> doInBackground(Void... voids) {
                 List<Asignatura> asignaturaList =
@@ -174,8 +184,8 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
 
             }
         }
-        GetAsignaturas gf = new GetAsignaturas(); // Crear una instancia y ejecutar
-        gf.execute();
+
     }
+
 
 }
