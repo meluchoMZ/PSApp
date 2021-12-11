@@ -23,7 +23,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     private AsignaturaPresenter mPresenter;
     RecyclerView recyclerView;
     View rootView;
-    AsignaturaAdapter mAdapter;
+    EventAdapter mAdapter;
     String day;
     InfoFragment(String day){
         this.day=day;
@@ -86,7 +86,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        mAdapter = new AsignaturaAdapter();
+        mAdapter = new EventAdapter();
         recyclerView.setAdapter(mAdapter);
     }
 }

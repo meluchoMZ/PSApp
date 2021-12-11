@@ -8,18 +8,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 
-public class AsignaturaAdapter extends RecyclerView.Adapter<AsignaturaAdapter.MyViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
 
     private List<AsignaturaViewModel> mItems;
 
-    public AsignaturaAdapter() {
+    public EventAdapter() {
 
         mItems = new ArrayList<>();
     }

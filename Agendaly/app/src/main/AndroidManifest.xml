@@ -11,6 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Agendaly">
         <activity
+            android:name=".Calendar.AddCalendarEventActivity"
+            />
+        <activity
+            android:name=".Calendar.ScreenCalendarActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".Calendar.CalendarActivity"
             android:exported="false" />
         <activity
