@@ -41,6 +41,8 @@ public class Horario extends BaseActivity {
         fragmentTransaction.replace(R.id.punto_anclaje_abajo, infoFragment);
         fragmentTransaction.commit();
 
+        bm.setSelectedItemId(R.id.inicioAppBar);
+
         bm.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
