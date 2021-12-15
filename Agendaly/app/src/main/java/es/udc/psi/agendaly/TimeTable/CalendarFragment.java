@@ -110,10 +110,6 @@ public class CalendarFragment extends Fragment  {
             Intent intentdel = new Intent(getActivity(),DeleteEvent.class);
             startActivity(intentdel);
         }
-        if (id == R.id.icon_sign_out) {
-            Intent profileIntent = new Intent(getActivity(), ProfileActivity.class);
-            startActivity(profileIntent);
-        }
         return true;
     }
 
