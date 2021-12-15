@@ -1,4 +1,68 @@
 <resources>
     <string name="app_name">Agendaly</string>
     <string name="feature_launcher_string">Use me to launch your feature</string>
+    <string name="back">back</string>
+    <string name="forward">forward</string>
+    <string name="feature_horario">Use me to launch your timetable</string>
+    <string name="shared_preferences_file">usr_shared_preferences</string>
+    <string name="auth_title">Authentication</string>
+    <string name="sign_up_button_text">Sign up</string>
+    <string name="sign_in_button_text">Sign in</string>
+    <string name="auth_user_tv">Agendaly account</string>
+    <string name="email_et_hint">someone@example.com</string>
+    <string name="password_et_hint">Password</string>
+    <string name="google_auth_button_text">Sign up with Google</string>
+    <string name="oauth_text">Other authentication methods</string>
+    <string name="error_empty_email">Enter email address</string>
+    <string name="error_empty_password">Enter password</string>
+    <string name="error_invalid_email">Invalid email address</string>
+    <string name="auth_error_dialog_title">Authentication error</string>
+    <string name="auth_error_dialog_button">Ok</string>
+    <string name="sign_out_button_text">Sign out</string>
+    <string name="automatic_signin_dialog">Attempting to sign in ...</string>
+    <string name="friday"> Viernes </string>
+    <string name="hora_prueba"> 15:30 - 18:30 </string>
+    <string name="aula_prueba"> Aula 2.10 </string>
+    <string name="monday"> Lunes </string>
+    <string name="saturday">Sábado</string>
+    <string name="sunday">Domingo</string>
+    <string name="thrusday">Jueves</string>
+    <string name="tuesday">Martes</string>
+    <string name="wednesday">Miércoles</string>
+    <string name="asignatura">Asignatura</string>
+    <string name="hora">Hora</string>
+    <string name="aula">Aula</string>
+    <string name="selectDay">Selecciona día</string>
+    <string name="add_asignatura">Asignatura añadida</string>
+    <string name="delete_question">¿Quiere borrar esta asignatura?</string>
+    <string name="yes">Sí</string>
+    <string name="asignatura_borrada">Asignatura borrada</string>
+    <string name="no">No</string>
+
+    <string-array name="days_week">
+        <item>@string/monday</item>
+        <item>@string/tuesday</item>
+        <item>@string/wednesday</item>
+        <item>@string/thrusday</item>
+        <item>@string/friday</item>
+        <item>@string/saturday</item>
+        <item>@string/sunday</item>
+    </string-array>
+    <string name="sign_out">Sign out</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="event">Evento</string>
+    <string name="hour">Hora</string>
+    <string name="description">Descripción</string>
+    <string name="add_event">Añadir evento</string>
+    <string name="calendario">Calendario</string>
+    <string name="inicio"><inicio>Inicio</inicio></string>
+    <string name="info">Info</string>
+
 </resources>
