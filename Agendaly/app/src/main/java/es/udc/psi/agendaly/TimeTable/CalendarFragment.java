@@ -1,11 +1,16 @@
 package es.udc.psi.agendaly.TimeTable;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
@@ -16,23 +21,21 @@ import devs.mulham.horizontalcalendar.HorizontalCalendar;
 import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
+import es.udc.psi.agendaly.Calendar.CalendarActivity;
+import es.udc.psi.agendaly.Profiles.ProfileActivity;
 import es.udc.psi.agendaly.R;
-import es.udc.psi.agendaly.TimeTable.days.FridayFragment;
-import es.udc.psi.agendaly.TimeTable.days.MondayFragment;
-import es.udc.psi.agendaly.TimeTable.days.SaturdayFragment;
-import es.udc.psi.agendaly.TimeTable.days.SundayFragment;
-import es.udc.psi.agendaly.TimeTable.days.ThursdayFragment;
-import es.udc.psi.agendaly.TimeTable.days.TuesdayFragment;
-import es.udc.psi.agendaly.TimeTable.days.WednesdayFragment;
 
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment  {
+
+    View rootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
-
+         rootView = inflater.inflate(R.layout.fragment_calendar, container, false);
+        setHasOptionsMenu(true);
         /* starts before 1 month from now */
         Calendar startDate = Calendar.getInstance();
         startDate.add(Calendar.MONTH, -1);
@@ -42,6 +45,7 @@ public class CalendarFragment extends Fragment {
         // Default Date set to Today.
         final Calendar defaultSelectedDate = Calendar.getInstance();
         SelectDay(defaultSelectedDate.get(Calendar.DAY_OF_WEEK));
+
 
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(rootView, R.id.calendarView)
                 .range(startDate, endDate)
@@ -65,6 +69,7 @@ public class CalendarFragment extends Fragment {
                 .build();
 
 
+
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Calendar date, int position) {
@@ -75,6 +80,8 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public boolean onDateLongClicked(Calendar date, int position) {
+                Intent intent = new Intent(getContext(), CalendarActivity.class);
+                startActivity(intent);
                 return true;
             }
 
@@ -84,65 +91,61 @@ public class CalendarFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.add_menu,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        if(id==R.id.icon_add){
+            Intent intent = new Intent(getActivity(),AddEvent.class);
+            startActivity(intent);
+        }
+
+        if(id==R.id.icon_delete){
+            Intent intentdel = new Intent(getActivity(),DeleteEvent.class);
+            startActivity(intentdel);
+        }
+        return true;
+    }
+
+
     public void SelectDay(int nD){
+        String dia = "";
         switch (nD) {
-
-            case 1: SundayFragment fr1 = new SundayFragment();
-            assert(getActivity()!=null);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.punto_anclaje_abajo, fr1)
-                        .addToBackStack(null)
-                        .commit();
+            case 1:
+                dia=getString(R.string.sunday);
                 break;
 
-            case 2: MondayFragment fr2 = new MondayFragment();
-                assert(getActivity()!=null);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.punto_anclaje_abajo, fr2)
-                        .addToBackStack(null)
-                        .commit();
+            case 2: dia=getString(R.string.monday);
                 break;
-            case 3: TuesdayFragment fr3 = new TuesdayFragment();
-                assert(getActivity()!=null);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.punto_anclaje_abajo, fr3)
-                        .addToBackStack(null)
-                        .commit();
+            case 3:dia=getString(R.string.tuesday);
                 break;
 
-            case 4: WednesdayFragment fr4 = new WednesdayFragment();
-                assert(getActivity()!=null);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.punto_anclaje_abajo, fr4)
-                        .addToBackStack(null)
-                        .commit();
+            case 4:dia=getString(R.string.wednesday);
                 break;
 
-            case 5: ThursdayFragment fr5 = new ThursdayFragment();
-                assert(getActivity()!=null);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.punto_anclaje_abajo, fr5)
-                        .addToBackStack(null)
-                        .commit();
+            case 5:dia=getString(R.string.thrusday);
                 break;
-            case 6: FridayFragment fr6 = new FridayFragment();
-                assert(getActivity()!=null);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.punto_anclaje_abajo, fr6)
-                        .addToBackStack(null)
-                        .commit();
+            case 6: dia=getString(R.string.friday);
                 break;
 
-            case 7: SaturdayFragment fr7 = new SaturdayFragment();
-                assert(getActivity()!=null);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.punto_anclaje_abajo, fr7)
-                        .addToBackStack(null)
-                        .commit();
+            case 7: dia=getString(R.string.saturday);
                 break;
 
         }
+        InfoFragment fragment = new InfoFragment(dia);
+        assert(getActivity()!=null);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.punto_anclaje_abajo, fragment)
+                .addToBackStack(null)
+                .commit();
     }
+
 
 }
 

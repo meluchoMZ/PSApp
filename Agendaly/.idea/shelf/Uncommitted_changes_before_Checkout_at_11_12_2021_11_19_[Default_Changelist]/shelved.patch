@@ -1,0 +1,38 @@
+Index: app/src/main/java/es/udc/psi/agendaly/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>/*\r\n * Agendaly, 2021\r\n * Authors:\r\n *  Laura Cabezas González\r\n *  Blanca María Fernández Martín\r\n *  Miguel Blanco Godón\r\n */\r\npackage es.udc.psi.agendaly;\r\n\r\nimport android.content.Intent;\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.widget.Button;\r\n\r\nimport butterknife.BindView;\r\nimport es.udc.psi.agendaly.Auth.AuthenticationActivity;\r\nimport es.udc.psi.agendaly.Calendar.CalendarActivity;\r\nimport es.udc.psi.agendaly.TimeTable.Horario;\r\n\r\n\r\npublic class MainActivity extends BaseActivity\r\n{\r\n\r\n\r\n\t/*\r\n\tTo avoid interference between use cases, this activity should be used as\r\n\tlauncher until we have decided the organization of the app.\r\n\tEach change in the repository should be managed as follow:\r\n\t\t- If it is a new feature, it should be developed on a branch called \"feature/<feature_name>\"\r\n\t\t- If a bug is detected, a new issue should be added to github. The bug should be\r\n\t\t  developed in a branch called \"bug/<issue_id>\"\r\n\tCommits should be pushed to it's branch. Then, changes will be merged. After this, those\r\n\tbranches should be removed.\r\n\tCommits should have the form: \"[<bug/feature>#<id/name>] <commit message>\"\r\n\t */\r\n\t@BindView(R.id.feature_launcherM)\r\n\tButton M;\r\n\r\n\t@BindView(R.id.feature_launcherB)\r\n\tButton b;\r\n\r\n\t@BindView(R.id.feature_launcherL)\r\n\tButton l;\r\n\t@Override\r\n\tprotected void onCreate(Bundle savedInstanceState)\r\n\t{\r\n\t\tsuper.onCreate(savedInstanceState);\r\n\t\tsetContentView(R.layout.activity_main);\r\n\t\tM.setOnClickListener(new View.OnClickListener() {\r\n\t\t\t@Override\r\n\t\t\tpublic void onClick(View view) {\r\n\t\t\t\tIntent horario = new Intent(getApplicationContext(), AuthenticationActivity.class);\r\n\t\t\t\tstartActivity(horario);\r\n\r\n\t\t\t}\r\n\t\t});\r\n\r\n\r\n\r\n\t\tButton b = findViewById(R.id.feature_launcher);\r\n\t\tb.setOnClickListener(new View.OnClickListener() {\r\n\t\t\t@Override\r\n\t\t\tpublic void onClick(View view) {\r\n\t\t\t\tIntent auth = new Intent(getApplicationContext(), CalendarActivity.class);\r\n\t\t\t\tstartActivity(auth);\r\n\r\n\t\t\t}});\r\n\r\n\r\n\t\tl.setOnClickListener(new View.OnClickListener() {\r\n\t\t\t@Override\r\n\t\t\tpublic void onClick(View view) {\r\n\t\t\t\tIntent horario = new Intent(getApplicationContext(), Horario.class);\r\n\t\t\t\tstartActivity(horario);\r\n\r\n\t\t\t}\r\n\t\t});\r\n\t}\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/es/udc/psi/agendaly/MainActivity.java b/app/src/main/java/es/udc/psi/agendaly/MainActivity.java
+--- a/app/src/main/java/es/udc/psi/agendaly/MainActivity.java	(revision fc472b6544035ac6094c34c2d0b0ced4da00741f)
++++ b/app/src/main/java/es/udc/psi/agendaly/MainActivity.java	(date 1639166896864)
+@@ -57,7 +57,6 @@
+ 
+ 
+ 
+-		Button b = findViewById(R.id.feature_launcher);
+ 		b.setOnClickListener(new View.OnClickListener() {
+ 			@Override
+ 			public void onClick(View view) {
+Index: ../.idea/T2.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../.idea/T2.iml b/../.idea/T2.iml
+new file mode 100644
+--- /dev/null	(date 1639166593309)
++++ b/../.idea/T2.iml	(date 1639166593309)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file

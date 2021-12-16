@@ -6,10 +6,24 @@
     android:orientation="vertical"
     android:gravity="center"
     tools:context=".MainActivity">
+
     <Button
-        android:id="@+id/feature_launcher"
+        android:id="@+id/feature_launcherM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/feature_launcher_string"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+    <Button
+        android:id="@+id/feature_launcherL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/feature_horario"
+        />
+    <Button
+        android:id="@+id/feature_launcherB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/feature_launcher_string"
         />
+
 </LinearLayout>

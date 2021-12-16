@@ -20,8 +20,8 @@ public class ItemDetail extends AppCompatActivity {
         Asignatura asignatura = getIntent().getParcelableExtra("item");
 
         nombre.setText(asignatura.getNombre());
-        horario.setText(asignatura.getHorario());
-        clase.setText(asignatura.getClase());
+        horario.setText(asignatura.getInicio() + "-" + asignatura.getFin());
+        clase.setText(asignatura.getAula());
 
     }
 }
