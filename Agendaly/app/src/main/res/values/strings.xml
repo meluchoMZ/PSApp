@@ -67,5 +67,6 @@
 
     <string name="contacts">Contacts</string>
     <string name="teams">Teams</string>
+    <string name="account">Cuenta</string>
 
 </resources>
