@@ -23,7 +23,13 @@ public class ProfileActivity extends BaseActivity {
 	public Button signOutButton;
 
 	@BindView(R.id.user_mail)
-	public TextView tv;
+	public TextView mail;
+
+	@BindView(R.id.contacts_no)
+	public TextView contacts;
+
+	@BindView(R.id.teams_no)
+	public TextView teams;
 
 	@RequiresApi(api = Build.VERSION_CODES.O)
 	@Override
@@ -31,7 +37,9 @@ public class ProfileActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_activity);
 		User user = AuthUtils.retrieveUser();
-		tv.setText(user.getEmail());
+		mail.setText(user.getEmail());
+		contacts.setText(Integer.toString(0));
+		teams.setText(Integer.toString(0));
 		signOutButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
