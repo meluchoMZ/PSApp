@@ -13,4 +13,6 @@ public interface AsignaturaPresenter {
     void deleteClass(String asignatura);
 
     void getAll();
+
+    void notifyDay(String day);
 }

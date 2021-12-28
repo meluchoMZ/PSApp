@@ -98,9 +98,10 @@ public class DeleteEvent extends BaseActivity implements AsignaturaView {
     }
 
     @Override
-    public void showEmptyView() {
+    public void sendNotification(List<AsignaturaViewModel> asignaturas) {
 
     }
+
 
     @Override
     public void showError() {

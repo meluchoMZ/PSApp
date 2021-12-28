@@ -32,6 +32,8 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
     }
 
 
+
+
     @Override
     public void insert(Asignatura asignatura) {
         insertAsignaturaDB(asignatura);
@@ -52,6 +54,18 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
     public void getAll() {
         getAsignaturasBD();
     }
+
+    @Override
+    public void notifyDay(String day) {
+        new NotifyDay(day).execute();
+    }
+
+    private List<AsignaturaViewModel> getAsignaturaViewModel(List<Asignatura> asignaturas) {
+
+        mAsignaturaViewModels = new AsignaturaViewModelMapper(asignaturas).map();
+        return mAsignaturaViewModels;
+    }
+
 
     public void insertAsignaturaDB(Asignatura asignatura) {
         class InsertAsignatura extends AsyncTask<Void, Void, Void> { // clase interna
@@ -120,14 +134,6 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
         gf.execute();
     }
 
-
-    private List<AsignaturaViewModel> getAsignaturaViewModel(List<Asignatura> asignaturas) {
-
-        mAsignaturaViewModels = new AsignaturaViewModelMapper(asignaturas).map();
-        return mAsignaturaViewModels;
-    }
-
-
     public class GetAsignaturasbyDay extends AsyncTask<Void, Void, List<Asignatura>> { // clase interna
             String day;
 
@@ -150,6 +156,31 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
                 mAsignaturaViewModels= getAsignaturaViewModel(list);
                 mView.showAsignaturas(mAsignaturaViewModels);
             }
+
+    }
+
+    public class NotifyDay extends AsyncTask<Void, Void, List<Asignatura>> { // clase interna
+        String day;
+
+        public NotifyDay(String day){
+            this.day = day;
+
+        }
+        @Override
+        public List<Asignatura> doInBackground(Void... voids) {
+            List<Asignatura> asignaturaList = AsignaturaDatabaseClient.getInstance(mContext)
+                    .getAsignaturaDatabase()
+                    .getAsignaturaDao()
+                    .getDayAsignaturas(day);// Sustituir por la función necesaria
+            return asignaturaList;
+        }
+
+        @Override
+        protected void onPostExecute (List<Asignatura> list) {
+            super.onPostExecute(list);
+            mAsignaturaViewModels= getAsignaturaViewModel(list);
+            mView.sendNotification(mAsignaturaViewModels);
+        }
 
     }
 

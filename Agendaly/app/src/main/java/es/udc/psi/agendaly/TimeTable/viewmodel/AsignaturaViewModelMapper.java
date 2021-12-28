@@ -18,7 +18,7 @@ public class AsignaturaViewModelMapper {
         List<AsignaturaViewModel> asignaturas = new ArrayList<>();
         for (Asignatura asignatura : mAsignatura) {
             asignaturas.add(new AsignaturaViewModel(asignatura.getNombre(),
-                    asignatura.getInicio()+"-"+asignatura.getFin(),asignatura.getAula()));
+                    asignatura.getInicio()+" - "+asignatura.getFin(),asignatura.getAula()));
         }
         return asignaturas;
     }

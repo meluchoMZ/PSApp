@@ -117,7 +117,6 @@ public class CalendarFragment extends Fragment  {
         return true;
     }
 
-
     public void SelectDay(int nD){
         String dia = "";
         switch (nD) {
