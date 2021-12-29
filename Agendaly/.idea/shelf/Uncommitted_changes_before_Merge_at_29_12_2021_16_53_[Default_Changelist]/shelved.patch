@@ -1,0 +1,206 @@
+Index: app/src/main/java/es/udc/psi/agendaly/TimeTable/notifications/MyReceiver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package es.udc.psi.agendaly.TimeTable.notifications;\r\n\r\nimport android.app.NotificationChannel;\r\nimport android.app.NotificationChannelGroup;\r\nimport android.app.NotificationManager;\r\nimport android.app.PendingIntent;\r\nimport android.content.BroadcastReceiver;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.graphics.Bitmap;\r\nimport android.graphics.BitmapFactory;\r\nimport android.graphics.Color;\r\nimport android.os.Build;\r\nimport android.os.Bundle;\r\nimport android.os.Parcelable;\r\nimport android.util.Log;\r\nimport android.widget.Toast;\r\n\r\nimport androidx.annotation.Nullable;\r\nimport androidx.annotation.RequiresApi;\r\nimport androidx.core.app.NotificationCompat;\r\nimport androidx.core.app.NotificationManagerCompat;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Random;\r\n\r\nimport es.udc.psi.agendaly.MainActivity;\r\nimport es.udc.psi.agendaly.R;\r\nimport es.udc.psi.agendaly.TimeTable.InfoFragment;\r\nimport es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;\r\n\r\npublic class MyReceiver extends BroadcastReceiver {\r\n    String todaySchedule = \"todaySchedule\";\r\n    Context context;\r\n    private String CHANNEL_ID = \"CHANNEL_ID\";\r\n    private String GROUP_NAME = \"TimeTable\";\r\n    Random random = new Random();\r\n\r\n\r\n    @RequiresApi(api = Build.VERSION_CODES.O)\r\n    @Override\r\n    public void onReceive(@Nullable Context context, @Nullable Intent intent) {\r\n\r\n        assert intent != null;\r\n        this.context=context;\r\n        Bundle bundle = new Bundle();\r\n        //createNotificationChannel();\r\n        ArrayList<String> list;\r\n\r\n        if (intent.getAction().equals(todaySchedule)) {\r\n            bundle=intent.getExtras();\r\n            if(bundle != null) {\r\n                list = bundle.getStringArrayList(\"asignatura\");\r\n                if(list != null) {\r\n                    int i=0;\r\n                    for (String a : list) {\r\n                        int m = list.size()+ i++;\r\n                        String[] parts = a.split(\"/\");\r\n                        String part1 = parts[0]; // asignatura\r\n                        String part2 = parts[1]; // horario y aula\r\n                        Notificar(part1,part2,m,context);\r\n                        /*NotificationCompat.Builder builder = new NotificationCompat.Builder(\r\n                                context, CHANNEL_ID)\r\n                                .setSmallIcon(R.drawable.baseline_event_white_20)\r\n                                .setTicker(\"Today\")\r\n                                .setContentTitle(part1)\r\n                                .setContentText(part2)\r\n                                .setAutoCancel(false)\r\n                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);\r\n                        //se lanza\r\n                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);\r\n                        notificationManager.notify(m, builder.build());*/\r\n\r\n\r\n                    }\r\n\r\n                }\r\n                }\r\n            }\r\n\r\n    }\r\n\r\n/*    // creamos el canal\r\n    void createNotificationChannel() {\r\n        // Create the NotificationChannel, but only on API 26+ because\r\n        // the NotificationChannel class is new and not in the support library\r\n        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {\r\n            int importance = NotificationManager.IMPORTANCE_DEFAULT;\r\n            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, GROUP_NAME, importance);\r\n            //channel.setDescription(description);\r\n            // Register the channel with the system; you can't change the importance\r\n            // or other notification behaviors after this\r\n            NotificationManager notifManager = context.getSystemService(NotificationManager.class);\r\n            notifManager.createNotificationChannel(channel);\r\n        }\r\n    }*/\r\n\r\n    // Método que crea y envía la notificación\r\n    public void Notificar(String titulo, String mensaje, int notID, Context context){\r\n        NotificationCompat.Builder creador;\r\n        String canalID = \"MiCanal01\";\r\n        Context contexto = context;\r\n        NotificationManager notificador = (NotificationManager) contexto.getSystemService(contexto.NOTIFICATION_SERVICE);\r\n        creador = new NotificationCompat.Builder(contexto, canalID);\r\n        // Si nuestro dispositivo tiene Android 8 (API 26, Oreo) o superior\r\n        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){\r\n            String canalNombre = \"Mensajes\";\r\n            String canalDescribe = \"Canal de mensajes\";\r\n            int importancia = NotificationManager.IMPORTANCE_HIGH;\r\n            NotificationChannel miCanal = new NotificationChannel(canalID, canalNombre, importancia);\r\n            miCanal.setDescription(canalDescribe);\r\n            miCanal.enableLights(true);\r\n            miCanal.setLightColor(Color.BLUE); // Esto no lo soportan todos los dispositivos\r\n            miCanal.enableVibration(true);\r\n            notificador.createNotificationChannel(miCanal);\r\n            creador = new NotificationCompat.Builder(contexto, canalID);\r\n        }\r\n        Bitmap iconoNotifica = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.baseline_event_white_20);\r\n        int iconoSmall = R.drawable.baseline_event_white_20;\r\n        creador.setSmallIcon(iconoSmall);\r\n        creador.setLargeIcon(iconoNotifica);\r\n        creador.setContentTitle(titulo);\r\n        creador.setContentText(mensaje);\r\n        creador.setStyle(new NotificationCompat.BigTextStyle().bigText(mensaje));\r\n        creador.setChannelId(canalID);\r\n        notificador.notify(notID, creador.build());\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/es/udc/psi/agendaly/TimeTable/notifications/MyReceiver.java b/app/src/main/java/es/udc/psi/agendaly/TimeTable/notifications/MyReceiver.java
+--- a/app/src/main/java/es/udc/psi/agendaly/TimeTable/notifications/MyReceiver.java	(revision c615ef469f96930acbcaceb13b602a60254a861e)
++++ b/app/src/main/java/es/udc/psi/agendaly/TimeTable/notifications/MyReceiver.java	(date 1640792712368)
+@@ -27,6 +27,7 @@
+ 
+ import es.udc.psi.agendaly.MainActivity;
+ import es.udc.psi.agendaly.R;
++import es.udc.psi.agendaly.TimeTable.Horario;
+ import es.udc.psi.agendaly.TimeTable.InfoFragment;
+ import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
+ 
+@@ -35,8 +36,6 @@
+     Context context;
+     private String CHANNEL_ID = "CHANNEL_ID";
+     private String GROUP_NAME = "TimeTable";
+-    Random random = new Random();
+-
+ 
+     @RequiresApi(api = Build.VERSION_CODES.O)
+     @Override
+@@ -45,9 +44,7 @@
+         assert intent != null;
+         this.context=context;
+         Bundle bundle = new Bundle();
+-        //createNotificationChannel();
+         ArrayList<String> list;
+-
+         if (intent.getAction().equals(todaySchedule)) {
+             bundle=intent.getExtras();
+             if(bundle != null) {
+@@ -60,19 +57,6 @@
+                         String part1 = parts[0]; // asignatura
+                         String part2 = parts[1]; // horario y aula
+                         Notificar(part1,part2,m,context);
+-                        /*NotificationCompat.Builder builder = new NotificationCompat.Builder(
+-                                context, CHANNEL_ID)
+-                                .setSmallIcon(R.drawable.baseline_event_white_20)
+-                                .setTicker("Today")
+-                                .setContentTitle(part1)
+-                                .setContentText(part2)
+-                                .setAutoCancel(false)
+-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+-                        //se lanza
+-                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+-                        notificationManager.notify(m, builder.build());*/
+-
+-
+                     }
+ 
+                 }
+@@ -80,22 +64,6 @@
+             }
+ 
+     }
+-
+-/*    // creamos el canal
+-    void createNotificationChannel() {
+-        // Create the NotificationChannel, but only on API 26+ because
+-        // the NotificationChannel class is new and not in the support library
+-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, GROUP_NAME, importance);
+-            //channel.setDescription(description);
+-            // Register the channel with the system; you can't change the importance
+-            // or other notification behaviors after this
+-            NotificationManager notifManager = context.getSystemService(NotificationManager.class);
+-            notifManager.createNotificationChannel(channel);
+-        }
+-    }*/
+-
+     // Método que crea y envía la notificación
+     public void Notificar(String titulo, String mensaje, int notID, Context context){
+         NotificationCompat.Builder creador;
+@@ -103,6 +71,8 @@
+         Context contexto = context;
+         NotificationManager notificador = (NotificationManager) contexto.getSystemService(contexto.NOTIFICATION_SERVICE);
+         creador = new NotificationCompat.Builder(contexto, canalID);
++        Intent intent = new Intent(context, Horario.class);
++        PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
+         // Si nuestro dispositivo tiene Android 8 (API 26, Oreo) o superior
+         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+             String canalNombre = "Mensajes";
+@@ -120,11 +90,13 @@
+         int iconoSmall = R.drawable.baseline_event_white_20;
+         creador.setSmallIcon(iconoSmall);
+         creador.setLargeIcon(iconoNotifica);
++        creador.setGroup("GROUP_ID_STRING").setAutoCancel(true);
+         creador.setContentTitle(titulo);
+         creador.setContentText(mensaje);
++        creador.setContentIntent(pi);
+         creador.setStyle(new NotificationCompat.BigTextStyle().bigText(mensaje));
+         creador.setChannelId(canalID);
+-        notificador.notify(notID, creador.build());
++        notificador.notify("notification",notID, creador.build());
+     }
+ 
+ }
+\ No newline at end of file
+Index: app/src/main/java/es/udc/psi/agendaly/TimeTable/CalendarFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package es.udc.psi.agendaly.TimeTable;\r\n\r\nimport android.content.Intent;\r\nimport android.graphics.Color;\r\nimport android.os.Bundle;\r\nimport android.view.LayoutInflater;\r\nimport android.view.Menu;\r\nimport android.view.MenuInflater;\r\nimport android.view.MenuItem;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.fragment.app.Fragment;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Calendar;\r\nimport java.util.List;\r\n\r\nimport devs.mulham.horizontalcalendar.HorizontalCalendar;\r\nimport devs.mulham.horizontalcalendar.model.CalendarEvent;\r\nimport devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;\r\nimport devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;\r\nimport es.udc.psi.agendaly.Calendar.CalendarActivity;\r\nimport es.udc.psi.agendaly.Profiles.ProfileActivity;\r\nimport es.udc.psi.agendaly.R;\r\n\r\n\r\npublic class CalendarFragment extends Fragment  {\r\n\r\n    View rootView;\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n\r\n         rootView = inflater.inflate(R.layout.fragment_calendar, container, false);\r\n        setHasOptionsMenu(true);\r\n        /* starts before 1 month from now */\r\n        Calendar startDate = Calendar.getInstance();\r\n        startDate.add(Calendar.MONTH, -1);\r\n        /* ends after 1 month from now */\r\n        Calendar endDate = Calendar.getInstance();\r\n        endDate.add(Calendar.MONTH, 1);\r\n        // Default Date set to Today.\r\n        final Calendar defaultSelectedDate = Calendar.getInstance();\r\n        SelectDay(defaultSelectedDate.get(Calendar.DAY_OF_WEEK));\r\n\r\n\r\n        HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(rootView, R.id.calendarView)\r\n                .range(startDate, endDate)\r\n                .datesNumberOnScreen(5)\r\n                .configure()\r\n                .formatTopText(\"MMM\")\r\n                .formatMiddleText(\"dd\")\r\n                .formatBottomText(\"EEE\")\r\n                .showTopText(true)\r\n                .showBottomText(true)\r\n                .textColor(Color.LTGRAY, Color.BLUE)\r\n                .colorTextMiddle(Color.LTGRAY, Color.parseColor(\"#ffd54f\"))\r\n                .end()\r\n                .defaultSelectedDate(defaultSelectedDate)\r\n                .addEvents(new CalendarEventsPredicate() {\r\n                     @Override\r\n                     public List<CalendarEvent> events(Calendar date) {\r\n                         return new ArrayList<>();\r\n                     }\r\n                 })\r\n                .build();\r\n\r\n\r\n\r\n        horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {\r\n            @Override\r\n            public void onDateSelected(Calendar date, int position) {\r\n                int nD=date.get(Calendar.DAY_OF_WEEK);\r\n                SelectDay(nD);\r\n\r\n            }\r\n\r\n            @Override\r\n            public boolean onDateLongClicked(Calendar date, int position) {\r\n                Intent intent = new Intent(getContext(), CalendarActivity.class);\r\n                startActivity(intent);\r\n                return true;\r\n            }\r\n\r\n        });\r\n\r\n        return rootView;\r\n\r\n    }\r\n\r\n    @Override\r\n    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {\r\n        super.onCreateOptionsMenu(menu, inflater);\r\n        inflater.inflate(R.menu.add_menu,menu);\r\n    }\r\n\r\n    @Override\r\n    public boolean onOptionsItemSelected(@NonNull MenuItem item) {\r\n        super.onOptionsItemSelected(item);\r\n        int id = item.getItemId();\r\n        if(id==R.id.icon_add){\r\n            Intent intent = new Intent(getActivity(),AddEvent.class);\r\n            startActivity(intent);\r\n        }\r\n\r\n        if(id==R.id.icon_delete){\r\n            Intent intentdel = new Intent(getActivity(),DeleteEvent.class);\r\n            startActivity(intentdel);\r\n        }\r\n        if (id == R.id.icon_sign_out) {\r\n            Intent profileIntent = new Intent(getActivity(), ProfileActivity.class);\r\n            startActivity(profileIntent);\r\n        }\r\n        return true;\r\n    }\r\n\r\n    public void SelectDay(int nD){\r\n        String dia = \"\";\r\n        switch (nD) {\r\n            case 1:\r\n                dia=getString(R.string.sunday);\r\n                break;\r\n\r\n            case 2: dia=getString(R.string.monday);\r\n                break;\r\n            case 3:dia=getString(R.string.tuesday);\r\n                break;\r\n\r\n            case 4:dia=getString(R.string.wednesday);\r\n                break;\r\n\r\n            case 5:dia=getString(R.string.thrusday);\r\n                break;\r\n            case 6: dia=getString(R.string.friday);\r\n                break;\r\n\r\n            case 7: dia=getString(R.string.saturday);\r\n                break;\r\n\r\n        }\r\n        InfoFragment fragment = new InfoFragment(dia);\r\n        assert(getActivity()!=null);\r\n        getActivity().getSupportFragmentManager().beginTransaction()\r\n                .replace(R.id.punto_anclaje_abajo, fragment)\r\n                .addToBackStack(null)\r\n                .commit();\r\n    }\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/es/udc/psi/agendaly/TimeTable/CalendarFragment.java b/app/src/main/java/es/udc/psi/agendaly/TimeTable/CalendarFragment.java
+--- a/app/src/main/java/es/udc/psi/agendaly/TimeTable/CalendarFragment.java	(revision c615ef469f96930acbcaceb13b602a60254a861e)
++++ b/app/src/main/java/es/udc/psi/agendaly/TimeTable/CalendarFragment.java	(date 1640793182597)
+@@ -110,6 +110,7 @@
+             Intent intentdel = new Intent(getActivity(),DeleteEvent.class);
+             startActivity(intentdel);
+         }
++
+         if (id == R.id.icon_sign_out) {
+             Intent profileIntent = new Intent(getActivity(), ProfileActivity.class);
+             startActivity(profileIntent);
+Index: app/src/main/res/menu/add_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<menu xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\">\r\n    <item\r\n        android:id=\"@+id/icon_add\"\r\n        android:icon=\"@drawable/baseline_add_white_24\"\r\n        android:title=\"@string/add_asignatura\"\r\n        app:showAsAction=\"always\" />\r\n\r\n    <item\r\n        android:id=\"@+id/icon_delete\"\r\n        android:icon=\"@drawable/baseline_delete_white_24\"\r\n        android:title=\"@string/delete_question\"\r\n        app:showAsAction=\"always\" />\r\n    <item\r\n        android:id=\"@+id/icon_sign_out\"\r\n        android:icon=\"@drawable/account_circle\"\r\n        android:title=\"@string/sign_out\"\r\n        app:showAsAction=\"always\" />\r\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/add_menu.xml b/app/src/main/res/menu/add_menu.xml
+--- a/app/src/main/res/menu/add_menu.xml	(revision c615ef469f96930acbcaceb13b602a60254a861e)
++++ b/app/src/main/res/menu/add_menu.xml	(date 1640793137208)
+@@ -1,6 +1,13 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <menu xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto">
++
++    <item
++        android:id="@+id/icon_notification"
++        android:icon="@drawable/baseline_notifications_white_24"
++        android:title="@string/add_asignatura"
++        app:showAsAction="always" />
++
+     <item
+         android:id="@+id/icon_add"
+         android:icon="@drawable/baseline_add_white_24"
+Index: app/src/main/java/es/udc/psi/agendaly/TimeTable/InfoFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package es.udc.psi.agendaly.TimeTable;\r\n\r\nimport android.app.AlarmManager;\r\nimport android.app.PendingIntent;\r\nimport android.content.ComponentName;\r\nimport android.content.Context;\r\nimport android.content.Intent;\r\nimport android.content.ServiceConnection;\r\nimport android.os.Bundle;\r\nimport android.os.IBinder;\r\nimport android.util.Log;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\n\r\nimport androidx.fragment.app.Fragment;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\nimport androidx.swiperefreshlayout.widget.SwipeRefreshLayout;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Calendar;\r\nimport java.util.Date;\r\nimport java.util.List;\r\n\r\nimport butterknife.BindView;\r\nimport es.udc.psi.agendaly.BaseActivity;\r\nimport es.udc.psi.agendaly.R;\r\nimport es.udc.psi.agendaly.TimeTable.notifications.MyReceiver;\r\nimport es.udc.psi.agendaly.TimeTable.presenter.AsignaturaDatabaseImp;\r\nimport es.udc.psi.agendaly.TimeTable.presenter.AsignaturaPresenter;\r\nimport es.udc.psi.agendaly.TimeTable.presenter.AsignaturaView;\r\nimport es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;\r\n\r\npublic class InfoFragment extends Fragment implements AsignaturaView {\r\n    private AsignaturaPresenter mPresenter;\r\n    RecyclerView recyclerView;\r\n    View rootView;\r\n    EventAdapter mAdapter;\r\n    String day;\r\n\r\n    public boolean done=false;\r\n    String currentDay;\r\n\r\n    InfoFragment(String day){\r\n        this.day=day;\r\n    }\r\n\r\n    String todaySchedule = \"todaySchedule\";\r\n    SwipeRefreshLayout swipeRefreshLayout;\r\n\r\n    @Override\r\n    public View onCreateView(LayoutInflater inflater, ViewGroup container,\r\n                             Bundle savedInstanceState) {\r\n        rootView= inflater.inflate(R.layout.activity_info_fragment, container, false);\r\n        recyclerView= rootView.findViewById(R.id.events_recyclerView);\r\n        swipeRefreshLayout=rootView.findViewById(R.id.swipeLayout);\r\n        mPresenter = new AsignaturaDatabaseImp(this, rootView.getContext());\r\n        currentDay = CurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));\r\n        notificar();\r\n        searchByDay(day);\r\n        setUpView();\r\n        refesh();\r\n\r\n        return rootView;\r\n    }\r\n\r\n    public void refesh(){\r\n        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {\r\n            @Override\r\n            public void onRefresh() {\r\n                searchByDay(day);\r\n                swipeRefreshLayout.setRefreshing(false);\r\n            }\r\n        });\r\n    }\r\n\r\n    public void searchByDay(String day){\r\n        mPresenter.searchByDay(day);\r\n    }\r\n\r\n\r\n    public void notificar(){\r\n        Log.d(\"_TAG\", String.valueOf(done));\r\n        if(currentDay.equals(day)){\r\n            if(!done){\r\n                done=true;\r\n                notifyByDay(currentDay);\r\n\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n    public void notifyByDay(String day){\r\n        mPresenter.notifyDay(day);\r\n    }\r\n\r\n\r\n\r\n    @Override\r\n    public void showAsignaturas(List<AsignaturaViewModel> asignaturas) {\r\n        mAdapter.setItems(asignaturas);\r\n        recyclerView.setAdapter(mAdapter);\r\n    }\r\n\r\n    @Override\r\n    public void sendNotification(List<AsignaturaViewModel> asignaturas) {\r\n        Intent intent = new Intent(rootView.getContext(), MyReceiver.class);\r\n        //new AsignaturaViewModel(a.getName(),a.getHora(),a.getAula())\r\n        ArrayList<String> sendName = new ArrayList<>();\r\n        for (AsignaturaViewModel a: asignaturas) {\r\n            sendName.add(\"Hoy tienes : \"+ a.getName() +\"/\"+\" Horario \" +\r\n                    a.getHora() + \" en el aula \" + a.getAula());\r\n        }\r\n        intent.putExtra(\"asignatura\", sendName);\r\n        intent.setAction(todaySchedule);\r\n        rootView.getContext().sendBroadcast(intent);\r\n\r\n    }\r\n\r\n    @Override\r\n    public void showError() {\r\n\r\n    }\r\n\r\n    @Override\r\n    public void updateAsignatura(AsignaturaViewModel asignatura, int position) {\r\n\r\n    }\r\n\r\n    private void setUpView() {\r\n\r\n        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);\r\n        recyclerView.setLayoutManager(linearLayoutManager);\r\n\r\n        mAdapter = new EventAdapter();\r\n        recyclerView.setAdapter(mAdapter);\r\n    }\r\n\r\n\r\n    public String CurrentDay(int nD) {\r\n        String dia = \"\";\r\n        switch (nD) {\r\n            case 1:\r\n                return getString(R.string.sunday);\r\n\r\n            case 2:\r\n                return getString(R.string.monday);\r\n\r\n            case 3:\r\n                return getString(R.string.tuesday);\r\n\r\n\r\n            case 4:\r\n                return getString(R.string.wednesday);\r\n\r\n\r\n            case 5:\r\n                return getString(R.string.thrusday);\r\n\r\n            case 6:\r\n                return getString(R.string.friday);\r\n\r\n\r\n            case 7:\r\n                return getString(R.string.saturday);\r\n\r\n\r\n        }\r\n        return dia;\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/es/udc/psi/agendaly/TimeTable/InfoFragment.java b/app/src/main/java/es/udc/psi/agendaly/TimeTable/InfoFragment.java
+--- a/app/src/main/java/es/udc/psi/agendaly/TimeTable/InfoFragment.java	(revision c615ef469f96930acbcaceb13b602a60254a861e)
++++ b/app/src/main/java/es/udc/psi/agendaly/TimeTable/InfoFragment.java	(date 1640792774441)
+@@ -86,7 +86,6 @@
+             if(!done){
+                 done=true;
+                 notifyByDay(currentDay);
+-
+             }
+         }
+ 
+Index: app/src/main/res/drawable/baseline_notifications_24.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/baseline_notifications_24.xml b/app/src/main/res/drawable/baseline_notifications_24.xml
+new file mode 100644
+--- /dev/null	(date 1636486222000)
++++ b/app/src/main/res/drawable/baseline_notifications_24.xml	(date 1636486222000)
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="?attr/colorControlNormal">
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M12,22c1.1,0 2,-0.9 2,-2h-4c0,1.1 0.89,2 2,2zM18,16v-5c0,-3.07 -1.64,-5.64 -4.5,-6.32L13.5,4c0,-0.83 -0.67,-1.5 -1.5,-1.5s-1.5,0.67 -1.5,1.5v0.68C7.63,5.36 6,7.92 6,11v5l-2,2v1h16v-1l-2,-2z"/>
++</vector>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"DesignSurface\">\r\n    <option name=\"filePathToZoomLevelMap\">\r\n      <map>\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Documents/GitHub/PSApp/Agendaly/app/src/main/res/layout/activity_notification.xml\" value=\"0.13858695652173914\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Documents/GitHub/PSApp/Agendaly/app/src/main/res/layout/content_notification.xml\" value=\"0.13858695652173914\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/back.xml\" value=\"0.26614583333333336\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/baseline_event_18.xml\" value=\"0.26614583333333336\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/baseline_home_20.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/baseline_info_20.xml\" value=\"0.26614583333333336\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/corner_shape.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/nav_background_curved.xml\" value=\"0.25462962962962965\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/activity_horario.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/activity_info_fragment.xml\" value=\"0.264\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/activity_item_detail.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/activity_main.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/authentication_activity.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/formulario_clases.xml\" value=\"0.14175724637681159\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/fragment_calendar.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/fragment_calendar_app_bar.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/fragment_home.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/fragment_info.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/layout/homelist.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/menu/add_menu.xml\" value=\"0.25\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/menu/bottom_app_bar.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/menu/bottom_bar.xml\" value=\"0.1\" />\r\n        <entry key=\"..\\:/Users/migue/git/PSApp/Agendaly/app/src/main/res/layout/activity_main.xml\" value=\"0.1793478260869565\" />\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"Android Studio default JDK\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision c615ef469f96930acbcaceb13b602a60254a861e)
++++ b/.idea/misc.xml	(date 1640793182644)
+@@ -3,8 +3,10 @@
+   <component name="DesignSurface">
+     <option name="filePathToZoomLevelMap">
+       <map>
++        <entry key="..\:/Users/laura/OneDrive/Documents/GitHub/PSApp/Agendaly/app/src/main/res/drawable/baseline_notifications_24.xml" value="0.26614583333333336" />
+         <entry key="..\:/Users/laura/OneDrive/Documents/GitHub/PSApp/Agendaly/app/src/main/res/layout/activity_notification.xml" value="0.13858695652173914" />
+         <entry key="..\:/Users/laura/OneDrive/Documents/GitHub/PSApp/Agendaly/app/src/main/res/layout/content_notification.xml" value="0.13858695652173914" />
++        <entry key="..\:/Users/laura/OneDrive/Documents/GitHub/PSApp/Agendaly/app/src/main/res/menu/add_menu.xml" value="0.25" />
+         <entry key="..\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/back.xml" value="0.26614583333333336" />
+         <entry key="..\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/baseline_event_18.xml" value="0.26614583333333336" />
+         <entry key="..\:/Users/laura/OneDrive/Escritorio/T2/Agendaly/app/src/main/res/drawable/baseline_home_20.xml" value="0.1" />

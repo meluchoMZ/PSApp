@@ -102,16 +102,6 @@ public class DeleteEvent extends BaseActivity implements AsignaturaView {
 
     }
 
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void updateAsignatura(AsignaturaViewModel asignatura, int position) {
-        mAdapter.updateItem(asignatura,position);
-    }
 }
 
 

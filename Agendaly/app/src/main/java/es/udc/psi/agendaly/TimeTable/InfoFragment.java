@@ -40,7 +40,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     String day;
 
     public boolean done=false;
-    String currentDay;
+
 
     InfoFragment(String day){
         this.day=day;
@@ -56,8 +56,6 @@ public class InfoFragment extends Fragment implements AsignaturaView {
         recyclerView= rootView.findViewById(R.id.events_recyclerView);
         swipeRefreshLayout=rootView.findViewById(R.id.swipeLayout);
         mPresenter = new AsignaturaDatabaseImp(this, rootView.getContext());
-        currentDay = CurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-        notificar();
         searchByDay(day);
         setUpView();
         refesh();
@@ -80,21 +78,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     }
 
 
-    public void notificar(){
-        Log.d("_TAG", String.valueOf(done));
-        if(currentDay.equals(day)){
-            if(!done){
-                done=true;
-                notifyByDay(currentDay);
 
-            }
-        }
-
-    }
-
-    public void notifyByDay(String day){
-        mPresenter.notifyDay(day);
-    }
 
 
 
@@ -119,16 +103,6 @@ public class InfoFragment extends Fragment implements AsignaturaView {
 
     }
 
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void updateAsignatura(AsignaturaViewModel asignatura, int position) {
-
-    }
-
     private void setUpView() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -139,37 +113,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     }
 
 
-    public String CurrentDay(int nD) {
-        String dia = "";
-        switch (nD) {
-            case 1:
-                return getString(R.string.sunday);
 
-            case 2:
-                return getString(R.string.monday);
-
-            case 3:
-                return getString(R.string.tuesday);
-
-
-            case 4:
-                return getString(R.string.wednesday);
-
-
-            case 5:
-                return getString(R.string.thrusday);
-
-            case 6:
-                return getString(R.string.friday);
-
-
-            case 7:
-                return getString(R.string.saturday);
-
-
-        }
-        return dia;
-    }
 
 
 

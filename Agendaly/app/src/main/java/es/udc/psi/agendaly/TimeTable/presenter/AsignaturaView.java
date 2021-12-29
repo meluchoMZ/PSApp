@@ -10,7 +10,4 @@ public interface AsignaturaView {
 
     void sendNotification(List<AsignaturaViewModel> asignaturas);
 
-    void showError();
-
-    void updateAsignatura(AsignaturaViewModel asignatura, int position);
 }
