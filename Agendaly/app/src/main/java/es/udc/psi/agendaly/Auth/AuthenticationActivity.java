@@ -110,11 +110,13 @@ public class AuthenticationActivity extends AppCompatActivity {
 					email.setError(getString(R.string.error_invalid_email));
 					return;
 				}
+				loginDialog.show();
 				FirebaseAuth.getInstance()
 						.createUserWithEmailAndPassword(emAddress, passwd)
 						.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 							@Override
 							public void onComplete(@NonNull Task<AuthResult> task) {
+								loginDialog.hide();
 								if (task.isSuccessful()) {
 									Intent intent = new Intent(getApplicationContext(), Horario.class);
 									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));
@@ -144,11 +146,13 @@ public class AuthenticationActivity extends AppCompatActivity {
 					email.setError(getString(R.string.error_invalid_email));
 					return;
 				}
+				loginDialog.show();
 				FirebaseAuth.getInstance()
 						.signInWithEmailAndPassword(emAddress, passwd)
 						.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 							@Override
 							public void onComplete(@NonNull Task<AuthResult> task) {
+								loginDialog.hide();
 								if (task.isSuccessful()) {
 									Intent intent = new Intent(getApplicationContext(), Horario.class);
 									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));

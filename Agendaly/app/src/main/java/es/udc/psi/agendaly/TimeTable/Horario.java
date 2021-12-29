@@ -22,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import es.udc.psi.agendaly.BaseActivity;
 import es.udc.psi.agendaly.Calendar.CalendarActivity;
+import es.udc.psi.agendaly.Profiles.ProfileActivity;
 import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.TimeTable.notifications.MyReceiver;
 
@@ -62,7 +63,8 @@ public class Horario extends BaseActivity {
                         startActivity(intentCalendar);
                         break;
                     case R.id.infoAppBar:
-
+                        Intent intent = new Intent(getBaseContext(), ProfileActivity.class);
+                        startActivity(intent);
                         break;
                 }
                 return true;
