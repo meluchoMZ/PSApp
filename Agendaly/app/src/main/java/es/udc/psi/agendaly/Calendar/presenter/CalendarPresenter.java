@@ -7,6 +7,8 @@ public interface CalendarPresenter {
 
     void searchByDay(String day);
 
+    void searchDayAfter(String day);
+
     void insert(Event event);
 
     void clearAll();
