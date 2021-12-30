@@ -28,11 +28,4 @@ public interface AsignaturaDao {
      @Query("DELETE FROM asignaturas")
     void deleteAll();
 
-   /*
-    // Consultas
-    @Query("SELECT * FROM artists" )
-    public List<Artist> getAllArtists();
-
-    @Query("SELECT DISTINCT * FROM artists WHERE name LIKE :name" )
-    public List<Artist> getArtist(String name);*/
 }

@@ -3,15 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/icon_add"
-        android:icon="@drawable/baseline_add_24"
+        android:icon="@drawable/baseline_add_white_24"
         android:title="@string/add_asignatura"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/icon_delete"
-        android:icon="@drawable/baseline_delete_24"
+        android:icon="@drawable/baseline_delete_white_24"
         android:title="@string/delete_question"
         app:showAsAction="always" />
-
-
 </menu>

@@ -38,10 +38,6 @@
     <string name="yes">Sí</string>
     <string name="asignatura_borrada">Asignatura borrada</string>
     <string name="no">No</string>
-    <string name="event">Evento</string>
-    <string name="hour">Hora</string>
-    <string name="description">Descripción</string>
-    <string name="add_event">Añadir evento</string>
 
     <string-array name="days_week">
         <item>@string/monday</item>
@@ -52,7 +48,7 @@
         <item>@string/saturday</item>
         <item>@string/sunday</item>
     </string-array>
-    <!-- Strings used for fragments for navigation -->
+    <string name="sign_out">Sign out</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -60,5 +56,17 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="event">Evento</string>
+    <string name="hour">Hora</string>
+    <string name="description">Descripción</string>
+    <string name="add_event">Añadir evento</string>
+    <string name="calendario">Calendario</string>
+    <string name="inicio"><inicio>Inicio</inicio></string>
+    <string name="info">Info</string>
+
+    <string name="contacts">Contacts</string>
+    <string name="teams">Teams</string>
+    <string name="account">Cuenta</string>
 
 </resources>

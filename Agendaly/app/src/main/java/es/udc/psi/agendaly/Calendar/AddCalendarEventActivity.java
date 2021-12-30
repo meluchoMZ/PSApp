@@ -67,6 +67,10 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
     public void updateEvent(EventViewModel event, int position) {
         mAdapter.updateItem(event,position);
     }
+    @Override
+    public void notifyEvent(List<EventViewModel> events) {
+
+    }
 
     public void nameEvent(){
         String eT = editTextNameEvent.getText().toString();

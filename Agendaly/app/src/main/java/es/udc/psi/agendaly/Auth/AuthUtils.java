@@ -7,6 +7,8 @@
  */
 package es.udc.psi.agendaly.Auth;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -15,7 +17,11 @@ import java.util.Base64;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Utils {
+import es.udc.psi.agendaly.GlobalApplication;
+import es.udc.psi.agendaly.R;
+
+public class AuthUtils {
+	private static final String SPFPATH = "usr_shared_preferences";
 	private static final String emailPatternRegexp = "(\\w|.+)@(?:\\w|.+)\\.(?:\\w+)";
 	private static final byte[] codingScheme =
 			{
@@ -59,5 +65,30 @@ public class Utils {
 			sourceBytes[i] ^= codingScheme[i];
 		}
 		return new String(sourceBytes);
+	}
+
+	@RequiresApi(api = Build.VERSION_CODES.O)
+	public static void saveUser(User user) {
+		SharedPreferences.Editor sp = AuthenticationActivity.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE).edit();
+		if (user.getProvider().equals(AuthenticationActivity.AUTH_TYPE_AGENDALY_ACCOUNT)) {
+			sp.putString("user", user.getEmail());
+			sp.putString("passwd", encode(user.getPassword()));
+		}
+		sp.putString("authMethod", user.getProvider());
+		sp.apply();
+	}
+
+	@RequiresApi(api = Build.VERSION_CODES.O)
+	public static User retrieveUser() {
+		SharedPreferences sp = AuthenticationActivity.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE);
+		String spEmail = sp.getString("user", null);
+		String spPasswd = sp.getString("passwd", null);
+		String spMethod = sp.getString("authMethod", null);
+		return new User(spEmail, spPasswd == null ? null : decode(spPasswd), spMethod);
+	}
+
+	public static void removeUser() {
+		SharedPreferences sp = AuthenticationActivity.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE);
+		sp.edit().clear().apply();
 	}
 }

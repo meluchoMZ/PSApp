@@ -34,6 +34,9 @@ public class CalendarDatabaseImp implements CalendarPresenter {
     }
 
     @Override
+    public void searchDayAfter(String day) { new GetNotification(day).execute(); }
+
+    @Override
     public void insert(Event event) {
         insertEventaDB(event);
     }
@@ -152,6 +155,31 @@ public class CalendarDatabaseImp implements CalendarPresenter {
             }
 
     }
+
+    public class GetNotification extends AsyncTask<Void, Void, List<Event>> { // clase interna
+        String day;
+
+        public GetNotification(String day) {
+            this.day = day;
+        }
+
+        @Override
+        public List<Event> doInBackground(Void... voids) {
+            List<Event> eventList = CalendarDatabaseClient.getInstance(mContext)
+                    .getCalendarDatabase()
+                    .getCalendarDao()
+                    .getDayEventbyDay(day);// Sustituir por la función necesaria
+            return eventList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Event> list) {
+            super.onPostExecute(list);
+            mEventsViewModels = getEventsViewModel(list);
+            mView.notifyEvent(mEventsViewModels);
+        }
+    }
+
 
 
     private void getEventsBD () {

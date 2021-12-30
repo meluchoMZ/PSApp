@@ -1,0 +1,54 @@
+package es.udc.psi.agendaly.Profiles;
+
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import butterknife.BindView;
+import es.udc.psi.agendaly.Auth.AuthUtils;
+import es.udc.psi.agendaly.Auth.AuthenticationActivity;
+import es.udc.psi.agendaly.Auth.User;
+import es.udc.psi.agendaly.BaseActivity;
+import es.udc.psi.agendaly.R;
+
+public class ProfileActivity extends BaseActivity {
+	@BindView(R.id.profile_sign_out_button)
+	public Button signOutButton;
+
+	@BindView(R.id.user_mail)
+	public TextView mail;
+
+	@BindView(R.id.contacts_no)
+	public TextView contacts;
+
+	@BindView(R.id.teams_no)
+	public TextView teams;
+
+	@RequiresApi(api = Build.VERSION_CODES.O)
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.profile_activity);
+		User user = AuthUtils.retrieveUser();
+		mail.setText(user.getEmail());
+		contacts.setText(Integer.toString(0));
+		teams.setText(Integer.toString(0));
+		signOutButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// do sign out
+				AuthUtils.removeUser();
+				// return to sign in page
+				Intent intent = new Intent(getApplicationContext(), AuthenticationActivity.class);
+				startActivity(intent);
+			}
+		});
+	}
+}

@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.List;
 
+import butterknife.BindView;
 import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaDatabaseImp;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaPresenter;
@@ -18,7 +20,6 @@ import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaView;
 import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 
 public class InfoFragment extends Fragment implements AsignaturaView {
-    AsignaturaView mView;
     private AsignaturaPresenter mPresenter;
     RecyclerView recyclerView;
     View rootView;
@@ -28,25 +29,40 @@ public class InfoFragment extends Fragment implements AsignaturaView {
         this.day=day;
     }
 
+
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView= inflater.inflate(R.layout.activity_info_fragment, container, false);
         recyclerView= rootView.findViewById(R.id.events_recyclerView);
+        swipeRefreshLayout=rootView.findViewById(R.id.swipeLayout);
         mPresenter = new AsignaturaDatabaseImp(this, rootView.getContext());
+        searchByDay(day);
         setUpView();
-        searchbyName(day);
+        refesh();
         return rootView;
     }
 
-    public void searchbyName(String day){
-        mPresenter.initFlow(day);
+    public void refesh(){
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                searchByDay(day);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    public void searchByDay(String day){
+        mPresenter.searchByDay(day);
     }
 
 
     @Override
-    public void showAsignaturas(List<AsignaturaViewModel> artists) {
-        mAdapter.setItems(artists);
+    public void showAsignaturas(List<AsignaturaViewModel> asignaturas) {
+        mAdapter.setItems(asignaturas);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -61,7 +77,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     }
 
     @Override
-    public void updateAsignatura(AsignaturaViewModel artist, int position) {
+    public void updateAsignatura(AsignaturaViewModel asignatura, int position) {
 
     }
 

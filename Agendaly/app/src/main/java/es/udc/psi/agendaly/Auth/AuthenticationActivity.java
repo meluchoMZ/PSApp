@@ -10,7 +10,6 @@ package es.udc.psi.agendaly.Auth;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -36,9 +35,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import es.udc.psi.agendaly.R;
+import es.udc.psi.agendaly.TimeTable.Horario;
 
 
 public class AuthenticationActivity extends AppCompatActivity {
+	public static Context context;
 	protected static final String AUTH_TYPE_AGENDALY_ACCOUNT = "agendaly account";
 	protected static final String AUTH_TYPE_GOOGLE = "google";
 	private static final int GOOGLE_OK = 200;
@@ -50,19 +51,19 @@ public class AuthenticationActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		context = this.getApplicationContext();
 		loginDialog = new ProgressDialog(this);
 		loginDialog.setMessage(getString(R.string.automatic_signin_dialog));
 		loginDialog.setCancelable(false);
 		loginDialog.setInverseBackgroundForced(false);
-		SharedPreferences sp = getApplicationContext().getSharedPreferences(getString(R.string.shared_preferences_file), Context.MODE_PRIVATE);
-		String spEmail = sp.getString("user", null);
-		String spPasswd = sp.getString("passwd", null);
-		String spMethod = sp.getString("authMethod", null);
-		String spTokenId = sp.getString("googleCredential", null);
+		User user = AuthUtils.retrieveUser();
+		String spEmail = user.getEmail();
+		String spPasswd = user.getPassword();
+		String spMethod = user.getProvider();
 		if (spEmail!=null && spPasswd!=null && spMethod!=null && spMethod.equals(AUTH_TYPE_AGENDALY_ACCOUNT)) {
 			loginDialog.show();
 			// tries automatic sign in using Agendaly account
-			FirebaseAuth.getInstance().signInWithEmailAndPassword(spEmail, Utils.decode(spPasswd))
+			FirebaseAuth.getInstance().signInWithEmailAndPassword(spEmail, spPasswd)
 					.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 						@Override
 						public void onComplete(@NonNull Task<AuthResult> task) {
@@ -70,9 +71,9 @@ public class AuthenticationActivity extends AppCompatActivity {
 								loginDialog.hide();
 								showAuthError(task.getException().getMessage());
 							} else {
-								Intent intent = new Intent(getApplicationContext(), AuthTestActivity.class);
+								Intent intent = new Intent(getApplicationContext(), Horario.class);
 								intent.putExtra("user", spEmail);
-								intent.putExtra("password", Utils.decode(spPasswd));
+								intent.putExtra("password", spPasswd);
 								intent.putExtra("authMethod", spMethod);
 								loginDialog.hide();
 								startActivity(intent);
@@ -89,7 +90,6 @@ public class AuthenticationActivity extends AppCompatActivity {
 			startActivityForResult(client.getSignInIntent(), GOOGLE_OK);
 		}
 		setContentView(R.layout.authentication_activity);
-		setTitle(getString(R.string.auth_title));
 		email = findViewById(R.id.email_tv);
 		password = findViewById(R.id.passwd_tv);
 		signUpAgendaly = findViewById(R.id.sign_up_button);
@@ -106,20 +106,20 @@ public class AuthenticationActivity extends AppCompatActivity {
 					password.setError(getString(R.string.error_empty_password));
 					return;
 				}
-				if (!Utils.validateEmailAddress(emAddress)) {
+				if (!AuthUtils.validateEmailAddress(emAddress)) {
 					email.setError(getString(R.string.error_invalid_email));
 					return;
 				}
+				loginDialog.show();
 				FirebaseAuth.getInstance()
 						.createUserWithEmailAndPassword(emAddress, passwd)
 						.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 							@Override
 							public void onComplete(@NonNull Task<AuthResult> task) {
+								loginDialog.hide();
 								if (task.isSuccessful()) {
-									Intent intent = new Intent(getApplicationContext(), AuthTestActivity.class);
-									intent.putExtra("user", emAddress);
-									intent.putExtra("password", passwd);
-									intent.putExtra("authMethod", AUTH_TYPE_AGENDALY_ACCOUNT);
+									Intent intent = new Intent(getApplicationContext(), Horario.class);
+									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));
 									startActivity(intent);
 								} else {
 									showAuthError(task.getException().getMessage());
@@ -142,20 +142,20 @@ public class AuthenticationActivity extends AppCompatActivity {
 					password.setError(getString(R.string.error_empty_password));
 					return;
 				}
-				if (!Utils.validateEmailAddress(emAddress)) {
+				if (!AuthUtils.validateEmailAddress(emAddress)) {
 					email.setError(getString(R.string.error_invalid_email));
 					return;
 				}
+				loginDialog.show();
 				FirebaseAuth.getInstance()
 						.signInWithEmailAndPassword(emAddress, passwd)
 						.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 							@Override
 							public void onComplete(@NonNull Task<AuthResult> task) {
+								loginDialog.hide();
 								if (task.isSuccessful()) {
-									Intent intent = new Intent(getApplicationContext(), AuthTestActivity.class);
-									intent.putExtra("user", emAddress);
-									intent.putExtra("password", passwd);
-									intent.putExtra("authMethod", AUTH_TYPE_AGENDALY_ACCOUNT);
+									Intent intent = new Intent(getApplicationContext(), Horario.class);
+									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));
 									startActivity(intent);
 								} else {
 									showAuthError(task.getException().getMessage());
@@ -198,12 +198,12 @@ public class AuthenticationActivity extends AppCompatActivity {
 					AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 					FirebaseAuth.getInstance().signInWithCredential(credential)
 							.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+								@RequiresApi(api = Build.VERSION_CODES.O)
 								@Override
 								public void onComplete(@NonNull Task<AuthResult> task) {
 									if (task.isSuccessful()) {
-										Intent intent = new Intent(getApplicationContext(), AuthTestActivity.class);
-										intent.putExtra("user", account.getEmail());
-										intent.putExtra("authMethod", AUTH_TYPE_GOOGLE);
+										Intent intent = new Intent(getApplicationContext(), Horario.class);
+										AuthUtils.saveUser(new User(account.getEmail(), null, AUTH_TYPE_GOOGLE));
 										loginDialog.hide();
 										startActivity(intent);
 									} else {
@@ -218,5 +218,14 @@ public class AuthenticationActivity extends AppCompatActivity {
 				showAuthError(e.getMessage());
 			}
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		finishAffinity();
+	}
+
+	public static Context getContext() {
+		return context;
 	}
 }
