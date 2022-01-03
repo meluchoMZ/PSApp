@@ -206,7 +206,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                 ALARM_REQUEST_CODE, alarmIntent, 0);
         if(!cancel) {
             manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    0, pendingIntent);
+                    AlarmManager.INTERVAL_DAY, pendingIntent);
             Toast.makeText(getContext(), "Notificacion de horario a las " +
                     timeformat.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
         }else{
