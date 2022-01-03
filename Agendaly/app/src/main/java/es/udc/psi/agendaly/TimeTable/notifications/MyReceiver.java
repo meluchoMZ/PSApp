@@ -34,9 +34,6 @@ import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
 public class MyReceiver extends BroadcastReceiver {
     String todaySchedule = "todaySchedule";
     Context context;
-    private String CHANNEL_ID = "CHANNEL_ID";
-    private String GROUP_NAME = "TimeTable";
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(@Nullable Context context, @Nullable Intent intent) {
@@ -68,14 +65,14 @@ public class MyReceiver extends BroadcastReceiver {
     public void Notificar(String titulo, String mensaje, int notID, Context context){
         NotificationCompat.Builder creador;
         String canalID = "MiCanal01";
-        Context contexto = context;
-        NotificationManager notificador = (NotificationManager) contexto.getSystemService(contexto.NOTIFICATION_SERVICE);
-        creador = new NotificationCompat.Builder(contexto, canalID);
+        NotificationManager notificador = (NotificationManager) context.getSystemService(
+                context.NOTIFICATION_SERVICE);
+        creador = new NotificationCompat.Builder(context, canalID);
         Intent intent = new Intent(context, Horario.class);
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
         // Si nuestro dispositivo tiene Android 8 (API 26, Oreo) o superior
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            String canalNombre = "Mensajes";
+            String canalNombre = "Timetable";
             String canalDescribe = "Canal de mensajes";
             int importancia = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel miCanal = new NotificationChannel(canalID, canalNombre, importancia);
@@ -84,18 +81,20 @@ public class MyReceiver extends BroadcastReceiver {
             miCanal.setLightColor(Color.BLUE); // Esto no lo soportan todos los dispositivos
             miCanal.enableVibration(true);
             notificador.createNotificationChannel(miCanal);
-            creador = new NotificationCompat.Builder(contexto, canalID);
+            creador = new NotificationCompat.Builder(context, canalID);
         }
-        Bitmap iconoNotifica = BitmapFactory.decodeResource(contexto.getResources(), R.drawable.baseline_event_white_20);
+        Bitmap iconoNotifica = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.baseline_event_white_20);
         int iconoSmall = R.drawable.baseline_event_white_20;
-        creador.setSmallIcon(iconoSmall);
-        creador.setLargeIcon(iconoNotifica);
-        creador.setGroup("GROUP_ID_STRING").setAutoCancel(true);
-        creador.setContentTitle(titulo);
-        creador.setContentText(mensaje);
-        creador.setContentIntent(pi);
-        creador.setStyle(new NotificationCompat.BigTextStyle().bigText(mensaje));
-        creador.setChannelId(canalID);
+        creador.setSmallIcon(iconoSmall)
+                .setLargeIcon(iconoNotifica)
+                .setGroup("GROUP_ID_STRING")
+                .setAutoCancel(true)
+                .setContentTitle(titulo)
+                .setContentText(mensaje)
+                .setContentIntent(pi)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(mensaje))
+                .setChannelId(canalID);
         notificador.notify("notification",notID, creador.build());
     }
 
