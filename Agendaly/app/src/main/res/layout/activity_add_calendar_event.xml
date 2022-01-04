@@ -92,7 +92,7 @@
         android:id="@+id/butSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar" />
+        android:text="@string/guardar" />
 
 
 

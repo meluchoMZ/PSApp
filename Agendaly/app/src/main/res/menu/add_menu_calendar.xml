@@ -7,11 +7,11 @@
         android:title="@string/add_event"
         app:showAsAction="always" />
 
-    <!--<item
+    <item
         android:id="@+id/icon_delete"
         android:icon="@drawable/baseline_delete_24"
         android:title="@string/delete_question"
-        app:showAsAction="always" />-->
+        app:showAsAction="always" />
 
 
 </menu>

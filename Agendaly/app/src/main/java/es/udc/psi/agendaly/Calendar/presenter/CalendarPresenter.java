@@ -17,5 +17,7 @@ public interface CalendarPresenter {
 
     void getAll();
 
+    void update(String event, String notificationDay,int sw);
+
     void checkedEvents();
 }

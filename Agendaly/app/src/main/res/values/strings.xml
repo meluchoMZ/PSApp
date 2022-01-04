@@ -71,5 +71,7 @@
     <string name="borrar_evento">borrar evento</string>
     <string name="Avisar">Avisar</string>
     <string name="notificar_cuantos_dias_antes">notificar cuantos dias antes</string>
+    <string name="guardar">Guardar</string>
+    <string name="avisar_estos_dias">"Avisar estos días antes: "</string>
 
 </resources>

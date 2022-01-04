@@ -56,6 +56,36 @@ public class CalendarDatabaseImp implements CalendarPresenter {
         getEventsBD();
     }
 
+    @Override
+    public void update(String event, String notificationDay, int sw) {
+        updateNoti(event,notificationDay,sw);
+    }
+
+    //@Query("UPDATE events SET notificationDay=:notificationDay, sw=:sw WHERE event = :event")
+    //    void updateNotification(String event, String notificationDay,int sw);
+    public void updateNoti(String event, String notificationDay,int sw ) {
+        class UpdateCalendar extends AsyncTask<Void, Void, Void> { // clase interna
+            @Override
+            public Void doInBackground(Void... voids) {
+                if (event != null) {
+                    CalendarDatabaseClient.getInstance(mContext)
+                            .getCalendarDatabase()
+                            .getCalendarDao()
+                            .updateNotification(event, notificationDay, sw); // Sustituir por la función necesaria
+
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
+        }
+        UpdateCalendar gf = new UpdateCalendar();
+        gf.execute();
+    }
+
     public void checkedEvents(){
         class GetChecked extends AsyncTask<Void, Void, List<Event>> { // clase interna
             @Override

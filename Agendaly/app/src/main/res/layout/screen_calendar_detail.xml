@@ -77,19 +77,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/Avisar"
+            android:text="@string/avisar_estos_dias"
             android:textAlignment="viewStart"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvNotification"
+        <EditText
+            android:id="@+id/editTextNotificationScreen"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
             android:minHeight="48dp"
-
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:ignore="SpeakableTextPresentCheck"
             />
 
         <androidx.appcompat.widget.SwitchCompat

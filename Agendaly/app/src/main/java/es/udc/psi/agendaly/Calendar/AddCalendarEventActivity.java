@@ -81,7 +81,11 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
 
     public void nameEvent(){
         String eT = editTextNameEvent.getText().toString();
-        if(!eT.isEmpty()) {event.setEvent(eT);}
+        if(!eT.isEmpty()) {
+            if(editTextNameEvent.getText().toString().length() != 0 ){
+                event.setEvent(eT);
+            }
+        }
     }
 
     public void descriptionEvent(){
@@ -117,9 +121,11 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
                 notificationDay();
                 swChecked();
                 if(event !=null) {
-                    mPresenter.insert(event);
-                    Toast.makeText(getBaseContext(), "Evento añadido", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if(event.getEvent()!=null) {
+                        mPresenter.insert(event);
+                        Toast.makeText(getBaseContext(), "Evento añadido", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } Toast.makeText(getBaseContext(), "Añada nombre", Toast.LENGTH_SHORT).show();
                 }
             }
         });

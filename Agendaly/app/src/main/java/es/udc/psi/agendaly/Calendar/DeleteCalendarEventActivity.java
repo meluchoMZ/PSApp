@@ -1,6 +1,9 @@
 package es.udc.psi.agendaly.Calendar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +13,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import es.udc.psi.agendaly.BaseActivity;
+import es.udc.psi.agendaly.Calendar.database.Event;
 import es.udc.psi.agendaly.Calendar.presenter.CalendarDatabaseImp;
 import es.udc.psi.agendaly.Calendar.presenter.CalendarPresenter;
 import es.udc.psi.agendaly.Calendar.presenter.CalendarView;
@@ -26,13 +30,14 @@ public class DeleteCalendarEventActivity extends BaseActivity implements Calenda
 
     @BindView(R.id.editTextNameEventDelete)
     EditText editTextNameEventDelete;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_calendar_event);
+
         mPresenter = new CalendarDatabaseImp(this,getBaseContext());
         deleteEvent();
+
     }
 
     @Override
@@ -65,13 +70,8 @@ public class DeleteCalendarEventActivity extends BaseActivity implements Calenda
                     Toast.makeText(getBaseContext(), "Evento borrado", Toast.LENGTH_SHORT).show();
                     finish();
                 }
-
             }
         });
 
     }
-
-
-
-
 }

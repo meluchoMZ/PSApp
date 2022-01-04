@@ -50,9 +50,8 @@ public class ScreenCalendarActivity extends BaseActivity implements CalendarView
     ArrayList<String> send;
     @BindView(R.id.calendarRecyclerView)
     RecyclerView recyclerView;
-    String action="send.events";
-
     CalendarPresenter mPresenter;
+    String action="send.events";
 
 
     @Override
@@ -64,7 +63,7 @@ public class ScreenCalendarActivity extends BaseActivity implements CalendarView
         Bundle parametros = this.getIntent().getExtras();
         if(parametros !=null){
             String date = parametros.getString("date");
-            Log.d("_TAG",date);
+            //Log.d("_TAG",date);
             //1 diciembre 2021
             day=date;
             search(date);

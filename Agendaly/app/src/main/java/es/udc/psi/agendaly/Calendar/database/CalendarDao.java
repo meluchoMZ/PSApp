@@ -27,7 +27,10 @@ public interface CalendarDao {
     @Query("SELECT * FROM events" )
     public List<Event> getAll();
 
-     @Query("DELETE FROM events")
+    @Query("UPDATE events SET notificationDay=:notificationDay, sw=:sw WHERE event = :event")
+    void updateNotification(String event, String notificationDay,int sw);
+
+    @Query("DELETE FROM events")
     void deleteAll();
 
    /*
