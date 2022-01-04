@@ -21,6 +21,9 @@ public interface CalendarDao {
      @Query("SELECT * FROM events WHERE day LIKE :day" )
      public List<Event> getDayEventbyDay(String day);
 
+    @Query("SELECT * FROM events WHERE sw LIKE :sw" )
+    public List<Event> getCheckedEvent(int sw);
+
     @Query("SELECT * FROM events" )
     public List<Event> getAll();
 

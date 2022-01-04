@@ -13,11 +13,14 @@ public class Event {
 
     }
 
-    public Event(String event, String day, String hour, String description){
+    public Event(String event, String day, String hour, String description, String notificationDay, int sw){
         this.event=event;
         this.day=day;
         this.hour=hour;
         this.decription=description;
+        this.notificationDay = notificationDay;
+        this.sw = sw;
+
         //this.date=selectdate;
     }
 
@@ -37,6 +40,12 @@ public class Event {
 
     @ColumnInfo(name = "decription")
     String decription;
+
+    @ColumnInfo(name = "notificationDay")
+    String notificationDay;
+
+    @ColumnInfo(name = "sw")
+    int sw;
 
     public int getIdBD() {
         return idBD;
@@ -59,6 +68,10 @@ public class Event {
         return decription;
     }
 
+    public String getNotificationDay() { return notificationDay;}
+
+    public int getSw(){return sw;}
+
 
     public void setEvent(String event) {
         this.event = event;
@@ -74,6 +87,14 @@ public class Event {
 
     public void setHour(String hour) {
         this.hour = hour;
+    }
+
+    public void setNotificationDay(String notificationDay) {
+        this.notificationDay = notificationDay;
+    }
+
+    public void setSw(int sw) {
+        this.sw= sw;
     }
 
 

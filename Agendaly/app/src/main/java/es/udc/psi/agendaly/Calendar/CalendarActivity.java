@@ -33,6 +33,7 @@ public class CalendarActivity extends AppCompatActivity implements CalendarView,
     private LocalDate selectedDate;
     private CalendarPresenter mPresenter;
     CalendarReceiver myReceiver;
+    ArrayList<String> send;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
     String action="send.events";
 
@@ -44,13 +45,16 @@ public class CalendarActivity extends AppCompatActivity implements CalendarView,
         initWidgets();
         selectedDate = LocalDate.now();
         setMonthView();
+
         myReceiver = new CalendarReceiver();
         setBroadcast();
+
         selectedDate = LocalDate.now();
         mPresenter = new CalendarDatabaseImp(this, getBaseContext());
+        mPresenter.checkedEvents();
         setMonthView();
-        Log.d("_TAG34",tomorrowDate());
-        notify(tomorrowDate());
+        //Log.d("_TAG34",tomorrowDate());
+        //notify(tomorrowDate());
     }
 
     @Override
@@ -72,9 +76,9 @@ public class CalendarActivity extends AppCompatActivity implements CalendarView,
         return formatter.format(tomorrow);
     }
 
-    public void notify(String day){
-        mPresenter.searchDayAfter(day);
-    }
+    //public void notify(String day){
+        //mPresenter.searchDayAfter(day);
+    //}
 
     private void initWidgets()
     {
@@ -163,15 +167,28 @@ public class CalendarActivity extends AppCompatActivity implements CalendarView,
 
     @Override
     public void notifyEvent(List<EventViewModel> events) {
-        Intent intentN = new Intent(getBaseContext(), CalendarReceiver.class);
-        ArrayList<String> send = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        Intent intentN = new Intent(this, CalendarReceiver.class);
+        String today = selectedDate.format(formatter);
+        send = new ArrayList<>();
         for (EventViewModel a: events) {
-            send.add("Mañana "+ a.getEvent() +" a las " +
-                    a.getHour() + "/" + a.getDescription());
+            Log.d("_TAGNOTE",today +" "+ getDayNotifyString(a.getDay(), Integer.parseInt(a.getNotificationDay())));
+            if(today.equals(getDayNotifyString(a.getDay(), Integer.parseInt(a.getNotificationDay())))) {
+                send.add("Event "+ a.getEvent() +" a las " +
+                        a.getHour() + "/" + a.getDescription()+ a.getNotificationDay());
+            }
         }
         intentN.putExtra("list_event", send);
         intentN.setAction(action);
         getBaseContext().sendBroadcast(intentN);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getDayNotifyString(String eventDay, int i){
+        LocalDate localDate1 = LocalDate.parse(eventDay, DateTimeFormatter.ofPattern("d MMMM yyyy"));
+        localDate1 = localDate1.minusDays(i);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return formatter.format(localDate1);
     }
 
     @Override

@@ -43,7 +43,7 @@ public class CalendarDatabaseImp implements CalendarPresenter {
 
     @Override
     public void clearAll() {
-        clearAll();
+        deleteAllEventsDB();
     }
 
     @Override
@@ -54,6 +54,28 @@ public class CalendarDatabaseImp implements CalendarPresenter {
     @Override
     public void getAll() {
         getEventsBD();
+    }
+
+    public void checkedEvents(){
+        class GetChecked extends AsyncTask<Void, Void, List<Event>> { // clase interna
+            @Override
+            public List<Event>doInBackground(Void... voids) {
+                List<Event> eventList = CalendarDatabaseClient.getInstance(mContext)
+                        .getCalendarDatabase()
+                        .getCalendarDao()
+                        .getCheckedEvent(1);// Sustituir por la función necesaria
+                return eventList;
+            }
+
+            @Override
+            protected void onPostExecute(List<Event> list){
+                super.onPostExecute(list);
+                mEventsViewModels = getEventsViewModel(list);
+                mView.notifyEvent(mEventsViewModels);
+            }
+        }
+        GetChecked getChecked = new GetChecked();
+        getChecked.execute();
     }
 
     public void insertEventaDB(Event event) {

@@ -25,7 +25,7 @@ public class CalendarReceiver extends BroadcastReceiver{
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(@Nullable Context context, @Nullable Intent intent) {
-        Log.d("_TAG_R", "HO");
+        //Log.d("_TAG_R", "HO");
         assert intent != null;
         Bundle bundle = new Bundle();
         createNotificationChannel(context);
@@ -33,9 +33,11 @@ public class CalendarReceiver extends BroadcastReceiver{
 
         ArrayList<String> eventsList;
         if (intent.getAction().equals(action)) {
+            Log.d("_TAG_R", "HEY");
             bundle = intent.getExtras();
             if (bundle != null) {
                 eventsList = bundle.getStringArrayList("list_event");
+                Log.d("_TAG_R", "HEY2");
                 if (eventsList != null) {
                     int i = 0;
                     for (String a : eventsList) {

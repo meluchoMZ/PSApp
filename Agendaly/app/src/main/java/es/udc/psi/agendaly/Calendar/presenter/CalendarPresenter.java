@@ -16,4 +16,6 @@ public interface CalendarPresenter {
     void deleteEvent(String event);
 
     void getAll();
+
+    void checkedEvents();
 }

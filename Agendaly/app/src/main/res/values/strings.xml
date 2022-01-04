@@ -68,5 +68,8 @@
     <string name="contacts">Contacts</string>
     <string name="teams">Teams</string>
     <string name="account">Cuenta</string>
+    <string name="borrar_evento">borrar evento</string>
+    <string name="Avisar">Avisar</string>
+    <string name="notificar_cuantos_dias_antes">notificar cuantos dias antes</string>
 
 </resources>
