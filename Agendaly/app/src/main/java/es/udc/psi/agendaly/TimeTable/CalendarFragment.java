@@ -158,6 +158,8 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
                 mPresenter.update(horaNotificacion,0);
                 notificar();
+                establecerAlarmaClick(getHorarioNotificacionCalendar(), true);
+                Toast.makeText(getContext(), "Notificaciones desactivadas ", Toast.LENGTH_SHORT).show();
                 done=true;
 
             }else{
@@ -191,9 +193,14 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         horaNotificacion= hourOfDay+":"+ minute;
-                        mPresenter.update(horaNotificacion,1);
-                        notificar();
-                        establecerAlarmaClick(getHorarioNotificacionCalendar(),false);
+                        if(!done) {
+                            mPresenter.update(horaNotificacion, 1);
+                            notificar();
+                            establecerAlarmaClick(getHorarioNotificacionCalendar(), false);
+                        }else{
+                            Toast.makeText(getContext(), "Activa las notificaciones ",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                 };
