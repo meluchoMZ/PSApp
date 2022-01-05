@@ -23,9 +23,12 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -51,8 +54,9 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
     String todaySchedule = "todaySchedule";
     String currentDay;
     String dia = "";
-    SimpleDateFormat timeformat=new SimpleDateFormat("hh:mm a");
+    SimpleDateFormat timeformat=new SimpleDateFormat("HH:mm");
     ArrayList<String> sendName;
+    String horaNotificacion;
     private static final int ALARM_REQUEST_CODE = 133;
     boolean back;
 
@@ -72,8 +76,13 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         // Default Date set to Today.
         final Calendar defaultSelectedDate = Calendar.getInstance();
         SelectDay(defaultSelectedDate.get(Calendar.DAY_OF_WEEK));
-
         currentDay = CurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+        horaNotificacion="00:00";
+        mPresenter.getNotificationChecked(currentDay);
+        if(!horaNotificacion.equals("00:00")){
+            repeat();
+        }
+        //repeat();
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(rootView, R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5)
@@ -118,6 +127,14 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
     }
 
+    public void repeat(){
+        if(currentDay.equals(dia)) {
+            mPresenter.notifyDay(currentDay);
+            notificar();
+            establecerAlarmaClick(getHorarioNotificacionCalendar(), false);
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -127,7 +144,6 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-        boolean go;
         int id = item.getItemId();
         if(id==R.id.icon_add){
             Intent intent = new Intent(getActivity(),AddEvent.class);
@@ -136,19 +152,27 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         //alarma a la hora estipulada por el usuario
         if(id==R.id.icon_notification){
             if (!done){
-                picker(item);
-                notificar();
+
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
-                        R.drawable.baseline_notifications_active_white_24));
+                        R.drawable.baseline_notifications_white_24));
+
+                mPresenter.update(horaNotificacion,0);
+                notificar();
                 done=true;
 
             }else{
+                mPresenter.update(horaNotificacion,1);
+                notificar();
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
-                        R.drawable.baseline_notifications_white_24));
+                        R.drawable.baseline_notifications_active_white_24));
                 done=false;
-                establecerAlarmaClick(Calendar.getInstance(),true);
-
             }
+
+        }
+        if(id==R.id.icon_picker_hour){
+            picker();
+            mPresenter.update(horaNotificacion,1);
+            notificar();
         }
 
         if(id==R.id.icon_delete){
@@ -158,16 +182,18 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         return true;
     }
 
-    public void picker(MenuItem item){
+    //elegimos la hora que queremos que nos notifique
+    public void picker(){
+        //("HH:mm");
         final Calendar getDate = Calendar.getInstance();
         TimePickerDialog.OnTimeSetListener onTimeSetListener =
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        getDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        getDate.set(Calendar.MINUTE, minute);
-                        establecerAlarmaClick(getDate,false);
-
+                        horaNotificacion= hourOfDay+":"+ minute;
+                        mPresenter.update(horaNotificacion,1);
+                        notificar();
+                        establecerAlarmaClick(getHorarioNotificacionCalendar(),false);
                     }
 
                 };
@@ -181,22 +207,48 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 getDate.clear();
+                getDate.set(Calendar.HOUR_OF_DAY, 0);
+                getDate.set(Calendar.MINUTE, 0);
+                notificar();
                 establecerAlarmaClick(getDate,true);
-                item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
-                        R.drawable.baseline_notifications_white_24));
+                //item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
+                       // R.drawable.baseline_notifications_white_24));
             }
         });
 
         timePickerDialog.show();
 
+    }
 
+    public String horarioFormat(){
+        String[] parts = horaNotificacion.split(":");
+        String hora = parts[0];
+        if(hora.length()<2){
+            hora= "0"+hora;
+        }
+        String minuto = parts[1];
+        if(minuto.length()<2){
+            minuto= "0"+minuto;
+        }
+        horaNotificacion = hora+":"+minuto;
+        return horaNotificacion;
+    }
 
-
-
+    public Calendar getHorarioNotificacionCalendar(){
+        horaNotificacion = horarioFormat();
+        String[] parts = horaNotificacion.split(":");
+        String hora = parts[0];
+        String minuto = parts[1];
+        final Calendar getDate = Calendar.getInstance();
+        getDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hora));
+        getDate.set(Calendar.MINUTE, Integer.parseInt(minuto));
+        getDate.set(Calendar.SECOND, 0);
+        return getDate;
     }
 
     private void establecerAlarmaClick(Calendar calendar,boolean cancel){
         //get instance of alarm manager
+        notificar();
         AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(getContext(), MyReceiver.class);
         alarmIntent.putExtra("asignatura", sendName);
@@ -205,8 +257,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),
                 ALARM_REQUEST_CODE, alarmIntent, 0);
         if(!cancel) {
-            manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, pendingIntent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
             Toast.makeText(getContext(), "Notificacion de horario a las " +
                     timeformat.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
         }else{
@@ -255,6 +306,11 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
     @Override
     public void sendNotification(List<AsignaturaViewModel> asignaturas) {
+        //todas las de ese día van a tener la misma hora
+        if(!asignaturas.isEmpty()) {
+            horaNotificacion= asignaturas.get(0).getNotificationHour();
+
+        }
         sendName = new ArrayList<>();
         for (AsignaturaViewModel a: asignaturas) {
             sendName.add("Hoy tienes : "+ a.getName() +"/"+" Horario " +
@@ -265,12 +321,8 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
     public void notificar(){
         if(currentDay.equals(dia)){
-                notifyByDay(currentDay);
+            mPresenter.getNotificationChecked(currentDay);
         }
-    }
-
-    public void notifyByDay(String day){
-        mPresenter.notifyDay(day);
     }
 
     public String CurrentDay(int nD) {

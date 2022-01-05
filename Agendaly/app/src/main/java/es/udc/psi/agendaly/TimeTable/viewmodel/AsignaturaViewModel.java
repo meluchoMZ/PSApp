@@ -6,15 +6,16 @@ import android.os.Parcelable;
 public class AsignaturaViewModel implements Parcelable {
 
 
-    private String name,aula,hora;
+    private String name,aula,hora,notificationHour;
 
     public AsignaturaViewModel(String name,
-                               String hora,String aula) {
+                               String hora,String aula, String notificationHour) {
 
 
         this.name = name;
         this.hora=hora;
         this.aula = aula;
+        this.notificationHour=notificationHour;
     }
 
     public AsignaturaViewModel(Parcel in){
@@ -31,6 +32,14 @@ public class AsignaturaViewModel implements Parcelable {
 
     public String getAula() {
         return aula;
+    }
+
+    public String getNotificationHour() {
+        return notificationHour;
+    }
+
+    public void setNotificationHour(String notificationHour) {
+        this.notificationHour = notificationHour;
     }
 
     @Override

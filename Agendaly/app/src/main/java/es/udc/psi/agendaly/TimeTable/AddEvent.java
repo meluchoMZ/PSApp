@@ -83,6 +83,8 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
             public void onClick(View view) {
                 nameAsignatura();
                 nameAula();
+                asignatura.setHoraNotificacion("00:00");
+                asignatura.setNotificar(1);
                 if(asignatura !=null && asignatura.getFin() != null && asignatura.getFin() != null
                         && asignatura.getAula() != null && asignatura.getNombre() != null) {
                     mPresenter.insert(asignatura);
