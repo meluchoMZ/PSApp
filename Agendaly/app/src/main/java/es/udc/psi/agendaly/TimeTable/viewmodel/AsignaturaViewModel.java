@@ -7,15 +7,17 @@ public class AsignaturaViewModel implements Parcelable {
 
 
     private String name,aula,hora,notificationHour;
+    private boolean notificar;
 
     public AsignaturaViewModel(String name,
-                               String hora,String aula, String notificationHour) {
+                               String hora,String aula, String notificationHour, boolean notificar) {
 
 
         this.name = name;
         this.hora=hora;
         this.aula = aula;
         this.notificationHour=notificationHour;
+        this.notificar=notificar;
     }
 
     public AsignaturaViewModel(Parcel in){
@@ -40,6 +42,10 @@ public class AsignaturaViewModel implements Parcelable {
 
     public void setNotificationHour(String notificationHour) {
         this.notificationHour = notificationHour;
+    }
+
+    public boolean isNotificar() {
+        return notificar;
     }
 
     @Override

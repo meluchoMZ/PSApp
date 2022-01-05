@@ -14,12 +14,15 @@ public class AsignaturaViewModelMapper {
     }
 
     public List<AsignaturaViewModel> map() {
-
+        boolean notificar;
         List<AsignaturaViewModel> asignaturas = new ArrayList<>();
         for (Asignatura asignatura : mAsignatura) {
+            if(asignatura.getNotificar()==0){
+                notificar=false;
+            }else {notificar=true;}
             asignaturas.add(new AsignaturaViewModel(asignatura.getNombre(),
                     asignatura.getInicio()+" - "+asignatura.getFin(),asignatura.getAula(),
-                    asignatura.getHoraNotificacion()));
+                    asignatura.getHoraNotificacion(),notificar));
         }
         return asignaturas;
     }

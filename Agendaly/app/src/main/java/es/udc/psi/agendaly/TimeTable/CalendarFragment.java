@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,12 +54,15 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
     private AsignaturaPresenter mPresenter;
     String todaySchedule = "todaySchedule";
     String currentDay;
+    boolean notificar;
+
     String dia = "";
     SimpleDateFormat timeformat=new SimpleDateFormat("HH:mm");
     ArrayList<String> sendName;
-    String horaNotificacion;
+    String horaNotificacion="";
     private static final int ALARM_REQUEST_CODE = 133;
-    boolean back;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,14 +79,13 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         endDate.add(Calendar.MONTH, 1);
         // Default Date set to Today.
         final Calendar defaultSelectedDate = Calendar.getInstance();
+        //se guarda el dia en el string dia
         SelectDay(defaultSelectedDate.get(Calendar.DAY_OF_WEEK));
+        //se guarda el dia actual
         currentDay = CurrentDay(Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-        horaNotificacion="00:00";
-        mPresenter.getNotificationChecked(currentDay);
-        if(!horaNotificacion.equals("00:00")){
-            repeat();
-        }
-        //repeat();
+
+
+
         HorizontalCalendar horizontalCalendar = new HorizontalCalendar.Builder(rootView, R.id.calendarView)
                 .range(startDate, endDate)
                 .datesNumberOnScreen(5)
@@ -111,7 +114,6 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
             public void onDateSelected(Calendar date, int position) {
                 int nD=date.get(Calendar.DAY_OF_WEEK);
                 SelectDay(nD);
-
             }
 
             @Override
@@ -123,16 +125,14 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
         });
 
+        //repetir la alarma programada
+        if(horaNotificacion.equals("")) {
+            mPresenter.searchByDay(currentDay);
+        }
+        notificar();
+        ejecutar();
         return rootView;
 
-    }
-
-    public void repeat(){
-        if(currentDay.equals(dia)) {
-            mPresenter.notifyDay(currentDay);
-            notificar();
-            establecerAlarmaClick(getHorarioNotificacionCalendar(), false);
-        }
     }
 
     @Override
@@ -149,21 +149,21 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
             Intent intent = new Intent(getActivity(),AddEvent.class);
             startActivity(intent);
         }
-        //alarma a la hora estipulada por el usuario
+        //alarmas acyivadas o desactivadas
         if(id==R.id.icon_notification){
             if (!done){
 
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_white_24));
 
-                mPresenter.update(horaNotificacion,0);
+                mPresenter.update(horarioFormat(),0);
                 notificar();
-                establecerAlarmaClick(getHorarioNotificacionCalendar(), true);
+                establecerAlarmaClick(getHorarioNotificacionCalendar(), true, true);
                 Toast.makeText(getContext(), "Notificaciones desactivadas ", Toast.LENGTH_SHORT).show();
                 done=true;
 
             }else{
-                mPresenter.update(horaNotificacion,1);
+                mPresenter.update(horarioFormat(),1);
                 notificar();
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_active_white_24));
@@ -171,9 +171,10 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
             }
 
         }
+        //alarma a la hora estipulada por el usuario
         if(id==R.id.icon_picker_hour){
             picker();
-            mPresenter.update(horaNotificacion,1);
+            mPresenter.update(horarioFormat(),1);
             notificar();
         }
 
@@ -194,9 +195,10 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         horaNotificacion= hourOfDay+":"+ minute;
                         if(!done) {
-                            mPresenter.update(horaNotificacion, 1);
+                            mPresenter.update(horarioFormat(), 1);
                             notificar();
-                            establecerAlarmaClick(getHorarioNotificacionCalendar(), false);
+                            establecerAlarmaClick(getHorarioNotificacionCalendar(),
+                                    false,true);
                         }else{
                             Toast.makeText(getContext(), "Activa las notificaciones ",
                                     Toast.LENGTH_SHORT).show();
@@ -217,15 +219,14 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                 getDate.set(Calendar.HOUR_OF_DAY, 0);
                 getDate.set(Calendar.MINUTE, 0);
                 notificar();
-                establecerAlarmaClick(getDate,true);
-                //item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
-                       // R.drawable.baseline_notifications_white_24));
+                establecerAlarmaClick(getDate,true, true);
             }
         });
 
         timePickerDialog.show();
 
     }
+
 
     public String horarioFormat(){
         String[] parts = horaNotificacion.split(":");
@@ -253,25 +254,37 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         return getDate;
     }
 
-    private void establecerAlarmaClick(Calendar calendar,boolean cancel){
-        //get instance of alarm manager
-        notificar();
-        AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent alarmIntent = new Intent(getContext(), MyReceiver.class);
-        alarmIntent.putExtra("asignatura", sendName);
-        alarmIntent.setAction(todaySchedule);
+    private void establecerAlarmaClick(Calendar calendar,boolean cancel, boolean show){
+        if(sendName!=null) {
+            AlarmManager manager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
+            Intent alarmIntent = new Intent(getContext(), MyReceiver.class);
+            alarmIntent.putExtra("asignatura", sendName);
+            alarmIntent.setAction(todaySchedule);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),
-                ALARM_REQUEST_CODE, alarmIntent, 0);
-        if(!cancel) {
-            manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
-            Toast.makeText(getContext(), "Notificacion de horario a las " +
-                    timeformat.format(calendar.getTime()), Toast.LENGTH_SHORT).show();
-        }else{
-            manager.cancel(pendingIntent);
-            Toast.makeText(getContext(), "Alarma cancelada ", Toast.LENGTH_SHORT).show();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(),
+                    ALARM_REQUEST_CODE, alarmIntent, 0);
+            if (!cancel) {
+                Log.d("_TAGSET", String.valueOf(sendName.size()));
+                manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                if(show){Toast.makeText(getContext(), "Notificacion de horario a las " +
+                        timeformat.format(calendar.getTime()), Toast.LENGTH_SHORT).show();}
+            } else {
+                manager.cancel(pendingIntent);
+                if(show){Toast.makeText(getContext(),
+                        "Alarma cancelada ", Toast.LENGTH_SHORT).show();}
+            }
+        }else {
+            Log.d("_TAGSET", "No hay asignaturas");
+            }
+
+    }
+
+
+
+    public void notificar(){
+        if(currentDay.equals(dia)){
+            mPresenter.getNotificationChecked(currentDay);
         }
-
     }
 
     public void SelectDay(int nD){
@@ -305,31 +318,22 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                 .commit();
     }
 
-
-    @Override
-    public void showAsignaturas(List<AsignaturaViewModel> asignaturas) {
-
-    }
-
-    @Override
-    public void sendNotification(List<AsignaturaViewModel> asignaturas) {
-        //todas las de ese día van a tener la misma hora
-        if(!asignaturas.isEmpty()) {
-            horaNotificacion= asignaturas.get(0).getNotificationHour();
-
-        }
-        sendName = new ArrayList<>();
-        for (AsignaturaViewModel a: asignaturas) {
-            sendName.add("Hoy tienes : "+ a.getName() +"/"+" Horario " +
-                    a.getHora() + " en el aula " + a.getAula());
-        }
-
-    }
-
-    public void notificar(){
-        if(currentDay.equals(dia)){
-            mPresenter.getNotificationChecked(currentDay);
-        }
+    //checkeamos actualizaciones
+    private void ejecutar() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                notificar();
+                if(notificar){
+                    Log.d("_TAGSET", horaNotificacion);
+                    establecerAlarmaClick(getHorarioNotificacionCalendar(),true,false);
+                    mPresenter.getNotificationChecked(currentDay);
+                    establecerAlarmaClick(getHorarioNotificacionCalendar(),false,false);
+                }
+                handler.postDelayed(this, 60000);//se ejecutara cada minuto
+            }
+        }, 100);
     }
 
     public String CurrentDay(int nD) {
@@ -362,6 +366,36 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
         }
         return dia;
+    }
+
+    @Override
+    public void showAsignaturas(List<AsignaturaViewModel> asignaturas) {
+        if(!asignaturas.isEmpty()) {
+            if(horaNotificacion.equals("")){
+            horaNotificacion= asignaturas.get(0).getNotificationHour();
+            Log.d("_TAGSENDSHOW",horaNotificacion);
+                notificar();
+                if(sendName!=null)establecerAlarmaClick(getHorarioNotificacionCalendar(),
+                        false, true);
+            }
+        }
+    }
+
+    @Override
+    public void sendNotification(List<AsignaturaViewModel> asignaturas) {
+        //todas las de ese día van a tener la misma hora
+        if(!asignaturas.isEmpty()) {
+            horaNotificacion= asignaturas.get(0).getNotificationHour();
+            notificar=asignaturas.get(0).isNotificar();
+
+        }
+        sendName = new ArrayList<>();
+        for (AsignaturaViewModel a: asignaturas) {
+            sendName.add("Hoy tienes : "+ a.getName() +"/"+" Horario " +
+                    a.getHora() + " en el aula " + a.getAula());
+
+        }
+
     }
 
 }
