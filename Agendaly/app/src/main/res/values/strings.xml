@@ -68,5 +68,12 @@
     <string name="contacts">Contacts</string>
     <string name="teams">Teams</string>
     <string name="account">Cuenta</string>
+    <string name="notificaciones_desactivadas">\"Notificaciones desactivadas \"</string>
+    <string name="warning_activa_notificaciones">\"Activa las notificaciones \"</string>
+    <string name="alarma_cancelada">\"Alarma cancelada \"</string>
+    <string name="notificacacion_a_las">\"Notificacion de horario a las \"</string>
+    <string name="hoy_tienes">\"Hoy tienes : \"</string>
+    <string name="horario_noti">\" Horario \"</string>
+    <string name="en_el_aula">\" en el aula \"</string>
 
 </resources>

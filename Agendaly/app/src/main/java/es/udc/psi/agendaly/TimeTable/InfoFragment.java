@@ -94,8 +94,8 @@ public class InfoFragment extends Fragment implements AsignaturaView {
         //new AsignaturaViewModel(a.getName(),a.getHora(),a.getAula())
         ArrayList<String> sendName = new ArrayList<>();
         for (AsignaturaViewModel a: asignaturas) {
-            sendName.add("Hoy tienes : "+ a.getName() +"/"+" Horario " +
-                    a.getHora() + " en el aula " + a.getAula());
+            sendName.add(getString(R.string.hoy_tienes)+ a.getName() +"/"+getString(R.string.horario_noti) +
+                    a.getHora() + getString(R.string.en_el_aula) + a.getAula());
         }
         intent.putExtra("asignatura", sendName);
         intent.setAction(todaySchedule);

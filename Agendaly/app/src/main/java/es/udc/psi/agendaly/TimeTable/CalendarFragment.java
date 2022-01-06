@@ -139,6 +139,15 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.add_menu,menu);
+        MenuItem item = menu.findItem(R.id.icon_notification);
+        Log.d("_TAG", String.valueOf(notificar));
+        if(notificar){
+            item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
+                    R.drawable.baseline_notifications_active_white_24));
+        }else{
+            item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
+                    R.drawable.baseline_notifications_white_24));
+        }
     }
 
     @Override
@@ -151,7 +160,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         }
         //alarmas acyivadas o desactivadas
         if(id==R.id.icon_notification){
-            if (!done){
+            if (notificar){
 
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_white_24));
@@ -159,7 +168,8 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                 mPresenter.update(horarioFormat(),0);
                 notificar();
                 establecerAlarmaClick(getHorarioNotificacionCalendar(), true, true);
-                Toast.makeText(getContext(), "Notificaciones desactivadas ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.notificaciones_desactivadas)
+                        , Toast.LENGTH_SHORT).show();
                 done=true;
 
             }else{
@@ -200,7 +210,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                             establecerAlarmaClick(getHorarioNotificacionCalendar(),
                                     false,true);
                         }else{
-                            Toast.makeText(getContext(), "Activa las notificaciones ",
+                            Toast.makeText(getContext(), getString(R.string.warning_activa_notificaciones),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -266,12 +276,12 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
             if (!cancel) {
                 Log.d("_TAGSET", String.valueOf(sendName.size()));
                 manager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                if(show){Toast.makeText(getContext(), "Notificacion de horario a las " +
+                if(show){Toast.makeText(getContext(), getString(R.string.notificacacion_a_las) +
                         timeformat.format(calendar.getTime()), Toast.LENGTH_SHORT).show();}
             } else {
                 manager.cancel(pendingIntent);
                 if(show){Toast.makeText(getContext(),
-                        "Alarma cancelada ", Toast.LENGTH_SHORT).show();}
+                        getString(R.string.alarma_cancelada), Toast.LENGTH_SHORT).show();}
             }
         }else {
             Log.d("_TAGSET", "No hay asignaturas");
@@ -391,8 +401,8 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         }
         sendName = new ArrayList<>();
         for (AsignaturaViewModel a: asignaturas) {
-            sendName.add("Hoy tienes : "+ a.getName() +"/"+" Horario " +
-                    a.getHora() + " en el aula " + a.getAula());
+            sendName.add(getString(R.string.hoy_tienes)+ a.getName() +"/"+getString(R.string.horario_noti) +
+                    a.getHora() + getString(R.string.en_el_aula) + a.getAula());
 
         }
 
