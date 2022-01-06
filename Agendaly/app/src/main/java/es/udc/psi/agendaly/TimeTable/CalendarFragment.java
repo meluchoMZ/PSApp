@@ -189,7 +189,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         }
         //alarmas acyivadas o desactivadas
         if(id==R.id.icon_notification){
-            if (notificar){
+            if (notificar && !done){
 
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_white_24));
@@ -206,6 +206,8 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
                 notificar();
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_active_white_24));
+                Toast.makeText(getContext(), getString(R.string.notificaciones_activadas)
+                        , Toast.LENGTH_SHORT).show();
                 done=false;
             }
 
