@@ -10,6 +10,7 @@ package es.udc.psi.agendaly.Auth;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -87,7 +88,7 @@ public class AuthUtils {
 
 	@RequiresApi(api = Build.VERSION_CODES.O)
 	public static User retrieveUser() {
-		SharedPreferences sp = AuthenticationActivity.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE);
+		SharedPreferences sp = GlobalApplication.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE);
 		String spEmail = sp.getString("user", null);
 		String spPasswd = sp.getString("passwd", null);
 		String spMethod = sp.getString("authMethod", null);

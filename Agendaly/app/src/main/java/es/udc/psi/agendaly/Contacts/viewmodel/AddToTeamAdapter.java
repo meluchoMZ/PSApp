@@ -1,11 +1,10 @@
 package es.udc.psi.agendaly.Contacts.viewmodel;
 
+import android.content.Intent;
 import android.os.Build;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,13 +13,13 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import es.udc.psi.agendaly.Auth.AuthUtils;
-import es.udc.psi.agendaly.BaseActivity;
 import es.udc.psi.agendaly.CloudMessaging.CloudMessagingAPI;
 import es.udc.psi.agendaly.CloudMessaging.CloudMessagingClient;
 import es.udc.psi.agendaly.CloudMessaging.CloudMessagingData;
@@ -32,6 +31,7 @@ import es.udc.psi.agendaly.Contacts.presenter.ContactsPresenter;
 import es.udc.psi.agendaly.GlobalApplication;
 import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.Teams.model.Teams;
+import es.udc.psi.agendaly.TimeTable.Horario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,30 +93,58 @@ public class AddToTeamAdapter extends RecyclerView.Adapter<AddToTeamAdapter.View
 
 	@RequiresApi(api = Build.VERSION_CODES.O)
 	@Override
-	public void doNotify(String user, String token) {
+	public void doNotify(String user) {
 		final String sender = AuthUtils.retrieveUser().getEmail();
 		final String title = "Team invitation";
 		final String message = sender
 				+ " wants to add you to the team "+team;
-		CloudMessagingData data = new CloudMessagingData(title, message, sender);
-		CloudMessagingSender notifier = new CloudMessagingSender(data, token);
-		api.sendNotification(notifier).enqueue(new Callback<CloudMessagingResponse>() {
-			@Override
-			public void onResponse(Call<CloudMessagingResponse> call, Response<CloudMessagingResponse> response) {
-				if (response.code() == 200) {
-					if (response.body().getCode() != 1) {
-						Toast.makeText(GlobalApplication.getContext(), "invitation sent", Toast.LENGTH_SHORT).show();
+		CloudMessagingData data = new CloudMessagingData(title, message);
+		FirebaseFirestore db = FirebaseFirestore.getInstance();
+		db.collection("userTeams").document(user).get().addOnCompleteListener(task -> {
+			if (task.isSuccessful()) {
+				if (task.getResult() != null && task.getResult().getData() != null) {
+					Map<String, Object> map = task.getResult().getData();
+					AtomicBoolean exists = new AtomicBoolean(false);
+					map.forEach((key, value) -> {
+						if (team.equals(key)) {
+							exists.set(true);
+						}
+					});
+					if (exists.get()) {
+						Toast.makeText(GlobalApplication.getContext(), user+
+								" already belong to this team", Toast.LENGTH_SHORT).show();
+					} else {
+						db.collection("userTokens").document(user).get()
+								.addOnCompleteListener(task2 -> {
+									if (task2.isSuccessful() && task2.getResult().getData() != null) {
+										String token = (String) task2.getResult().getData().get("token");
+										CloudMessagingSender notifier = new CloudMessagingSender(data, token);
+										api.sendNotification(notifier).enqueue(new Callback<CloudMessagingResponse>() {
+											@Override
+											public void onResponse(Call<CloudMessagingResponse> call, Response<CloudMessagingResponse> response) {
+												if (response.code() == 200) {
+													if (response.body().getCode() != 1) {
+														Toast.makeText(GlobalApplication.getContext(), "Invitation sent", Toast.LENGTH_SHORT).show();
+													}
+												}
+											}
+
+											@Override
+											public void onFailure(Call<CloudMessagingResponse> call, Throwable t) {
+												Toast.makeText(GlobalApplication.getContext(), "Cannot send invitation to join the team",
+														Toast.LENGTH_SHORT). show();
+											}
+										});
+										canWrite = true;
+										Intent intent = new Intent(GlobalApplication.getContext(), Horario.class);
+										intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										GlobalApplication.getContext().startActivity(intent);
+									}
+								});
 					}
 				}
 			}
-
-			@Override
-			public void onFailure(Call<CloudMessagingResponse> call, Throwable t) {
-				Toast.makeText(GlobalApplication.getContext(), "Cannot send invitation to join the team",
-						Toast.LENGTH_SHORT). show();
-			}
 		});
-		canWrite = true;
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder {

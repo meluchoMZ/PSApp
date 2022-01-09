@@ -18,4 +18,6 @@ public interface ContactsDao {
 	public List<Contact> getAll();
 	@Query("select token from contacts where email = (:email)")
 	public String getTokenFromUser(String email);
+	@Query("delete from contacts")
+	public void removeAll();
 }

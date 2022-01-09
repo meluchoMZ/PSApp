@@ -3,12 +3,10 @@ package es.udc.psi.agendaly.CloudMessaging;
 public class CloudMessagingData {
 	private String title;
 	private String message;
-	private String from;
 
-	public CloudMessagingData(String title, String message, String from) {
+	public CloudMessagingData(String title, String message) {
 		this.title = title;
 		this.message = message;
-		this.from = from;
 	}
 
 	public String getTitle() {
@@ -25,13 +23,5 @@ public class CloudMessagingData {
 
 	public void setMessage(String message) {
 		this.message = message;
-	}
-
-	public String getFrom() {
-		return this.from;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
 	}
 }

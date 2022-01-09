@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +34,7 @@ import es.udc.psi.agendaly.Auth.AuthUtils;
 import es.udc.psi.agendaly.BaseActivity;
 import es.udc.psi.agendaly.Calendar.CalendarActivity;
 import es.udc.psi.agendaly.Contacts.ContactsActivity;
+import es.udc.psi.agendaly.GlobalApplication;
 import es.udc.psi.agendaly.Profiles.ProfileActivity;
 import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.Teams.model.Teams;
@@ -84,6 +86,12 @@ public class TeamsActivity extends BaseActivity implements TeamsView {
 		});
 		initRV(new ArrayList<>());
 		tPresenter.getTeams();
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			String tuid = (String) extras.get("team");
+			String[] creator = tuid.split("#");
+			showConfirmationDialog(tuid, creator[1]);
+		}
 	}
 
 	@Override
@@ -153,5 +161,18 @@ public class TeamsActivity extends BaseActivity implements TeamsView {
 		params.gravity = Gravity.CENTER;
 		view.setLayoutParams(params);
 		s.show();
+	}
+
+	private void showConfirmationDialog(String tuid, String creator) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(creator+" "+getString(R.string.joinTeam)+" "+tuid);
+		builder.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				tPresenter.addTeam(new Teams(tuid, creator));
+			}
+		});
+		builder.setNegativeButton(getString(R.string.cancel), null);
+		builder.create().show();
 	}
 }

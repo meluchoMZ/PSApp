@@ -56,7 +56,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 						// getting email
 						String text = ((TextView) ((LinearLayout)((FrameLayout) v)
 								.getChildAt(0)).getChildAt(0)).getText().toString();
-						Toast.makeText(v.getContext(), text, Toast.LENGTH_SHORT).show();
 						Intent intent = new Intent(itemView.getContext(), AddToTeamActivity.class);
 						intent.putExtra(AddToTeamAdapter.USER, text);
 						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

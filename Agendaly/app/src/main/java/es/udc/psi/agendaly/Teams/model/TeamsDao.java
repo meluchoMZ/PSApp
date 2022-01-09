@@ -19,4 +19,6 @@ public interface TeamsDao {
 	public List<Teams> getAll();
 	@Query("select * from teams where uuid = (:uuid) order by tuid")
 	public List<Teams> getTeamsCreatedByUser(String uuid);
+	@Query("delete from teams")
+	public void removeAll();
 }
