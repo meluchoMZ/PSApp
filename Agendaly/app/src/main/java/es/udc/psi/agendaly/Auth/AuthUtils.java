@@ -10,10 +10,18 @@ package es.udc.psi.agendaly.Auth;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -80,7 +88,7 @@ public class AuthUtils {
 
 	@RequiresApi(api = Build.VERSION_CODES.O)
 	public static User retrieveUser() {
-		SharedPreferences sp = AuthenticationActivity.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE);
+		SharedPreferences sp = GlobalApplication.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE);
 		String spEmail = sp.getString("user", null);
 		String spPasswd = sp.getString("passwd", null);
 		String spMethod = sp.getString("authMethod", null);
@@ -90,5 +98,19 @@ public class AuthUtils {
 	public static void removeUser() {
 		SharedPreferences sp = AuthenticationActivity.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE);
 		sp.edit().clear().apply();
+	}
+
+	public static void saveUserTokenInFirestore(String mail) {
+		if (mail == null) return;
+		FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+			if (task.isSuccessful() && task.getResult() != null) {
+				// do whatever with token
+				FirebaseFirestore db = FirebaseFirestore.getInstance();
+				HashMap<String, String> map = new HashMap<>();
+				map.put("token", task.getResult());
+				db.collection("userTokens").document(mail)
+						.set(map);
+			}
+		});
 	}
 }

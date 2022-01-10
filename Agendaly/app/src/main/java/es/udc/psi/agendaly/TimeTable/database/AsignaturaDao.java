@@ -8,6 +8,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import es.udc.psi.agendaly.Calendar.database.Event;
 import es.udc.psi.agendaly.TimeTable.Asignatura;
 
 @Dao
@@ -27,5 +28,12 @@ public interface AsignaturaDao {
 
      @Query("DELETE FROM asignaturas")
     void deleteAll();
+
+    @Query("UPDATE asignaturas SET horaNotificacion=:horaNotificacion, notificar=:notificar")
+    void update(String horaNotificacion, int notificar);
+
+    @Query("SELECT * FROM asignaturas WHERE notificar LIKE :notificar AND day LIKE :day" )
+    public List<Asignatura> getNotificationChecked(String day, int notificar);
+
 
 }
