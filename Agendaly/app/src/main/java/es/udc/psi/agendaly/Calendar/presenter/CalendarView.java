@@ -11,4 +11,6 @@ public interface CalendarView {
     void showEvents(List<EventViewModel> events);
 
     void updateEvent(EventViewModel event, int position);
+
+    void notifyEvent(List<EventViewModel> events);
 }

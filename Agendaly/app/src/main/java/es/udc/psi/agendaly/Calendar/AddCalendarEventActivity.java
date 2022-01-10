@@ -1,6 +1,7 @@
 package es.udc.psi.agendaly.Calendar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.content.Intent;
 import android.icu.util.Calendar;
@@ -43,6 +44,12 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
     @BindView(R.id.editTextEventHour)
     EditText editTextHour;
 
+    @BindView(R.id.eTDiasAntes)
+    EditText editTextNotification;
+
+    @BindView(R.id.add_calendar_sw)
+    SwitchCompat switchCompat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +74,18 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
     public void updateEvent(EventViewModel event, int position) {
         mAdapter.updateItem(event,position);
     }
+    @Override
+    public void notifyEvent(List<EventViewModel> events) {
+
+    }
 
     public void nameEvent(){
         String eT = editTextNameEvent.getText().toString();
-        if(!eT.isEmpty()) {event.setEvent(eT);}
+        if(!eT.isEmpty()) {
+            if(editTextNameEvent.getText().toString().length() != 0 ){
+                event.setEvent(eT);
+            }
+        }
     }
 
     public void descriptionEvent(){
@@ -84,6 +99,18 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
         if(!eT.isEmpty()) {event.setHour(eT);}
     }
 
+    public void notificationDay(){
+        String eT = editTextNotification.getText().toString();
+        if(!eT.isEmpty()) {event.setNotificationDay(eT);}
+    }
+
+    public void swChecked(){
+        Boolean sw = switchCompat.isChecked();
+        if(!sw){event.setSw(0);}
+        else{event.setSw(1);}
+    }
+
+
     public void saveEvent(){
         butSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,10 +118,14 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
                 hourEvent();
                 descriptionEvent();
                 nameEvent();
+                notificationDay();
+                swChecked();
                 if(event !=null) {
-                    mPresenter.insert(event);
-                    Toast.makeText(getBaseContext(), "Evento añadido", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if(event.getEvent()!=null) {
+                        mPresenter.insert(event);
+                        Toast.makeText(getBaseContext(), "Evento añadido", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } Toast.makeText(getBaseContext(), "Añada nombre", Toast.LENGTH_SHORT).show();
                 }
             }
         });

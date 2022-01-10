@@ -58,11 +58,41 @@
         android:text=""
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <TextView
+        android:id="@+id/tvNoti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notificar_cuantos_dias_antes"/>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <EditText
+        android:id="@+id/eTDiasAntes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="number"
+        android:minHeight="48dp"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/add_calendar_sw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:checked="false"
+        android:layout_gravity="center|center_horizontal" />
+    </TableRow>
+
+
     <Button
         android:id="@+id/butSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar" />
+        android:text="@string/guardar" />
 
 
 

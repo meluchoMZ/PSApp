@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,13 +18,24 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
+import es.udc.psi.agendaly.Calendar.presenter.CalendarDatabaseImp;
+import es.udc.psi.agendaly.Calendar.presenter.CalendarPresenter;
+import es.udc.psi.agendaly.Calendar.presenter.CalendarView;
+import es.udc.psi.agendaly.Calendar.viewmodel.EventViewModel;
 import es.udc.psi.agendaly.R;
 
-public class CalendarActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
+@RequiresApi(api = Build.VERSION_CODES.O)
+public class CalendarActivity extends AppCompatActivity implements CalendarView, CalendarAdapter.OnItemListener{
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private LocalDate selectedDate;
+    private CalendarPresenter mPresenter;
+    CalendarReceiver myReceiver;
+    ArrayList<String> send;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+    String action="send.events";
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -32,7 +45,40 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
         initWidgets();
         selectedDate = LocalDate.now();
         setMonthView();
+
+        myReceiver = new CalendarReceiver();
+        setBroadcast();
+
+        selectedDate = LocalDate.now();
+        mPresenter = new CalendarDatabaseImp(this, getBaseContext());
+        mPresenter.checkedEvents();
+        setMonthView();
+        //Log.d("_TAG34",tomorrowDate());
+        //notify(tomorrowDate());
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(myReceiver);
+    }
+
+    void setBroadcast(){
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(action);
+        registerReceiver(myReceiver, filter);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String tomorrowDate(){
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+        return formatter.format(tomorrow);
+    }
+
+    //public void notify(String day){
+        //mPresenter.searchDayAfter(day);
+    //}
 
     private void initWidgets()
     {
@@ -113,5 +159,40 @@ public class CalendarActivity extends AppCompatActivity implements CalendarAdapt
 
             //Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void showEvents(List<EventViewModel> events) {
+    }
+
+    @Override
+    public void notifyEvent(List<EventViewModel> events) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        Intent intentN = new Intent(this, CalendarReceiver.class);
+        String today = selectedDate.format(formatter);
+        send = new ArrayList<>();
+        for (EventViewModel a: events) {
+            Log.d("_TAGNOTE",today +" "+ getDayNotifyString(a.getDay(), Integer.parseInt(a.getNotificationDay())));
+            if(today.equals(getDayNotifyString(a.getDay(), Integer.parseInt(a.getNotificationDay())))) {
+                send.add("Event "+ a.getEvent() +" a las " +
+                        a.getHour() + "/" + a.getDescription()+ a.getNotificationDay());
+            }
+        }
+        intentN.putExtra("list_event", send);
+        intentN.setAction(action);
+        getBaseContext().sendBroadcast(intentN);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getDayNotifyString(String eventDay, int i){
+        LocalDate localDate1 = LocalDate.parse(eventDay, DateTimeFormatter.ofPattern("d MMMM yyyy"));
+        localDate1 = localDate1.minusDays(i);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return formatter.format(localDate1);
+    }
+
+    @Override
+    public void updateEvent(EventViewModel event, int position) {
+
     }
 }
