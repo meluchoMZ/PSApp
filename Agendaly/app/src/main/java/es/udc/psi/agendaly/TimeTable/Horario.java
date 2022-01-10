@@ -22,9 +22,17 @@ import java.util.List;
 import butterknife.BindView;
 import es.udc.psi.agendaly.BaseActivity;
 import es.udc.psi.agendaly.Calendar.CalendarActivity;
+import es.udc.psi.agendaly.Contacts.ContactsActivity;
 import es.udc.psi.agendaly.Profiles.ProfileActivity;
 import es.udc.psi.agendaly.R;
+
 import es.udc.psi.agendaly.TimeTable.notifications.MyReceiver;
+
+import es.udc.psi.agendaly.Teams.TeamsActivity;
+import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaPresenter;
+import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaView;
+import es.udc.psi.agendaly.TimeTable.viewmodel.AsignaturaViewModel;
+
 
 public class Horario extends BaseActivity {
     String todaySchedule = "todaySchedule";
@@ -62,9 +70,17 @@ public class Horario extends BaseActivity {
                         Intent intentCalendar = new Intent(getBaseContext(), CalendarActivity.class);
                         startActivity(intentCalendar);
                         break;
+                    case R.id.contactsAppBar:
+                        Intent intentContacts = new Intent(getBaseContext(), ContactsActivity.class);
+                        startActivity(intentContacts);
+                        break;
+                    case R.id.teamsAppBar:
+                        Intent intentTeams = new Intent(getBaseContext(), TeamsActivity.class);
+                        startActivity(intentTeams);
+                        break;
                     case R.id.infoAppBar:
-                        Intent intent = new Intent(getBaseContext(), ProfileActivity.class);
-                        startActivity(intent);
+                        Intent intentInfo = new Intent(getBaseContext(), ProfileActivity.class);
+                        startActivity(intentInfo);
                         break;
                 }
                 return true;
