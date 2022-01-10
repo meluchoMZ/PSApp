@@ -120,6 +120,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 								if (task.isSuccessful()) {
 									Intent intent = new Intent(getApplicationContext(), Horario.class);
 									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));
+									AuthUtils.saveUserTokenInFirestore(emAddress);
 									startActivity(intent);
 								} else {
 									showAuthError(task.getException().getMessage());
@@ -156,6 +157,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 								if (task.isSuccessful()) {
 									Intent intent = new Intent(getApplicationContext(), Horario.class);
 									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));
+									AuthUtils.saveUserTokenInFirestore(emAddress);
 									startActivity(intent);
 								} else {
 									showAuthError(task.getException().getMessage());
@@ -204,6 +206,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 									if (task.isSuccessful()) {
 										Intent intent = new Intent(getApplicationContext(), Horario.class);
 										AuthUtils.saveUser(new User(account.getEmail(), null, AUTH_TYPE_GOOGLE));
+										AuthUtils.saveUserTokenInFirestore(account.getEmail());
 										loginDialog.hide();
 										startActivity(intent);
 									} else {

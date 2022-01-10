@@ -34,6 +34,16 @@
         <activity android:name=".TimeTable.AddEvent" />
         <activity android:name=".TimeTable.DeleteEvent" />
         <activity android:name=".Profiles.ProfileActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Contacts.ContactsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Teams.TeamsActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Contacts.AddToTeamActivity" android:screenOrientation="portrait"/>
+        <service
+            android:name=".CloudMessaging.CloudMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
     </application>
 
