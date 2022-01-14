@@ -102,6 +102,7 @@ public class AddToTeamAdapter extends RecyclerView.Adapter<AddToTeamAdapter.View
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
 		db.collection("userTeams").document(user).get().addOnCompleteListener(task -> {
 			if (task.isSuccessful()) {
+				task.getResult();
 				if (task.getResult() != null && task.getResult().getData() != null) {
 					Map<String, Object> map = task.getResult().getData();
 					AtomicBoolean exists = new AtomicBoolean(false);
@@ -111,43 +112,43 @@ public class AddToTeamAdapter extends RecyclerView.Adapter<AddToTeamAdapter.View
 						}
 					});
 					if (exists.get()) {
-						Toast.makeText(GlobalApplication.getContext(), user+
+						Toast.makeText(GlobalApplication.getContext(), user +
 								" already belong to this team", Toast.LENGTH_SHORT).show();
-					} else {
-						db.collection("userTokens").document(user).get()
-								.addOnCompleteListener(task2 -> {
-									if (task2.isSuccessful() && task2.getResult().getData() != null) {
-										String token = (String) task2.getResult().getData().get("token");
-										CloudMessagingSender notifier = new CloudMessagingSender(data, token);
-										api.sendNotification(notifier).enqueue(new Callback<CloudMessagingResponse>() {
-											@Override
-											public void onResponse(Call<CloudMessagingResponse> call, Response<CloudMessagingResponse> response) {
-												if (response.code() == 200) {
-													if (response.body().getCode() != 1) {
-														Toast.makeText(GlobalApplication.getContext(), "Invitation sent", Toast.LENGTH_SHORT).show();
-													}
-												}
-											}
-
-											@Override
-											public void onFailure(Call<CloudMessagingResponse> call, Throwable t) {
-												Toast.makeText(GlobalApplication.getContext(), "Cannot send invitation to join the team",
-														Toast.LENGTH_SHORT). show();
-											}
-										});
-										canWrite = true;
-										Intent intent = new Intent(GlobalApplication.getContext(), Horario.class);
-										intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-										GlobalApplication.getContext().startActivity(intent);
-									}
-								});
+						return;
 					}
 				}
-			}
-		});
-	}
+				db.collection("userTokens").document(user).get()
+						.addOnCompleteListener(task2 -> {
+							if (task2.isSuccessful() && task2.getResult().getData() != null) {
+								String token = (String) task2.getResult().getData().get("token");
+								CloudMessagingSender notifier = new CloudMessagingSender(data, token);
+								api.sendNotification(notifier).enqueue(new Callback<CloudMessagingResponse>() {
+									@Override
+									public void onResponse(Call<CloudMessagingResponse> call, Response<CloudMessagingResponse> response) {
+										if (response.code() == 200) {
+											if (response.body().getCode() != 1) {
+												Toast.makeText(GlobalApplication.getContext(), "Invitation sent", Toast.LENGTH_SHORT).show();
+											}
+										}
+									}
 
-	public static class ViewHolder extends RecyclerView.ViewHolder {
+									@Override
+									public void onFailure(Call<CloudMessagingResponse> call, Throwable t) {
+										Toast.makeText(GlobalApplication.getContext(), "Cannot send invitation to join the team",
+												Toast.LENGTH_SHORT). show();
+									}
+								});
+								canWrite = true;
+								Intent intent = new Intent(GlobalApplication.getContext(), Horario.class);
+								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+								GlobalApplication.getContext().startActivity(intent);
+							}
+						});
+		}
+	});
+}
+
+public static class ViewHolder extends RecyclerView.ViewHolder {
 		public TextView name;
 
 		public ViewHolder(@NonNull View itemView) {
