@@ -270,16 +270,20 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
 
     public String horarioFormat(){
-        String[] parts = horaNotificacion.split(":");
-        String hora = parts[0];
-        if(hora.length()<2){
-            hora= "0"+hora;
+        if(!horaNotificacion.equals("")) {
+            String[] parts = horaNotificacion.split(":");
+            if (parts.length != 0) {
+                String hora = parts[0];
+                if (hora.length() < 2) {
+                    hora = "0" + hora;
+                }
+                String minuto = parts[1];
+                if (minuto.length() < 2) {
+                    minuto = "0" + minuto;
+                }
+                horaNotificacion = hora + ":" + minuto;
+            }
         }
-        String minuto = parts[1];
-        if(minuto.length()<2){
-            minuto= "0"+minuto;
-        }
-        horaNotificacion = hora+":"+minuto;
         return horaNotificacion;
     }
 
