@@ -3,6 +3,8 @@ package es.udc.psi.agendaly.TimeTable.presenter;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import androidx.room.Update;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,8 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
     }
 
 
+
+
     @Override
     public void insert(Asignatura asignatura) {
         insertAsignaturaDB(asignatura);
@@ -52,6 +56,67 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
     public void getAll() {
         getAsignaturasBD();
     }
+
+    @Override
+    public void notifyDay(String day) {
+        new NotifyDay(day).execute();
+    }
+
+    @Override
+    public void update(String horaNotificacion, int notificar) {
+        class Update extends AsyncTask<Void, Void, Void> { // clase interna
+            @Override
+            public Void doInBackground(Void... voids) {
+                    AsignaturaDatabaseClient.getInstance(mContext)
+                            .getAsignaturaDatabase()
+                            .getAsignaturaDao()
+                            .update(horaNotificacion,notificar); // Sustituir por la función necesaria
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute (Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }
+        Update gf = new Update(); // Crear una instancia y ejecutar
+        gf.execute();
+    }
+
+    @Override
+    public void getNotificationChecked(String day) {
+        class NotificationChecked extends AsyncTask<Void, Void, List<Asignatura>> {
+
+            @Override
+            protected List<Asignatura> doInBackground(Void... voids) {
+                List<Asignatura> asignaturaList =
+                        AsignaturaDatabaseClient.getInstance(mContext)
+                                .getAsignaturaDatabase()
+                                .getAsignaturaDao()
+                                .getNotificationChecked(day,1);
+                return asignaturaList;
+            }
+
+            @Override
+            protected void onPostExecute(List<Asignatura> list) {
+                mAsignaturaViewModels= getAsignaturaViewModel(list);
+                mView.sendNotification(mAsignaturaViewModels);
+
+            }
+        }
+
+        NotificationChecked gf = new NotificationChecked();
+        gf.execute();
+    }
+
+    private List<AsignaturaViewModel> getAsignaturaViewModel(List<Asignatura> asignaturas) {
+
+        mAsignaturaViewModels = new AsignaturaViewModelMapper(asignaturas).map();
+        return mAsignaturaViewModels;
+    }
+
 
     public void insertAsignaturaDB(Asignatura asignatura) {
         class InsertAsignatura extends AsyncTask<Void, Void, Void> { // clase interna
@@ -120,14 +185,6 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
         gf.execute();
     }
 
-
-    private List<AsignaturaViewModel> getAsignaturaViewModel(List<Asignatura> asignaturas) {
-
-        mAsignaturaViewModels = new AsignaturaViewModelMapper(asignaturas).map();
-        return mAsignaturaViewModels;
-    }
-
-
     public class GetAsignaturasbyDay extends AsyncTask<Void, Void, List<Asignatura>> { // clase interna
             String day;
 
@@ -150,6 +207,31 @@ public class AsignaturaDatabaseImp implements AsignaturaPresenter{
                 mAsignaturaViewModels= getAsignaturaViewModel(list);
                 mView.showAsignaturas(mAsignaturaViewModels);
             }
+
+    }
+
+    public class NotifyDay extends AsyncTask<Void, Void, List<Asignatura>> { // clase interna
+        String day;
+
+        public NotifyDay(String day){
+            this.day = day;
+
+        }
+        @Override
+        public List<Asignatura> doInBackground(Void... voids) {
+            List<Asignatura> asignaturaList = AsignaturaDatabaseClient.getInstance(mContext)
+                    .getAsignaturaDatabase()
+                    .getAsignaturaDao()
+                    .getDayAsignaturas(day);// Sustituir por la función necesaria
+            return asignaturaList;
+        }
+
+        @Override
+        protected void onPostExecute (List<Asignatura> list) {
+            super.onPostExecute(list);
+            mAsignaturaViewModels= getAsignaturaViewModel(list);
+            mView.sendNotification(mAsignaturaViewModels);
+        }
 
     }
 

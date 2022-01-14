@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/calendarAppBar"
-        android:icon="@drawable/baseline_event_white_24"
-        android:title="@string/calendario"/>
+
+
+    <item android:id="@+id/contactsAppBar"
+        android:icon="@drawable/ic_baseline_contacts_24"
+        android:title="@string/contacts" />
+
+    <item android:id="@+id/teamsAppBar"
+        android:icon="@drawable/ic_team"
+        android:title="@string/teams" />
 
     <item android:id="@+id/inicioAppBar"
         android:icon="@drawable/baseline_home_white_24"
         android:title="@string/inicio"/>
+
+    <item android:id="@+id/calendarAppBar"
+        android:icon="@drawable/baseline_event_white_24"
+        android:title="@string/calendario"/>
 
     <item android:id="@+id/infoAppBar"
         android:icon="@drawable/baseline_info_white_24"

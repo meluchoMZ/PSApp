@@ -1,5 +1,7 @@
 package es.udc.psi.agendaly.TimeTable.presenter;
 
+import java.util.List;
+
 import es.udc.psi.agendaly.TimeTable.Asignatura;
 
 public interface AsignaturaPresenter {
@@ -13,4 +15,11 @@ public interface AsignaturaPresenter {
     void deleteClass(String asignatura);
 
     void getAll();
+
+    void notifyDay(String day);
+
+    void update(String horaNotificacion, int notificar);
+
+    void getNotificationChecked(String day);
+
 }

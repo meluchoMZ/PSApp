@@ -74,4 +74,26 @@
     <string name="guardar">Guardar</string>
     <string name="avisar_estos_dias">"Avisar estos días antes: "</string>
 
+    <string name="notificaciones_desactivadas"> Notificaciones desactivadas </string>
+    <string name="warning_activa_notificaciones"> Activa las notificaciones </string>
+    <string name="alarma_cancelada">Alarma cancelada "</string>
+    <string name="notificacacion_a_las">Notificacion de horario a las </string>
+    <string name="hoy_tienes">Hoy tienes : </string>
+    <string name="horario_noti"> Horario  </string>
+    <string name="en_el_aula"> en el aula "</string>
+    <string name="notificaciones_activadas">Notificaciones activadas</string>
+
+    <string name="id_text">ID: </string>
+    <string name="add_contact">Add contact</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="add2team">Add to team...</string>
+    <string name="delete_contact">Delete contact</string>
+    <string name="add_team_input_dialog">Enter team name</string>
+    <string name="select_team">Select a team</string>
+    <string name="add2teamButton">Add to team</string>
+    <string name="joinTeam"> wants you to join the team </string>
+    <string name="accept">Accept</string>
+
+
 </resources>

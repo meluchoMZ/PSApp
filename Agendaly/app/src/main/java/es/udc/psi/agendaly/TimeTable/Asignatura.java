@@ -27,6 +27,12 @@ public class Asignatura {
     @ColumnInfo(name = "fin")
     String fin;
 
+    @ColumnInfo(name = "horaNotificacion")
+    String horaNotificacion; //("hh:mm");
+
+    @ColumnInfo(name = "notificar")
+    int notificar;
+
 
     public Asignatura() {
 
@@ -85,5 +91,20 @@ public class Asignatura {
         return idBD;
     }
 
+    public void setHoraNotificacion(String horaNotificacion) {
+        this.horaNotificacion = horaNotificacion;
+    }
+
+    public void setNotificar(int notificar) {
+        this.notificar = notificar;
+    }
+
+    public String getHoraNotificacion() {
+        return horaNotificacion;
+    }
+
+    public int getNotificar() {
+        return notificar;
+    }
 }
 

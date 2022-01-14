@@ -8,9 +8,6 @@ public interface AsignaturaView {
 
     void showAsignaturas(List<AsignaturaViewModel> asignaturas);
 
-    void showEmptyView();
+    void sendNotification(List<AsignaturaViewModel> asignaturas);
 
-    void showError();
-
-    void updateAsignatura(AsignaturaViewModel asignatura, int position);
 }
