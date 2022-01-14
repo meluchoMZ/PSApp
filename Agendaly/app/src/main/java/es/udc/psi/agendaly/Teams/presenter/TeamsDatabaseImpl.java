@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import es.udc.psi.agendaly.Auth.AuthUtils;
+import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.Teams.model.Teams;
 import es.udc.psi.agendaly.Teams.model.TeamsDatabaseClient;
 
@@ -159,7 +160,8 @@ public class TeamsDatabaseImpl implements TeamsPresenter {
 							TeamsDatabaseClient.getInstance(context)
 									.getDatabase().getDao().insert(team);
 						} catch (Exception e) {
-							view.showError("Cannot save team '"+team.getTeamID()+"'");
+							view.showError(context.getString(R.string.cannotSaveTeamBD)+
+									"'"+team.getTeamID()+"'");
 						} finally {
 							teamsList = TeamsDatabaseClient.getInstance(context)
 									.getDatabase().getDao().getAll();
@@ -178,7 +180,7 @@ public class TeamsDatabaseImpl implements TeamsPresenter {
 						.getDatabase().getDao().getAll();
 				for (Teams t : teamsList) {
 					if (t.getTeamID().equals(team.getTeamID())) {
-						view.showError("Cannot create team: already created");
+						view.showError(context.getString(R.string.teamAlreadyCreated));
 						return null;
 					}
 				}
@@ -192,7 +194,7 @@ public class TeamsDatabaseImpl implements TeamsPresenter {
 						BGDBCall call = new BGDBCall();
 						call.execute();
 					} else {
-						view.showError("Cannot create team. Check internet connection");
+						view.showError(context.getString(R.string.cannotCreateTeam));
 					}
 				});
 				return null;
