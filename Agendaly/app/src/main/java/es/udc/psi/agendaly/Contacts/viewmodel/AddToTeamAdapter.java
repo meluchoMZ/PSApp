@@ -113,7 +113,9 @@ public class AddToTeamAdapter extends RecyclerView.Adapter<AddToTeamAdapter.View
 					});
 					if (exists.get()) {
 						Toast.makeText(GlobalApplication.getContext(), user +
-								" already belong to this team", Toast.LENGTH_SHORT).show();
+								" "+GlobalApplication
+								.getContext().getString(R.string.isAlreadyInTeam),
+								Toast.LENGTH_SHORT).show();
 						return;
 					}
 				}
@@ -127,14 +129,17 @@ public class AddToTeamAdapter extends RecyclerView.Adapter<AddToTeamAdapter.View
 									public void onResponse(Call<CloudMessagingResponse> call, Response<CloudMessagingResponse> response) {
 										if (response.code() == 200) {
 											if (response.body().getCode() != 1) {
-												Toast.makeText(GlobalApplication.getContext(), "Invitation sent", Toast.LENGTH_SHORT).show();
+												Toast.makeText(GlobalApplication.getContext(), GlobalApplication
+														.getContext().getString(R.string.invitationSent), Toast.LENGTH_SHORT).show();
 											}
 										}
 									}
 
 									@Override
 									public void onFailure(Call<CloudMessagingResponse> call, Throwable t) {
-										Toast.makeText(GlobalApplication.getContext(), "Cannot send invitation to join the team",
+										Toast.makeText(GlobalApplication.getContext(), GlobalApplication.getContext().getString(
+												R.string.cannotSendInvitation
+												),
 												Toast.LENGTH_SHORT). show();
 									}
 								});
