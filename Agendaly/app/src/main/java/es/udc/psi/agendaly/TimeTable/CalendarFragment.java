@@ -123,7 +123,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
         //repetir la alarma programada
         if(horaNotificacion.equals("")) {
-            mPresenter.searchByDay(currentDay);
+            mPresenter.getAll();
         }
         notificar();
         ejecutar();
@@ -183,28 +183,71 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         }
         //alarmas acyivadas o desactivadas
         if(id==R.id.icon_notification){
-           // Log.d("_TAG", String.valueOf(notificarBoolean));
-            if (!notificarBoolean && !done){
+            Log.d("_TAG", notificarBoolean +"  " +done);
+            Log.d("_TAG", String.valueOf(sendName.isEmpty()));
 
+            //notificaciones activadas desde bd
+            if (notificarBoolean){
+                //no hemos pulsado pero esta activado
+                if(!done) {
+                    //hemos pulsado para desactivar
+                    item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
+                            R.drawable.baseline_notifications_white_24));
+                    mPresenter.update(horarioFormat(),0);
+                    notificar();
+                    establecerAlarmaClick(getHorarioNotificacionCalendar(), true, true);
+                    Toast.makeText(getContext(), getString(R.string.notificaciones_desactivadas)
+                            , Toast.LENGTH_SHORT).show();
+                    done = true;
+                }else{
+                    //hemos pulsado para activar
+                    mPresenter.update(horarioFormat(), 1);
+                    notificar();
+                    item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
+                            R.drawable.baseline_notifications_active_white_24));
+                    Toast.makeText(getContext(), getString(R.string.notificaciones_activadas)
+                            , Toast.LENGTH_SHORT).show();
+                    done=false;
+                }
+            }else{
+                //bd desactivado => icono desactivado
+                // pulsamos para activar
+                if(!done) {
+                    mPresenter.update(horarioFormat(), 1);
+                    notificar();
+                    item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
+                            R.drawable.baseline_notifications_active_white_24));
+                    Toast.makeText(getContext(), getString(R.string.notificaciones_activadas)
+                            , Toast.LENGTH_SHORT).show();
+                    done=true;
+                }/*else{
+                    //pulsamos para activar
+                    mPresenter.update(horarioFormat(), 1);
+                    notificar();
+                    item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
+                            R.drawable.baseline_notifications_active_white_24));
+                    Toast.makeText(getContext(), getString(R.string.notificaciones_activadas)
+                            , Toast.LENGTH_SHORT).show();
+                    done = true;
+                }*/
+            }
+
+            //no hay nada activado
+            /*if(sendName.isEmpty()){
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_white_24));
-
-                mPresenter.update(horarioFormat(),0);
-                notificar();
-                establecerAlarmaClick(getHorarioNotificacionCalendar(), true, true);
-                Toast.makeText(getContext(), getString(R.string.notificaciones_desactivadas)
-                        , Toast.LENGTH_SHORT).show();
-                done=true;
-
+                done=false;
             }else{
-                mPresenter.update(horarioFormat(),1);
+                //pulsamos para activar
+                mPresenter.update(horarioFormat(), 1);
                 notificar();
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_active_white_24));
                 Toast.makeText(getContext(), getString(R.string.notificaciones_activadas)
                         , Toast.LENGTH_SHORT).show();
-                done=false;
-            }
+                done = true;
+            }*/
+
 
         }
         //alarma a la hora estipulada por el usuario
@@ -405,6 +448,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         if(!asignaturas.isEmpty()) {
             if(horaNotificacion.equals("")){
             horaNotificacion= asignaturas.get(0).getNotificationHour();
+                notificarBoolean =asignaturas.get(0).isNotificar();
                 notificar();
                 if(sendName!=null)establecerAlarmaClick(getHorarioNotificacionCalendar(), false, true);
             }
