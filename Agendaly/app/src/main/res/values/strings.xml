@@ -5,21 +5,21 @@
     <string name="forward">forward</string>
     <string name="feature_horario">Use me to launch your timetable</string>
     <string name="shared_preferences_file">usr_shared_preferences</string>
-    <string name="auth_title">Authentication</string>
-    <string name="sign_up_button_text">Sign up</string>
-    <string name="sign_in_button_text">Sign in</string>
-    <string name="auth_user_tv">Agendaly account</string>
-    <string name="email_et_hint">someone@example.com</string>
-    <string name="password_et_hint">Password</string>
-    <string name="google_auth_button_text">Sign up with Google</string>
-    <string name="oauth_text">Other authentication methods</string>
-    <string name="error_empty_email">Enter email address</string>
-    <string name="error_empty_password">Enter password</string>
-    <string name="error_invalid_email">Invalid email address</string>
-    <string name="auth_error_dialog_title">Authentication error</string>
+    <string name="auth_title">Autenticación</string>
+    <string name="sign_up_button_text">Registrarse</string>
+    <string name="sign_in_button_text">Iniciar sesión</string>
+    <string name="auth_user_tv">Cuenta Agendaly</string>
+    <string name="email_et_hint">alguien@ejemplo.com</string>
+    <string name="password_et_hint">Contraseña</string>
+    <string name="google_auth_button_text">Inicia sesión con Google</string>
+    <string name="oauth_text">Otros métodos de autenticación</string>
+    <string name="error_empty_email">Introduzca el correo electónico</string>
+    <string name="error_empty_password">Introduzca la contraseña</string>
+    <string name="error_invalid_email">Dirección de correo inválida</string>
+    <string name="auth_error_dialog_title">Error de autenticación</string>
     <string name="auth_error_dialog_button">Ok</string>
-    <string name="sign_out_button_text">Sign out</string>
-    <string name="automatic_signin_dialog">Attempting to sign in ...</string>
+    <string name="sign_out_button_text">Cerrar sesión</string>
+    <string name="automatic_signin_dialog">Iniciando sesión ...</string>
     <string name="friday"> Viernes </string>
     <string name="hora_prueba"> 15:30 - 18:30 </string>
     <string name="aula_prueba"> Aula 2.10 </string>
@@ -48,7 +48,7 @@
         <item>@string/saturday</item>
         <item>@string/sunday</item>
     </string-array>
-    <string name="sign_out">Sign out</string>
+    <string name="sign_out">Cerrar sesión</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -65,8 +65,60 @@
     <string name="inicio"><inicio>Inicio</inicio></string>
     <string name="info">Info</string>
 
-    <string name="contacts">Contacts</string>
-    <string name="teams">Teams</string>
+    <string name="contacts">Contactos</string>
+    <string name="teams">Equipos</string>
     <string name="account">Cuenta</string>
+    <string name="borrar_evento">borrar evento</string>
+    <string name="Avisar">Avisar</string>
+    <string name="notificar_cuantos_dias_antes">notificar cuantos dias antes</string>
+    <string name="guardar">Guardar</string>
+    <string name="avisar_estos_dias">"Avisar estos días antes: "</string>
+
+    <string name="notificaciones_desactivadas"> Notificaciones desactivadas </string>
+    <string name="warning_activa_notificaciones"> Activa las notificaciones </string>
+    <string name="alarma_cancelada">Alarma cancelada "</string>
+    <string name="notificacacion_a_las">Notificacion de horario a las </string>
+    <string name="hoy_tienes">Hoy tienes : </string>
+    <string name="horario_noti"> Horario  </string>
+    <string name="en_el_aula"> en el aula "</string>
+    <string name="notificaciones_activadas">Notificaciones activadas</string>
+
+    <string name="id_text">ID: </string>
+
+    <string name="complete_field">Completa todos los campos</string>
+    <string name="asignatura_noencontrada">Asignatura no encontrada</string>
+
+
+    <string name="feb_2021">Feb 2021</string>
+    <string name="sun">DOM</string>
+    <string name="mon">LUN</string>
+    <string name="tue">MAR</string>
+    <string name="wed">MIE</string>
+    <string name="thur">JUE</string>
+    <string name="fri">VIE</string>
+    <string name="sat">SAB</string>
+    <string name="_1">1</string>
+
+    <string name="add_contact">Añadir contacto</string>
+    <string name="add">Añadir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="add2team">Añadir a equipo...</string>
+    <string name="delete_contact">Borrar contacto</string>
+    <string name="add_team_input_dialog">Inserte el nombre del equipo</string>
+    <string name="select_team">Seleccione un equipo</string>
+    <string name="add2teamButton">Añadir al equipo</string>
+    <string name="joinTeam"> quiere añadirle al equipo </string>
+    <string name="accept">Aceptar</string>
+    <string name="cannotAddContactDB">No se puede añadir el contacto</string>
+    <string name="theUser">El usuario</string>
+    <string name="doesNotExist">no existe</string>
+    <string name="cannotSendInvitation">No se puede enviar la invitación</string>
+    <string name="invitationSent">Invitación enviada</string>
+    <string name="isAlreadyInTeam">ya pertenece al equipo</string>
+    <string name="cannotSaveTeamBD">No se puede guardar el equipo</string>
+    <string name="teamAlreadyCreated">Este equipo ya existe</string>
+    <string name="cannotCreateTeam">No se puede crear el equipo</string>
+
+
 
 </resources>

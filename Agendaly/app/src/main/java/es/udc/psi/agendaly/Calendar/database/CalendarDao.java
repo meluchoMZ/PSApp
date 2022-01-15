@@ -21,10 +21,16 @@ public interface CalendarDao {
      @Query("SELECT * FROM events WHERE day LIKE :day" )
      public List<Event> getDayEventbyDay(String day);
 
+    @Query("SELECT * FROM events WHERE sw LIKE :sw" )
+    public List<Event> getCheckedEvent(int sw);
+
     @Query("SELECT * FROM events" )
     public List<Event> getAll();
 
-     @Query("DELETE FROM events")
+    @Query("UPDATE events SET notificationDay=:notificationDay, sw=:sw WHERE event = :event")
+    void updateNotification(String event, String notificationDay,int sw);
+
+    @Query("DELETE FROM events")
     void deleteAll();
 
    /*

@@ -34,13 +34,16 @@ public class CalendarDatabaseImp implements CalendarPresenter {
     }
 
     @Override
+    public void searchDayAfter(String day) { new GetNotification(day).execute(); }
+
+    @Override
     public void insert(Event event) {
         insertEventaDB(event);
     }
 
     @Override
     public void clearAll() {
-        clearAll();
+        deleteAllEventsDB();
     }
 
     @Override
@@ -51,6 +54,58 @@ public class CalendarDatabaseImp implements CalendarPresenter {
     @Override
     public void getAll() {
         getEventsBD();
+    }
+
+    @Override
+    public void update(String event, String notificationDay, int sw) {
+        updateNoti(event,notificationDay,sw);
+    }
+
+    //@Query("UPDATE events SET notificationDay=:notificationDay, sw=:sw WHERE event = :event")
+    //    void updateNotification(String event, String notificationDay,int sw);
+    public void updateNoti(String event, String notificationDay,int sw ) {
+        class UpdateCalendar extends AsyncTask<Void, Void, Void> { // clase interna
+            @Override
+            public Void doInBackground(Void... voids) {
+                if (event != null) {
+                    CalendarDatabaseClient.getInstance(mContext)
+                            .getCalendarDatabase()
+                            .getCalendarDao()
+                            .updateNotification(event, notificationDay, sw); // Sustituir por la función necesaria
+
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+            }
+        }
+        UpdateCalendar gf = new UpdateCalendar();
+        gf.execute();
+    }
+
+    public void checkedEvents(){
+        class GetChecked extends AsyncTask<Void, Void, List<Event>> { // clase interna
+            @Override
+            public List<Event>doInBackground(Void... voids) {
+                List<Event> eventList = CalendarDatabaseClient.getInstance(mContext)
+                        .getCalendarDatabase()
+                        .getCalendarDao()
+                        .getCheckedEvent(1);// Sustituir por la función necesaria
+                return eventList;
+            }
+
+            @Override
+            protected void onPostExecute(List<Event> list){
+                super.onPostExecute(list);
+                mEventsViewModels = getEventsViewModel(list);
+                mView.notifyEvent(mEventsViewModels);
+            }
+        }
+        GetChecked getChecked = new GetChecked();
+        getChecked.execute();
     }
 
     public void insertEventaDB(Event event) {
@@ -152,6 +207,31 @@ public class CalendarDatabaseImp implements CalendarPresenter {
             }
 
     }
+
+    public class GetNotification extends AsyncTask<Void, Void, List<Event>> { // clase interna
+        String day;
+
+        public GetNotification(String day) {
+            this.day = day;
+        }
+
+        @Override
+        public List<Event> doInBackground(Void... voids) {
+            List<Event> eventList = CalendarDatabaseClient.getInstance(mContext)
+                    .getCalendarDatabase()
+                    .getCalendarDao()
+                    .getDayEventbyDay(day);// Sustituir por la función necesaria
+            return eventList;
+        }
+
+        @Override
+        protected void onPostExecute(List<Event> list) {
+            super.onPostExecute(list);
+            mEventsViewModels = getEventsViewModel(list);
+            mView.notifyEvent(mEventsViewModels);
+        }
+    }
+
 
 
     private void getEventsBD () {

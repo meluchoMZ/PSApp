@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -32,6 +33,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import es.udc.psi.agendaly.R;
@@ -120,6 +122,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 								if (task.isSuccessful()) {
 									Intent intent = new Intent(getApplicationContext(), Horario.class);
 									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));
+									AuthUtils.saveUserTokenInFirestore(emAddress);
 									startActivity(intent);
 								} else {
 									showAuthError(task.getException().getMessage());
@@ -156,6 +159,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 								if (task.isSuccessful()) {
 									Intent intent = new Intent(getApplicationContext(), Horario.class);
 									AuthUtils.saveUser(new User(emAddress, passwd, AUTH_TYPE_AGENDALY_ACCOUNT));
+									AuthUtils.saveUserTokenInFirestore(emAddress);
 									startActivity(intent);
 								} else {
 									showAuthError(task.getException().getMessage());
@@ -204,6 +208,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 									if (task.isSuccessful()) {
 										Intent intent = new Intent(getApplicationContext(), Horario.class);
 										AuthUtils.saveUser(new User(account.getEmail(), null, AUTH_TYPE_GOOGLE));
+										AuthUtils.saveUserTokenInFirestore(account.getEmail());
 										loginDialog.hide();
 										startActivity(intent);
 									} else {

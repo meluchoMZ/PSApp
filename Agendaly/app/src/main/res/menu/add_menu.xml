@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/icon_picker_hour"
+        android:icon="@drawable/baseline_schedule_white_24"
+        android:title="@string/add_asignatura"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/icon_notification"
+        android:icon="@drawable/baseline_notifications_active_white_24"
+        android:title="@string/add_asignatura"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/icon_add"
         android:icon="@drawable/baseline_add_white_24"
