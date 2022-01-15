@@ -84,6 +84,17 @@
     <string name="notificaciones_activadas">Notificaciones activadas</string>
 
     <string name="id_text">ID: </string>
+
+    <string name="feb_2021">Feb 2021</string>
+    <string name="sun">DOM</string>
+    <string name="mon">LUN</string>
+    <string name="tue">MAR</string>
+    <string name="wed">MIE</string>
+    <string name="thur">JUE</string>
+    <string name="fri">VIE</string>
+    <string name="sat">SAB</string>
+    <string name="_1">1</string>
+
     <string name="add_contact">Añadir contacto</string>
     <string name="add">Añadir</string>
     <string name="cancel">Cancelar</string>
