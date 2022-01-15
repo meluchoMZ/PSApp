@@ -24,7 +24,7 @@ Para instalar la aplicación, tan solo es necesario tener abierto el proyecto en
 - **Blanca Fernández Martín** - *calendario con notificaciones*
 
 ## Agradecimientos
-- Calum Hill - [versión inicial del calendario] (https://github.com/codeWithCal/CalendarTutorialAndroidStudio/tree/master/app/src/main/java/codewithcal/au/calendarappexample) - *codeWithCal*
-- Mulham-Raee - [versión inicial del horario] (https://github.com/Mulham-Raee/Horizontal-Calendar) - *Mulham-Raee*
+- Calum Hill - [versión inicial del calendario](https://github.com/codeWithCal/CalendarTutorialAndroidStudio/tree/master/app/src/main/java/codewithcal/au/calendarappexample) - *codeWithCal*
+- Mulham-Raee - [versión inicial del horario](https://github.com/Mulham-Raee/Horizontal-Calendar) - *Mulham-Raee*
 
 
