@@ -54,14 +54,14 @@ public class ProfileActivity extends BaseActivity {
 		mail.setText(user.getEmail());
 		contacts.setText("0");
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
-		db.collection("userContacts").document(AuthUtils.retrieveUser().getEmail())
+		db.collection("userContacts").document(user.getEmail())
 				.get().addOnCompleteListener(task -> {
 					if (task.isSuccessful() && task.getResult() != null && task.getResult().getData() != null) {
 						contacts.setText(Integer.toString(task.getResult().getData().size()));
 					}
 		});
 		teams.setText("0");
-		db.collection("userTeams").document(AuthUtils.retrieveUser().getEmail())
+		db.collection("userTeams").document(user.getEmail())
 				.get().addOnCompleteListener(task -> {
 			if (task.isSuccessful() && task.getResult() != null && task.getResult().getData() != null) {
 				teams.setText(Integer.toString(task.getResult().getData().size()));

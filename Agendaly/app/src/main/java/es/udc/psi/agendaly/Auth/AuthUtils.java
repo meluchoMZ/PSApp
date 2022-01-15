@@ -79,9 +79,9 @@ public class AuthUtils {
 	public static void saveUser(User user) {
 		SharedPreferences.Editor sp = AuthenticationActivity.getContext().getSharedPreferences(SPFPATH, Context.MODE_PRIVATE).edit();
 		if (user.getProvider().equals(AuthenticationActivity.AUTH_TYPE_AGENDALY_ACCOUNT)) {
-			sp.putString("user", user.getEmail());
 			sp.putString("passwd", encode(user.getPassword()));
 		}
+		sp.putString("user", user.getEmail());
 		sp.putString("authMethod", user.getProvider());
 		sp.apply();
 	}

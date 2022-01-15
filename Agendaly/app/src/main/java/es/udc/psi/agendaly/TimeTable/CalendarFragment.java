@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,12 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import devs.mulham.horizontalcalendar.HorizontalCalendar;
@@ -38,8 +34,6 @@ import devs.mulham.horizontalcalendar.model.CalendarEvent;
 import devs.mulham.horizontalcalendar.utils.CalendarEventsPredicate;
 import devs.mulham.horizontalcalendar.utils.HorizontalCalendarListener;
 import es.udc.psi.agendaly.Calendar.CalendarActivity;
-import es.udc.psi.agendaly.MainActivity;
-import es.udc.psi.agendaly.Profiles.ProfileActivity;
 import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.TimeTable.notifications.MyReceiver;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaDatabaseImp;
@@ -55,7 +49,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
     private AsignaturaPresenter mPresenter;
     String todaySchedule = "todaySchedule";
     String currentDay;
-    boolean notificar;
+    boolean notificarBoolean =false;
 
     String dia = "";
     SimpleDateFormat timeformat=new SimpleDateFormat("HH:mm");
@@ -155,7 +149,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
             @Override
             public void run() {
                 notificar();
-                if(notificar){
+                if(notificarBoolean){
                     establecerAlarmaClick(getHorarioNotificacionCalendar(),true,false);
                     mPresenter.getNotificationChecked(currentDay);
                     establecerAlarmaClick(getHorarioNotificacionCalendar(),false,false);
@@ -170,7 +164,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.add_menu,menu);
         MenuItem item = menu.findItem(R.id.icon_notification);
-        if(notificar){
+        if(notificarBoolean){
             item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                     R.drawable.baseline_notifications_active_white_24));
         }else{
@@ -189,7 +183,8 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         }
         //alarmas acyivadas o desactivadas
         if(id==R.id.icon_notification){
-            if (notificar && !done){
+           // Log.d("_TAG", String.valueOf(notificarBoolean));
+            if (!notificarBoolean && !done){
 
                 item.setIcon(ContextCompat.getDrawable(rootView.getContext(),
                         R.drawable.baseline_notifications_white_24));
@@ -270,20 +265,25 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
 
 
     public String horarioFormat(){
-        String[] parts = horaNotificacion.split(":");
-        String hora = parts[0];
-        if(hora.length()<2){
-            hora= "0"+hora;
+        if(!horaNotificacion.equals("")) {
+            String[] parts = horaNotificacion.split(":");
+            if (parts.length != 0) {
+                String hora = parts[0];
+                if (hora.length() < 2) {
+                    hora = "0" + hora;
+                }
+                String minuto = parts[1];
+                if (minuto.length() < 2) {
+                    minuto = "0" + minuto;
+                }
+                horaNotificacion = hora + ":" + minuto;
+            }
         }
-        String minuto = parts[1];
-        if(minuto.length()<2){
-            minuto= "0"+minuto;
-        }
-        horaNotificacion = hora+":"+minuto;
         return horaNotificacion;
     }
 
     public Calendar getHorarioNotificacionCalendar(){
+        if(!horaNotificacion.equals("")){
         horaNotificacion = horarioFormat();
         String[] parts = horaNotificacion.split(":");
         String hora = parts[0];
@@ -292,11 +292,12 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         getDate.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hora));
         getDate.set(Calendar.MINUTE, Integer.parseInt(minuto));
         getDate.set(Calendar.SECOND, 00);
-        return getDate;
+        return getDate;}
+        else{return null;}
     }
 
     private void establecerAlarmaClick(Calendar calendar,boolean cancel, boolean show){
-        if(sendName!=null) {
+        if(sendName!=null && calendar!=null) {
             AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
             long time = calendar.getTimeInMillis();
             if(time < Calendar.getInstance().getTimeInMillis())
@@ -415,7 +416,7 @@ public class CalendarFragment extends Fragment implements AsignaturaView {
         //todas las de ese día van a tener la misma hora
         if(!asignaturas.isEmpty()) {
             horaNotificacion= asignaturas.get(0).getNotificationHour();
-            notificar=asignaturas.get(0).isNotificar();
+            notificarBoolean =asignaturas.get(0).isNotificar();
 
         }
         sendName = new ArrayList<>();
