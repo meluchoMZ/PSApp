@@ -1,6 +1,14 @@
 package es.udc.psi.agendaly.TimeTable;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import es.udc.psi.agendaly.BaseActivity;
 import es.udc.psi.agendaly.R;
+import es.udc.psi.agendaly.TimeTable.notifications.MyReceiver;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaDatabaseImp;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaPresenter;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaView;
@@ -25,11 +38,15 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     View rootView;
     EventAdapter mAdapter;
     String day;
+
+    public boolean done=false;
+
+
     InfoFragment(String day){
         this.day=day;
     }
 
-
+    String todaySchedule = "todaySchedule";
     SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -42,6 +59,7 @@ public class InfoFragment extends Fragment implements AsignaturaView {
         searchByDay(day);
         setUpView();
         refesh();
+
         return rootView;
     }
 
@@ -60,6 +78,10 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     }
 
 
+
+
+
+
     @Override
     public void showAsignaturas(List<AsignaturaViewModel> asignaturas) {
         mAdapter.setItems(asignaturas);
@@ -67,17 +89,17 @@ public class InfoFragment extends Fragment implements AsignaturaView {
     }
 
     @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void updateAsignatura(AsignaturaViewModel asignatura, int position) {
+    public void sendNotification(List<AsignaturaViewModel> asignaturas) {
+        Intent intent = new Intent(rootView.getContext(), MyReceiver.class);
+        //new AsignaturaViewModel(a.getName(),a.getHora(),a.getAula())
+        ArrayList<String> sendName = new ArrayList<>();
+        for (AsignaturaViewModel a: asignaturas) {
+            sendName.add(getString(R.string.hoy_tienes)+ a.getName() +"/"+getString(R.string.horario_noti) +
+                    a.getHora() + getString(R.string.en_el_aula) + a.getAula());
+        }
+        intent.putExtra("asignatura", sendName);
+        intent.setAction(todaySchedule);
+        rootView.getContext().sendBroadcast(intent);
 
     }
 
@@ -89,4 +111,12 @@ public class InfoFragment extends Fragment implements AsignaturaView {
         mAdapter = new EventAdapter();
         recyclerView.setAdapter(mAdapter);
     }
+
+
+
+
+
+
+
+
 }

@@ -20,7 +20,8 @@ public class EventViewModelMapper {
         List<EventViewModel> events = new ArrayList<>();
         for (Event event : mEvent) {
             events.add(new EventViewModel(event.getEvent(),
-                    event.getHour(), event.getDecription()));
+                    event.getHour(), event.getDecription(), event.getNotificationDay(),
+                    event.getSw(),event.getDay()));
         }
         return events;
     }

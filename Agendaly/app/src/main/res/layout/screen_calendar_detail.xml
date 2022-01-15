@@ -14,7 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/event"/>
+            android:text="@string/event"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvEventName"
@@ -34,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/hour"/>
+            android:text="@string/hour"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvHour"
@@ -54,6 +56,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/description"
+            android:textStyle="bold"
              />
 
         <TextView
@@ -62,6 +65,55 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
              />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/textViewAvisa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/avisar_estos_dias"
+            android:textAlignment="viewStart"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextNotificationScreen"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:minHeight="48dp"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:ignore="SpeakableTextPresentCheck"
+            />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/screen_sw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:layout_gravity="center|center_horizontal" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#7C7C7C"
+            android:textSize="1sp" />
+
     </TableRow>
 
 </LinearLayout>

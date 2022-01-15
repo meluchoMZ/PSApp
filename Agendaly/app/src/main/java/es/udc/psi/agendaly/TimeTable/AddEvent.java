@@ -1,7 +1,9 @@
 package es.udc.psi.agendaly.TimeTable;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,12 +17,14 @@ import androidx.annotation.Nullable;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
 import es.udc.psi.agendaly.BaseActivity;
 import es.udc.psi.agendaly.R;
+import es.udc.psi.agendaly.TimeTable.notifications.MyReceiver;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaDatabaseImp;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaPresenter;
 import es.udc.psi.agendaly.TimeTable.presenter.AsignaturaView;
@@ -30,6 +34,7 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
     Asignatura asignatura = new Asignatura();
     private EventAdapter mAdapter;
     AsignaturaPresenter mPresenter;
+
 
     @BindView(R.id.butInicio)
     Button butInicio;
@@ -78,11 +83,15 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
             public void onClick(View view) {
                 nameAsignatura();
                 nameAula();
+                asignatura.setHoraNotificacion("00:00");
+                asignatura.setNotificar(1);
                 if(asignatura !=null && asignatura.getFin() != null && asignatura.getFin() != null
                         && asignatura.getAula() != null && asignatura.getNombre() != null) {
                     mPresenter.insert(asignatura);
                     Toast.makeText(getBaseContext(), getString(R.string.add_asignatura), Toast.LENGTH_SHORT).show();
                     finish();
+                }else{
+                    Toast.makeText(getBaseContext(), getString(R.string.complete_field), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -102,7 +111,8 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
 
     public void nameAula(){
         String eT = editTextAula.getText().toString();
-        if(!eT.isEmpty()) {asignatura.setAula(eT);}
+        if(!eT.isEmpty()) {
+            asignatura.setAula(eT);}
     }
 
     public void chooseDay(){
@@ -124,7 +134,7 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
             public void onClick(View view) {
                 //showTimePickerDialog();
                 final Calendar getDate = Calendar.getInstance();
-                SimpleDateFormat timeformat=new SimpleDateFormat("HH:mm a");
+                SimpleDateFormat timeformat=new SimpleDateFormat("hh:mm a");
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
                         AddEvent.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -157,7 +167,7 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         getDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         getDate.set(Calendar.MINUTE, minute);
-                        SimpleDateFormat timeformat=new SimpleDateFormat("HH:mm a");
+                        SimpleDateFormat timeformat=new SimpleDateFormat("hh:mm a");
                         String fin = timeformat.format(getDate.getTime());
                         asignatura.setFin(fin);
                     }
@@ -193,18 +203,8 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
     }
 
     @Override
-    public void showEmptyView() {
-
+    public void sendNotification(List<AsignaturaViewModel> asignaturas) {
     }
 
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void updateAsignatura(AsignaturaViewModel asignatura, int position) {
-        mAdapter.updateItem(asignatura,position);
-    }
 }
 
