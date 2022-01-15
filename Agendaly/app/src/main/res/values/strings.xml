@@ -94,6 +94,8 @@
     <string name="add2teamButton">Add to team</string>
     <string name="joinTeam"> wants you to join the team </string>
     <string name="accept">Accept</string>
+    <string name="complete_field">Completa todos los campos</string>
+    <string name="asignatura_noencontrada">Asignatura no encontrada</string>
 
 
 </resources>

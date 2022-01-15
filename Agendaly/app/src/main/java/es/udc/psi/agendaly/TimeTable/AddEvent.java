@@ -90,6 +90,8 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
                     mPresenter.insert(asignatura);
                     Toast.makeText(getBaseContext(), getString(R.string.add_asignatura), Toast.LENGTH_SHORT).show();
                     finish();
+                }else{
+                    Toast.makeText(getBaseContext(), getString(R.string.complete_field), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -109,7 +111,8 @@ public class AddEvent extends BaseActivity implements AsignaturaView {
 
     public void nameAula(){
         String eT = editTextAula.getText().toString();
-        if(!eT.isEmpty()) {asignatura.setAula(eT);}
+        if(!eT.isEmpty()) {
+            asignatura.setAula(eT);}
     }
 
     public void chooseDay(){
