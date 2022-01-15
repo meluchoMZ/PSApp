@@ -125,7 +125,7 @@ public class AddCalendarEventActivity extends BaseActivity implements CalendarVi
                         mPresenter.insert(event);
                         Toast.makeText(getBaseContext(), "Evento añadido", Toast.LENGTH_SHORT).show();
                         finish();
-                    } Toast.makeText(getBaseContext(), "Añada nombre", Toast.LENGTH_SHORT).show();
+                    } else {Toast.makeText(getBaseContext(), "Añada nombre", Toast.LENGTH_SHORT).show();};
                 }
             }
         });

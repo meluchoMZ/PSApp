@@ -27,6 +27,7 @@ import es.udc.psi.agendaly.Auth.AuthUtils;
 import es.udc.psi.agendaly.CloudMessaging.CloudMessagingData;
 import es.udc.psi.agendaly.Contacts.model.Contact;
 import es.udc.psi.agendaly.Contacts.model.ContactsDatabaseClient;
+import es.udc.psi.agendaly.R;
 import es.udc.psi.agendaly.Teams.model.TeamsDatabaseClient;
 
 public class ContactsDatabaseImpl implements ContactsPresenter {
@@ -148,11 +149,13 @@ public class ContactsDatabaseImpl implements ContactsPresenter {
 											BGDBCall call = new BGDBCall();
 											call.execute(token);
 										} else {
-											view.showError("Cannot add contact. Please check internet connection");
+
+											view.showError(context.getString(R.string.cannotAddContactDB));
 										}
 									});
 								} else {
-									view.showError("User '"+contact.getEmail()+"' does not exist");
+									view.showError(context.getString(R.string.theUser) + " " + contact.getEmail()
+									+ " " +context.getString(R.string.doesNotExist));
 								}
 							} else {
 								return;

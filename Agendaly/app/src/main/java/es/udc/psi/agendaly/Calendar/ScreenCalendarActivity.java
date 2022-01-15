@@ -99,7 +99,7 @@ public class ScreenCalendarActivity extends BaseActivity implements CalendarView
             extras.putString("date",message);
             intent.putExtras(extras);
             startActivity(intent);
-
+            finish();
         }
 
         if(id == R.id.icon_delete){
@@ -109,6 +109,7 @@ public class ScreenCalendarActivity extends BaseActivity implements CalendarView
             extras.putString("date",message);
             intent.putExtras(extras);
             startActivity(intent);
+            finish();
         }
 
         return true;
