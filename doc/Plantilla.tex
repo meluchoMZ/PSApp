@@ -13,6 +13,7 @@
 \usepackage{multirow} 
 \usepackage{cite}
 \usepackage{url}
+\usepackage{wrapfig}
 
 \setpapersize{A4}	   %  DIN A4
 \setmargins{3cm}    % margen izquierdo
@@ -59,7 +60,7 @@ PROGRAMACIÓN DE SISTEMAS 21/22 Q1\\
 \textbf{Autores:}Miguel Blanco Godón \\
 Blanca Fernández Martín\\
 Laura Cabezas González\\
-\textbf{Fecha:}\textit{A Coruña, 16 de diciembre de 2021}\\
+\textbf{Fecha:}\textit{A Coruña, 15 de enero de 2022}\\
 \end{large}
 
 \end{center}
@@ -93,7 +94,7 @@ Versión & Fecha & Autor \\
 0.1 & 07/10/2021 & Grupo Q1.1 \\ \hline
 0.2 & 09/11/2021 & Grupo Q1.1 \\ \hline
 1.0 & 15/12/2021 & Grupo Q1.1 \\ \hline
-x & y & \\ \hline
+1.5 & 15/01/2022 & Grupo Q1.1 \\ \hline
 \end{tabular}
 
 \end{center}
@@ -136,13 +137,15 @@ Además también nos inspira mucho a la hora de saber las entregas la propia int
 \subsection{Funcionalidades}
 Las funcionalidades principales serán:
 \begin{itemize}
-\item \textbf{1.Fijar fechas en el calendario [feature/calendar]:} desde la aplicación habrá una forma de establecer citas que se crearán en un calendario. Se podrá fijar la fecha, el nombre del evento, y alguna nota informativa a mayores. La aplicación llevará una agenda donde se mostrarán ordenadamente los eventos creados y sus fechas.
+\item \textbf{1.Fijar fechas en el calendario [feature/calendar]:} desde la aplicación habrá una forma de establecer citas que se crearán en un calendario. Se podrá fijar la fecha, el nombre del evento, y alguna nota informativa a mayores. La aplicación llevará una agenda donde se mostrarán ordenadamente los eventos creados y sus fechas. Además, el usuario podrá eliminar un evento cuando considere.
 
 \item \textbf{2.Almacenar el horario de clases [feature/horario]:} se podrá crear un horario semanal introduciendo las asignaturas y algún atributo a mayores, por ejemplo, el aula en la que se imparte y la hora . El horario será visible nada más abrir la aplicación.
 
 \item \textbf{3.Autenticación[feature/authentication]:} el usuario podrá identificarse al entrar en la app, de forma que pueda acceder a sus datos desde otros dispositivos. Además, la autenticación del usuario verifica su identidad frente a otros usuarios a la hora de trabajar en grupos.
 
-\item \textbf{4.Notificaciones de estudio[feature/notification]:} el usuario podrá fijar el tiempo diario que le quiera dedicar a cada tarea y organizarlo en el día. La aplicación almacenará esta información y emitirá notificaciones a las horas establecidas a modo de recordatorio.
+\item \textbf{4.Notificaciones de horario[feature/horario]:} el usuario podrá escoger si quiere que le notifique el horario diariamente y la hora a la que quiere que se produzca esa notificación.
+
+\item \textbf{5.Notificaciones de calendario[feature/calendar]:} al crear un evento, el usuario podrá decidir si quiere que se le avise de ese evento mediante una notificación, y en caso de que así sea, podrá decidir la antelación con la que quiere ser avisado. Además, podrá modificar cuando se le envía la notificación o desactivarla en cualquier momento.
 
 
 \end{itemize}
@@ -157,7 +160,7 @@ Y las funcionalidades secundarias serán:
 
 %%
 \subsection{Prioridades}
-El objetivo principal de esta aplicación es implementar de forma simple las funcionalidades de una agenda, aprovechando las comodidades que puede aportar un telefono movil. Es por esto que las prioridades serán las tareas más cercanas a la funcionalidad de la agenda, es decir, fijar las fechas de los eventos importantes en un calendario, mostrar los eventos proximos, mantener una copia facilmente accesible del horario semanal y el sistema de notificaciones para el estudio diario. 
+El objetivo principal de esta aplicación es implementar de forma simple las funcionalidades de una agenda, aprovechando las comodidades que puede aportar un teléfono móvil. Es por esto que las prioridades serán las tareas más cercanas a la funcionalidad de la agenda, es decir, fijar las fechas de los eventos importantes en un calendario y mantener una copia fácilmente accesible del horario semanal. 
 
 
 
@@ -174,21 +177,16 @@ En la iteración final, se corregirán los fallos de las iteraciones anteriores 
 
 %%
 \subsection{Responsabilidades}
-Se llevará a cabo la implementación de tres funcionalidades simultaneamente, para que todos los miembros del grupo puedan trabajar simultaneamente sin tener que esperar a por el trabajo de los demás. Las primeras funcionalidades a implementar se repartirán tal que 
-la creación eventos en el calendario será implementada por Blanca Fernandez, el horario semanal por Laura Cabezas y la autenticación por Miguel Blanco. 
+Se llevará a cabo la implementación de tres funcionalidades simultáneamente, para que todos los miembros del grupo puedan trabajar simultáneamente sin tener que esperar a por el trabajo de los demás. Las primeras funcionalidades a implementar se repartirán tal que 
+la creación del calendario será implementada por Blanca Fernández, el horario semanal por Laura Cabezas y la autenticación por Miguel Blanco. 
 \newline
-La creación y gestión de equipos será responsabilidad de Miguel Blanco. El añadir notificaciones al horario será responsabilidad de Laura Cabezas.Y añadir notificaciones al calendario será responsabilidad de Blanca Fernandez.
+La creación y gestión de equipos será responsabilidad de Miguel Blanco. La funcionalidad de añadir notificaciones al horario será responsabilidad de Laura Cabezas. Y la posibilidad de añadir notificaciones al calendario será responsabilidad de Blanca Fernández.
 %%
 \subsection{Hitos}
 Se realizará una entrega por cada funcionalidad implementada, más otras dos a mayores, al final de cada iteración, donde se solucionarán los detalles de integración de las partes en las que se dividió el trabajo. Por lo tanto, habrá tres hitos iniciales para las tres funcionalidades ya repartidas, y un cuarto hito donde se mostrará una primera versión funcional de la aplicación, aunque con funcionalidades reducidas. Más adelante, volverá a haber un hito por cada funcionalidad secundaria que se implemente, y finalmente, la entrega final de la aplicación completa.
-En cuanto a los test, en cada hito de una funcionalidad aislada se creará un test para esa funcionalidad, y para el hito que compruebe la integración de las partes, un test común para las funcionalidades que estén implementadas hasta ese momento.
-%%
-\subsection{Incidencias}
-Debido a la forma en la que se va a desarollar el proyecto y estar divido en pequeñas funcionalidades que se desarrollarán independientemente, la cohesión de las partes puede llegar a ser un punto crítico.
-Un riesgo a tener en cuenta a la hora del diseño es el uso de repositorios externos, ya que si no lo controlamos podemos perder funcionalidades. \cite{misc-hc}
 
-Se completará esta sección cuando se haya llegado a un grano suficientemente fino en la planificación del proyecto y se conozcan más detalles sobre la implementación.
-Cuando estos detalles sean conocidos se clasificarán las posibles incidencias segun su gravedad y se poporcionará una solución acorde. Los diferentes grados serán incidencias leves (bugs), incidencias de grado medio (fallo en una funcionalidad/caso de uso), o incidencias graves (a nivel de toda la aplicación/arquitectura/caso de uso no satisfacible).
+%%
+
 
 %%%%%%%
 %%%%%%%
@@ -199,10 +197,11 @@ Cuando estos detalles sean conocidos se clasificarán las posibles incidencias s
 Para esta aplicación vamos a usar el patrón de arquitectura Clean.
 
 \subsection{Persistencia}
-Para la persistencia de usuarios se utilizarán ficheros de shared preferences almacenados en local. Por seguridad, las contraseñas estarán cifradas. Los eventos de calendario/horario se guaradarán en una base de datos de Firebase. Para guardar los datos usaremos dos bases de datos implementadas con Room, una para el calendario y otra para el horario.
+Para la persistencia de usuarios se utilizarán ficheros de shared preferences almacenados en local. Por seguridad, las contraseñas estarán cifradas. Los eventos de calendario/horario se guardarán en una base de datos de Firebase. Para guardar los datos usaremos dos bases de datos implementadas con Room, una para el calendario y otra para el horario.
+Para la persistencia de contactos y equipos, se usará una base de datos local (ROOM) que servirá para acceder a la información a modo de consulta cuando los usuarios pierdan la conexión internet (es necesaria la conexión para acceder a la app puesto que hay que llevar a cabo un proceso de autenticación). También se dispondrá de una base de datos documental en un ambiente cloud (Firestore) que permitirá mantener la persistencia de estos datos asociada a la cuenta de los usuarios, permitiendo la recuperación automática de la información en caso de que los usuarios cambien de dispositivo.
 
 \subsection{Vista}
-Ver figuras 1,2, y 3.
+Ver figuras 1, 2, 3,4 y 5.
 \begin{figure}
             \includegraphics[scale=0.05]{view.jpeg} \hfill
             \includegraphics[scale=0.05]{dialog.jpeg}\hfill
@@ -210,7 +209,7 @@ Ver figuras 1,2, y 3.
             \includegraphics[scale=0.05]{account_view.jpeg}
             \caption{Pantallas de autenticación}
         \end{figure}
-        
+
 \begin{figure}
             \includegraphics[scale=0.05]{Horario.png} 
             \includegraphics[scale=0.05]{swipe.png}\hfill
@@ -219,25 +218,78 @@ Ver figuras 1,2, y 3.
             \includegraphics[scale=0.05]{add_spinner.png}
             \includegraphics[scale=0.05]{ToastAdd.png}\hfill
             \includegraphics[scale=0.05]{borrar.png}
-             \includegraphics[scale=0.05]{avisoBorr.png}
-              \includegraphics[scale=0.05]{asignaturaBorrToast.png}
+            \includegraphics[scale=0.05]{avisoBorr.png}
+            \includegraphics[scale=0.05]{asignaturaBorrToast.png}
             \caption{Pantallas del horario}
         \end{figure}
         
 \begin{figure}
-            \includegraphics[scale=0.05]{calendarinitview.jpg} \hfill
-            \includegraphics[scale=0.05]{selectedemptyday.jpg}\hfill
-            \includegraphics[scale=0.05]{addevent.jpg} \hfill
-            \includegraphics[scale=0.05]{savedevent.jpg}\hfill
-            \caption{Pantallas del calendario}
+        \includegraphics[scale=0.05]{notificacion1.png} 
+        \includegraphics[scale=0.05]{notificacion2.png} 
+        \includegraphics[scale=0.05]{notificacion3.png} 
+        \includegraphics[scale=0.05]{notificacion8.png}
+        \includegraphics[scale=0.05]{notificacion4.png}\hfill 
+        \includegraphics[scale=0.05]{notificacion5.png} 
+        \includegraphics[scale=0.05]{notificacion6.png} 
+        \includegraphics[scale=0.05]{notificacion7.png} 
+            \caption{Pantallas de las notificaciones del horario}
         \end{figure}
 
+
+\begin{figure}
+            \includegraphics[scale=0.05]{calendar1.jpg} \hfill
+            \includegraphics[scale=0.05]{calendar2.jpg}\hfill
+            \includegraphics[scale=0.05]{calendar3.jpg} \hfill
+            \includegraphics[scale=0.05]{calendar4.jpg}\hfill
+            \includegraphics[scale=0.05]{calendar5.jpg}\hfill
+            \includegraphics[scale=0.05]{calendar6.jpg}\hfill
+            \caption{Pantallas del calendario y sus notificaciones}
+        \end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=0.05]{contacts_view.jpeg} \hfill
+    \includegraphics[scale=0.05]{add_contact.jpeg}\hfill
+    \includegraphics[scale=0.05]{teams_view.jpeg}\hfill
+    \includegraphics[scale=0.05]{add_team.jpeg}\hfill
+    \includegraphics[scale=0.05]{add_to_Team.jpeg}\hfill
+    \includegraphics[scale=0.05]{notif_add_team.jpeg}\hfill
+    \includegraphics[scale=0.05]{addToTeamDialog.jpeg}\hfill
+    \caption{Pantallas de contactos y equipos}
+\end{figure}
+\newpage
+
 \subsection{Comunicaciones}
-Necesitamos comunicaciones con servidores para la manutención de usuarios. También necesitaremos un proveedor de bases de datos y comunicación con la API de Google para el calendario.
+Las comunicaciones se pueden agrupar en tres tipos:
+\begin{itemize}
+    \item \textbf{de validación}: serán las que consulten al servidor en Firebase para procesos de autenticación o busca de usuarios.
+    \item \textbf{de carga y almacenamiento de datos}: serán las que ejecuten operaciones CRUD contra la base de datos de Firestore.
+    \item \textbf{peer2peer}: serán las que se realicen entre dispositivos utilizando los tokens de identificación y el API de Firebase Cloud Messaging.
+\end{itemize}
 \subsection{Sensores}
 No aplica.
 \subsection{Trabajo en background}
-Sincronización de datos, gestión de eventos a efectos de notificación, trabajo con bases de datos.
+En el proceso de autenticación se realizan dos tareas: el propio inicio de sesión, el cual se valida contra el servidor de autenticación de Firebase; y el guardado del token de identificación de la sesión en la instalación. Este último es un valor alfanumérico que se guarda en una base de datos documental alojada en cloud, la cual permite el direccionamiento de las invitaciones a equipos entre dispositivos.
+Para los casos de uso de contactos y equipos, se realizan operaciones en segundo plano que podemos agrupar en:
+\begin{itemize}
+    \item \textbf{Tareas de acceso a BD local}: todas las operaciones con contactos y equipos son guardadas localmente en una base de datos, permitiendo al usuario su consulta sin conexión. Este almacenamiento persistente está ligado al inicio de sesión, y se borra al cerrar sesión.
+    \item \textbf{Tareas de acceso a BD remota}: todas las operaciones con contactos y equipos tienen copia en una base documental en cloud (Firestore). Los usuarios que inicien sesión dispondrán de copia de seguridad en red de contactos y equipos. Estos datos son permanentes y no dependen de si el usuario cierra sesión.
+    \item \textbf{Envío de datos entre dispositivos}: para añadir contactos a los equipos, se envían datos en segundo plano para la comunicación entre los dispostivos donde se ejecutan ambas cuentas.
+    \item \textbf{Receiver}: para poder atender las comunicaciones entre dispositivos, hay un receiver que estará a la escucha de comunicaciones entrantes. Si recibe alguna comunicación, notificará al usuario.
+\end{itemize} 
+
+En lo referente al horario las operaciones que se ejecutan en segundo plano son las siguiente:
+\begin{itemize}
+\item \textbf{Acceso y modificación de la BD local}: las operaciones para añadir y borrar asignaturas se realizan en segundo plano, así como las de lectura a la base datos. 
+\item \textbf{Notificaciones programadas en el horario}: las notificaciones son programadas haciendo uso del Alarm Manager que las mandará en la hora que indicada y esta información será recogida por un Receiver el cual generará la notificación.
+
+En cuanto al trabajo en background en relación con el calendario:
+
+\item \textbf{Acceso y modificación de la BD local}: las operaciones para añadir y borrar eventos se realizan en segundo plano, así como las de lectura a la base datos.
+
+\item \textbf{Notificaciones programadas en el horario}: para la implementación del envío de las notificaciones de los eventos con la antelación especificada por el usuario se ha utilizado Alarm Manager. De esta forma, Alarm Manager envía la información del evento tantos días antes como sea necesario, y a partir de esos datos el Receiver genera la notificación.
+\end{itemize}
+
 
 \section{Detalles de la implementación}
 Estos se dividirán por tareas:
@@ -266,15 +318,83 @@ Estos se dividirán por tareas:
 \end{itemize}
 
 \begin{itemize}
+    \item \textbf{Notificaciones del Horario}:las notificaciones se implementan añadiendo en el menú del horario dos iconos más uno con forma de reloj sirve para especificar la hora a la que queremos que se nos notifique las asignaturas cada día, el otro con forma de campana que no servirá para activar o desactivar las notificaciones, si la campana está "apagada" no se podrán programar las notificaciones, si esta está activa se notificará con la hora guardada anteriormente. Si pulsamos se desactivara las notificaciones pero la hora programada seguirá guardada. 
+    
+\end{itemize}
+\begin{itemize}
     \item \textbf{Calendario}:
-    para el calendario se han creado inicialmente un LinearLayout con los botones de adelante y atrás y el nombre del mes, otro con los nombres de los días de la semana y un RecycledView donde irán los números de cada dia del mes. Las fechas se organizan en seis filas y siete columnas dado que, en el peor de los casos (cuando un mes de 30 o 31 días comienza en fin de semana), puede ser necesario utilizar las seis filas para representar todos los días del mes. Cada celda contiene únicamente el número del día que representa.  Cuando se selecciona un día del mes, se lanza una nueva actividad que muestra los eventos planeados para ese día, cada uno en forma de 3 textos: el título del evento, la hora a la que va a tener lugar y una breve descripcion del mismo. Para obtener los valores de estos campos para cada evento, se accede a la base de datos implementada en Room. En esta actividad también existe un menú que permite añadir nuevos eventos. Si se selecciona, se lanzará una nueva actividad con tres textos que se corresponden con los campos qe almacena cada evento y un EditText por cada uno, para que los datos con los que se rellenen sean aquellos que se añaden a la base de datos para cada evento. Cuando se acaben de especificar estos campos, existe el botón de guardar, que añade el evento y los atributos introducidos a la base de datos. Por último, se mostrará un Toast en la parte inferior que verifica que el evento ha sido añadido correctamente.
+    para el calendario se han creado inicialmente un LinearLayout con los botones de adelante y atrás y el nombre del mes, otro con los nombres de los días de la semana y un RecycledView donde irán los números de cada día del mes.  \newline
+    Las fechas se organizan en seis filas y siete columnas dado que, en el peor de los casos (cuando un mes de 30 o 31 días comienza en fin de semana), puede ser necesario utilizar las seis filas para representar todos los días del mes. Se puede cambiar el mes que se visualiza por pantalla pulsando dos botones, para ir al anterior y al siguiente mes. Cada celda contiene únicamente el número del día que representa.  \newline
+    Cuando se selecciona un día del mes, se lanza una nueva actividad que muestra los eventos planeados para ese día, cada uno en forma de 3 textos: el título del evento, la hora a la que va a tener lugar y una breve descripción del mismo. Para obtener los valores de estos campos para cada evento, se accede a la base de datos implementada en Room.  \newline
+    En esta actividad también existe un menú que permite añadir y eliminar eventos. Si se selecciona la opción de añadir, se lanzará una nueva actividad con tres textos que se corresponden con los campos que almacena cada evento y un EditText por cada uno, para que los datos con los que se rellenen sean aquellos que se añaden a la base de datos para cada evento. También es posible configurar una notificación para el evento en esta pantalla.  Cuando se acaben de especificar estos campos, existe el botón de guardar, que añade el evento y los atributos introducidos a la base de datos. Por último, se vuelve a la pantalla principal del calendario y se mostrará un Toast en la parte inferior que verifica que el evento ha sido añadido correctamente. \newline
+    Otra opción del menú que aparece cuando se abre el detalle de un día en concreto es el de eliminar un evento. Si se pulsa el icono de la papelera del menú, se lanza una nueva actividad con un editText en el que se podrá especificar el nombre del evento a eliminar, y a continuación borrarlo pulsando un botón.
+    
+\end{itemize}
+\begin{itemize}
+    \item \textbf{Notificaciones del calendario}:
+    en el momento en el que se entre en la pantalla del calendario en se recibirán las notificaciones de los eventos en los que se haya elegido esta opción. \newline
+    Las notificaciones se configuran en el momento de crear el evento. Hay un texto que indica la posibilidad de configurar la notificación de ese evento, y para ello también hay un editText donde se podrá incluir el número de días de antelación con los que se desea recibir la notificación del evento, y un switch que activa o desactiva esta opción. \newline
+    El usuario puede modificar en cualquier momento tanto el número de días de antelación de las notificaciones como la activación o desactivación de las notificaciones de cada evento individualmente. 
+\end{itemize}
+    
+\begin{itemize}
+    \item \textbf{Contactos y equipos}: en ambos casos se dispone de un conjunto RecyclerView + Menús / Menú contextual. A través del menú contextual se abrirán los diálogos de entrada de datos, los cuales permitirán añadir nuevos contactos, añadir nuevos equipos o invitar contactos a equipos de propia creación. En ambos casos la persistencia se maneja con bases de datos locales (para acceso sin conexión), pero la funcionalidad completa requiere de conexión a internet (puesto que estos datos se guardan en una base de datos remota y se necesita comunicación entre dispositivos para enviar las invitaciones de participación). La actualización del RecyclerView se realiza automáticamente al terminar las operaciones CRUD sobre las bases de datos (locales y remotas).
+    \item \textbf{Notificaciones de invitaciones}: en este caso se crea una notificación que al ser pulsada despliega un diálogo de confirmación. Si el usuario acepta unirse al equipo, el equipo se añadirá local y remotamente. Después se actualizará la vista del recycler view de la activity Teams asíncronamente.
 \end{itemize}
 
 %%%%%%%
 %%%%%%%
+\section{Pruebas realizadas y evaluación de las mismas}
+Las pruebas realizadas han sido pruebas manuales. No disponemos de test automatizados de unidad, integración ni aceptación.
+\newline
+En cuanto a las pruebas manuales, varían según la funcionalidad implementada:
+\begin{itemize}
+    \item \textbf{Autenticación}: se comprobó el inicio e cierre de sesión, los datos de los ficheiros de preferencias compartidas y la generación de los tokens para comunicaciones con ambos métodos de autenticación.
+    \item \textbf{Contactos}: se comprobó que sólo se pudiesen añadir contactos registrados en Agendaly, así como que añadiesen correctamente. Se comprobó también si los datos se recuperan automáticamente al iniciar sesión y si se borraran de la base de datos local al cerrar sesión.
+    \item \textbf{Equipos}: se comprobó que se pudiesen añadir equipos propios, así como que se añadieran los provenientes de invitación. También se comprobó que los datos se recuperaran automáticamente al iniciar sesión y se borraran de la base de datos local al cerrar sesión.
+    \item \textbf{Invitaciones y notificaciones}: se comprobó el envío de datos entre dispositivos, la recepción y la creación de las notificaciones.
+    \item \textbf{Calendario}: se ha probado a ir y volver desde las diferentes pantallas de la aplicación a la pantalla principal del calendario. También que se pueda cambiar de mes y que se visualiza correctamente en cualquier caso: meses de 28, 29, 30 y 31 días, que encajen con los días de la semana correspondientes comprobandolo con un calendario real. Se comprobó que se pueden crear eventos, siempre que tengan un nombre (no son necesarios el resto de los campos). Se ha confirmado que se pueden borrar eventos de tal forma que tras haber sido borrados no aparecen en el día en el que se habían creado, ni se recibe la notificación en caso de haber sido activada.
+    \item \textbf{Notificaciones del calendario}: se ha verificado que al entrar en la pantalla del calendario se reciben las notificaciones de los eventos en los que se han configurado. Se ha comprobado que cambiando la antelación de las notificaciones se siguen recibiendo. Se ha confirmado que no es posible introducir caracteres que no sean números naturales en el editText a la hora de establecer la notificación. Se ha probado que una vez se ha eliminado un evento cuya notificación estaba activada, no se vuelve a recibir al entrar en la pantalla del calendario.
+
+    \item \textbf{Horario}: se ha probado ha añadir diferentes asignaturas y a añadirlas sin algunos de los campos. Borrar estas asignaturas. 
+    
+    \item \textbf{Notificaciones de horario}: se ha probado a que enviara notificaciones estableciendo una hora cercana en ese mismo día, estableciendo este mismo tiempo y cambiando de día para que notifique las asignaturas de ese día a esa misma hora teniendo en cuenta que si no hay asignaturas no notifique. También se ha probado a establecer una notificación y desactivarla acto seguido para comprobar que no se manda cuando se desactiva. Y también se ha comprobado que si la "campana está desactivada" no se podrán establecer notificaciones.
+
+\end{itemize}
+\section{Trabajo futuro}
+Se establecerá por funcionalidad:
+\begin{itemize}
+    \item \textbf{Autenticación}: añadir proveedores de inicio de sesión.
+    \item \textbf{Contactos y equipos}: añadir completo manejo sobre todos los parámetros de contactos y equipos. Concretamente, con respecto a los equipos, añadir roles, configuraciones de equipos, gestionar tareas grupales, asignar tareas a integrantes de los equipos, sincronizar los datos de equipos entre participantes y permitir almacenamiento de documentos conjuntos. Con respecto a las notificaciones, añadir mailboxes que permitan mantenerlas en espera, así como volver a verlas posteriormente, mejorando el sistema de comunicación distribuída entre dispositivos. Mejoras de interfaz y user experience.
+    
+    \item \textbf{Horario}: mejorar la interfaz y permitir añadir más características a la hora de guardar información sobre las asignaturas así como a la hora de lo que se muestra por pantalla. 
+    
+    \item \textbf{Notificaciones de horario}: añadir más personalización a las notificaciones como por ejemplo poder posponerla para que te avise más adelante en ese mismo día o desactivar los avisos desde la misma.
+    
+    \item \textbf{Calendario}: Se podrían añadir diferentes formas de visualizar los días en el calendario: formato semanal y anual, también mejoras menores en la interfaz a la hora de visualizar los eventos de un día seleccionado y mejoras en la usabilidad.
+    
+    \item \textbf{Notificaciones del calendario}: una posible mejora sería profundizar en el diseño de las notificaciones y que contasen con una opción de "posponer", o al pulsar sobre ellas llevasen al usuario a la pantalla de edición.
+    
+    
+\end{itemize}
+\section{Incidencias destacables en la realización del TT}
+A nivel general no hemos tenido prácticamente problemas porque las partes están bastante compartimentadas.
+Podemos agrupar las incidencias por funcionalidad:
+\begin{itemize}
+    \item \textbf{Autenticación}: no hubo incidencias relevantes.
+    \item \textbf{Contactos y equipos}: la gestión de dos sistemas de almacenamiento (local y distribuido) complica la sincronización de los datos. Necesidad de depender de proveedores externos para la gestión de datos y comunicación multiusuario. Esta dependencia complica toda la lógica de negocio del sistema. En futuras versiones se debería invertir tiempo en la construcción de un servidor con acceso a bases de datos propias que permitiera: (1) simplificar la lógica de negocio sustituyendo el API de Firebase por un API REST estándar, en el cual no hubiera que restringir el funcionamiento a los formatos de envío de información que Google nos proporciona; y (2) dejar de depender de proveedores de servicios externos, permitiendo una mejor escalabilidad, así como permitirnos pruebas automatizadas con un desarrollo e integración contínua de producto que no devenguen en gastos de cloud. 
+    Además, el no depender de proveedores nos posibilitaría para la migración de la comunicación, para que sea basada en servidor, y no peer to peer, mejorando y simplificando el manejo de notificaciones (sobre todo en primer plano). Este mecanismo nos permitiría manejar todas las notificaciones con un "mailbox" de servidor, de modo que ninguna se perdiese (incluso si el usuario simplemente se deshacía de ellas).
+
+    \item \textbf{Horario}: no hubo incidencias mayores más allá de la gestión adecuada de los fragmentos para que hubiera una sincronización entre el día y la información.
+    
+    \item \textbf{Calendario}: a la hora de crear un evento, en la base de datos se almacena también la fecha en la que tendrá lugar. Esta información no se recibe por medio de un editText que rellena el usuario (como ocurre con el resto de campos), si no que va implícita en el momento en el que se selecciona el día en el que se crea el evento. Fue necesario transformar la fecha a una cadena de caracteres para que fuese posible almacenarla en la base de datos.
+
+    \item \textbf{Notificaciones del horario y del calendario}: para implementar estas funciones se tuvo que modificar los datos guardados en la BD generando esto errores a la hora de los datos guardados anteriormente y lo que se quería guardar ahora, para solucionar esto se optó por borrar los datos almacenados hasta el momento.
 
 
 
+\end{itemize}
+Debido a falta de tiempo, no se han podido terminar de completar algunas funcionalidades, más concretamente, la organización de equipos (hay una funcionalidad básica pero la completa requeriría más tiempo e infraestructura) y el repositorio de apuntes (para el cual necesitaríamos mucho almacenamiento en cloud, además de que sería un proyecto de expansión tan grande o más que la propia aplicación).\newpage
 
 \bibliographystyle{pfc-fic}
 \bibliography{biblio}
