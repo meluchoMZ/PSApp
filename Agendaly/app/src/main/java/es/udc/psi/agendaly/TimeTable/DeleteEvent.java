@@ -58,10 +58,12 @@ public class DeleteEvent extends BaseActivity implements AsignaturaView {
                         .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String a = nameAsignatura();
-                                if(a != null) {
+                                if(a != null && !a.equals("")) {
                                     mPresenter.deleteClass(a);
                                     Toast.makeText(getBaseContext(), getString(R.string.asignatura_borrada), Toast.LENGTH_SHORT).show();
                                     finish();
+                                }else{
+                                    Toast.makeText(getBaseContext(), getString(R.string.asignatura_noencontrada), Toast.LENGTH_SHORT).show();
                                 }
 
                             }

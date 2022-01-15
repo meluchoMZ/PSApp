@@ -85,6 +85,10 @@
 
     <string name="id_text">ID: </string>
 
+    <string name="complete_field">Completa todos los campos</string>
+    <string name="asignatura_noencontrada">Asignatura no encontrada</string>
+
+
     <string name="feb_2021">Feb 2021</string>
     <string name="sun">DOM</string>
     <string name="mon">LUN</string>
@@ -114,6 +118,7 @@
     <string name="cannotSaveTeamBD">No se puede guardar el equipo</string>
     <string name="teamAlreadyCreated">Este equipo ya existe</string>
     <string name="cannotCreateTeam">No se puede crear el equipo</string>
+
 
 
 </resources>
