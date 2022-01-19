@@ -27,6 +27,7 @@ import es.udc.psi.agendaly.TimeTable.Horario;
 
 public class CloudMessagingService extends FirebaseMessagingService {
 	private Map<String, String> data;
+	private static int pendingIntentId = 0;
 	@RequiresApi(api = Build.VERSION_CODES.N)
 	@Override
 	public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -53,9 +54,10 @@ public class CloudMessagingService extends FirebaseMessagingService {
 		matcher.find();
 		String team = matcher.group();
 		intent.putExtra("team", team);
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		pendingIntentId++;
 		PendingIntent pendingIntent = PendingIntent.getActivity(this,
-				0, intent, PendingIntent.FLAG_UPDATE_CURRENT) ;
+				pendingIntentId, intent, PendingIntent.FLAG_UPDATE_CURRENT) ;
 		builder.setContentIntent(pendingIntent);
 		builder.setAutoCancel(true);
 		manager.notify(0, builder.build());
