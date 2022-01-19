@@ -95,9 +95,9 @@ public class AddToTeamAdapter extends RecyclerView.Adapter<AddToTeamAdapter.View
 	@Override
 	public void doNotify(String user) {
 		final String sender = AuthUtils.retrieveUser().getEmail();
-		final String title = "Team invitation";
+		final String title = GlobalApplication.getContext().getString(R.string.teamInvitation);
 		final String message = sender
-				+ " wants to add you to the team "+team;
+				+ " "+GlobalApplication.getContext().getString(R.string.joinTeam)+" "+team;
 		CloudMessagingData data = new CloudMessagingData(title, message);
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
 		db.collection("userTeams").document(user).get().addOnCompleteListener(task -> {
